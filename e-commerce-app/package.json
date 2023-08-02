@@ -24,8 +24,8 @@
     "lint": "eslint src/**/*.{js,jsx,ts,tsx}",
     "lint:fix": "eslint --fix src/**/*.{js,jsx,ts,tsx}",
     "format": "prettier --write 'src/**/*.{js,jsx,ts,tsx,css,md}' --config ./.prettierrc",
-    "prettier:check": "prettier . --check",
-    "prettier:write": "prettier . --write"
+    "prettier:check": "prettier src/**/*.{js,jsx,ts,tsx,css,md} --check",
+    "prettier:write": "prettier src/**/*.{js,jsx,ts,tsx,css,md} --write"
   },
   "eslintConfig": {
     "extends": [
@@ -49,6 +49,7 @@
     "eslint": "^8.46.0",
     "eslint-config-prettier": "^8.9.0",
     "eslint-plugin-prettier": "^5.0.0",
+    "husky": "^8.0.3",
     "prettier": "^3.0.0"
   }
 }
