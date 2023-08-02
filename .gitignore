@@ -1,0 +1,9 @@
+*~
+*.swp
+*.tmp
+*.temp
+build/
+dist/
+out/
+bin/
+node_modules/
