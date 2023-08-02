@@ -21,4 +21,24 @@ It allows customers to see the entire range, sort and select the desired product
 
 React, Webpack, TypeScript, ESLint, Prettier, Husky, Jest, SCSS
 
-##
+### How to clone this project?
+
+# Clone this repository
+
+$ git clone https://github.com/evgueniazet/eCommerce-Application.git
+
+# Go to folder
+
+$ cd eCommerce-Application
+
+### Installing
+
+# Install dependencies
+
+$ npm install
+
+# Start development server
+
+$ npm start
+
+###
