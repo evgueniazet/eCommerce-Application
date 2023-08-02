@@ -1,1 +1,1 @@
-# eCommerce-Application
+# This is an online store project using CommerceTools
