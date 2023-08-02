@@ -23,22 +23,28 @@ React, Webpack, TypeScript, ESLint, Prettier, Husky, Jest, SCSS
 
 ### How to clone this project?
 
-# Clone this repository
+Clone this repository
 
+```sh
 $ git clone https://github.com/evgueniazet/eCommerce-Application.git
+```
 
-# Go to folder
+Go to folder
 
+```sh
 $ cd eCommerce-Application
+```
 
 ### Installing
 
-# Install dependencies
+Install dependencies
 
+```sh
 $ npm install
+```
 
-# Start development server
+Start development server
 
+```sh
 $ npm start
-
-###
+```
