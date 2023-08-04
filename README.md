@@ -1,6 +1,6 @@
 # eCommerce-Application
 
-This is fully functional E-Commerce app built with React
+This is fully functional E-Commerce app built with [![React](https://techinfini.in/offer-item/1051/react-logo-1/)](https://react.dev/)
 
 ## Demo is here: ![demo]()
 
@@ -23,28 +23,42 @@ React, Webpack, TypeScript, ESLint, Prettier, Husky, Jest, SCSS
 
 ### How to clone this project?
 
-Clone this repository
-
 ```sh
+Clone this repository:
 $ git clone https://github.com/evgueniazet/eCommerce-Application.git
-```
 
-Go to folder
-
-```sh
+Go to folder:
 $ cd eCommerce-Application
 ```
 
 ### Installing
 
-Install dependencies
-
 ```sh
+Install dependencies:
 $ npm install
+
+Run the app in the development mode:
+$ npm start
+
+Build the app for production:
+$ npm run build
 ```
 
-Start development server
+### Testing and running
 
 ```sh
-$ npm start
+To launch the test runner in the interactive watch mode:
+$ npm test
+
+To copy all configs and transitive dependencies:
+$ npm run eject
+
+Run ESLint to lint and to fix the code:
+$ npm run lint
+$ npm run lint:fix
+
+Run Prettier to check and fix the code:
+$ npm run format
+$ npm run prettier:check
+$ npm run prettier:write
 ```
