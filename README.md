@@ -1,8 +1,8 @@
 # eCommerce-Application
 
-This is fully functional E-Commerce app built with [![React](https://techinfini.in/offer-item/1051/react-logo-1/)](https://react.dev/)
+This is fully functional E-Commerce app built with React
 
-## Demo is here: ![demo]()
+## App's demo : ![demo]()
 
 ### Or link to live site [here]()
 
@@ -19,7 +19,8 @@ It allows customers to see the entire range, sort and select the desired product
 
 ## Project powered by:
 
-React, Webpack, TypeScript, ESLint, Prettier, Husky, Jest, SCSS
+- React, Webpack, TypeScript, ESLint, Prettier, Husky, Jest, SCSS
+- using CommerceTools
 
 ### How to clone this project?
 
