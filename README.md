@@ -63,3 +63,10 @@ $ npm run format
 $ npm run prettier:check
 $ npm run prettier:write
 ```
+
+## Authors
+
+Rolling Scopes School: React Dreamteam
+mentored by [Hanna Dziahonskaya](https://app.rs.school/profile?githubId=santerna)
+
+Happy coding!
