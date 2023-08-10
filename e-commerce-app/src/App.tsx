@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import React from 'react';
-import { BrowserRouter as Router, Route, Link, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
 import { AboutPage } from './pages/AboutPage/AboutPage';
 import { ErrorPage } from './pages/ErrorPage/ErrorPage';
@@ -22,15 +22,15 @@ export const App = () => {
                     <p>
                         Edit <code>src/App.tsx</code> and save to reload.
                     </p>
-                    <Link to="/">Home</Link>
-                    <Link to="/about">About</Link>
-                    <Link to="/basket">Basket</Link>
-                    <Link to="/login">Login</Link>
-                    <Link to="/registration">Registration</Link>
-                    <Link to="/user">User</Link>
-                    <Link to="/product">Product</Link>
-                    <Link to="/products">Products</Link>
-                    <Link to="*">Error</Link>
+                    <NavLink to="/">Home</NavLink>
+                    <NavLink to="/about">About</NavLink>
+                    <NavLink to="/basket">Basket</NavLink>
+                    <NavLink to="/login">Login</NavLink>
+                    <NavLink to="/registration">Registration</NavLink>
+                    <NavLink to="/user">User</NavLink>
+                    <NavLink to="/product">Product</NavLink>
+                    <NavLink to="/products">Products</NavLink>
+                    <NavLink to="*">Error</NavLink>
                 </header>
             </div>
             <Routes>
