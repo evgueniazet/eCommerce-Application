@@ -10,6 +10,7 @@ import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { UserPage } from './pages/UserPage/UserPage';
 import { ProductPage } from './pages/ProductPage/ProductPage';
 import { ProductsPage } from './pages/ProductsPage/ProductsPage';
+import RootPage from './pages/RootPage/RootPage';
 
 export const App = () => {
 
@@ -33,7 +34,8 @@ export const App = () => {
                 </header>
             </div>
             <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path={'/'} element={<RootPage />}>
+                <Route index element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/basket" element={<BasketPage />} />
                 <Route path="/login" element={<LoginPage />} />
@@ -41,8 +43,9 @@ export const App = () => {
                 <Route path="/user" element={<UserPage />} />
                 <Route path="/product" element={<ProductPage />} />
                 <Route path="/products" element={<ProductsPage />} />
+                </Route>
                 <Route path="*" element={<ErrorPage />} />
             </Routes>
         </Router>
     );
-}
+};
