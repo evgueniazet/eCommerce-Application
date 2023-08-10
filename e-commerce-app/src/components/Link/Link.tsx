@@ -1,5 +1,5 @@
 import React from 'react';
-import { ILink } from '../interfaces/ILink';
+import { ILink } from '../../interfaces/ILink';
 
 export const Link = ({ children, className, navTo }: ILink) => {
   const redirectTo = (e: React.MouseEvent<HTMLElement>) => {
