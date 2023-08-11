@@ -1,118 +1,47 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { useRegistrationForm } from '../../hooks/useRegistrationForm';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 
-export const RegistrationForm = () => {
+export const RegistrationForm: React.FC = () => {
   const {
-    email,
-    password,
-    repeatPassword,
-    firstName,
-    lastName,
-    birthDate,
-    streetAddress,
-    houseNumber,
-    city,
-    postalCode,
-    country,
-    handleInputChange,
+    register,
     handleSubmit,
-  } = useRegistrationForm();
+    formState: { errors },
+  } = useForm<IRegistrationFormData>();
+
+  const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
+    console.log('data', data);
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         label="Email"
-        value={email}
-        onChange={handleInputChange}
+        {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
         variant="outlined"
         margin="normal"
+        helperText={errors.email && 'Enter a valid e-mail address'}
         fullWidth
       />
-      <TextField
-        label="Password"
-        value={password}
-        onChange={handleInputChange}
-        type="password"
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
+      <TextField label="Password" type="password" variant="outlined" margin="normal" fullWidth />
 
       <TextField
         label="Repeat Password"
-        value={repeatPassword}
-        onChange={handleInputChange}
         type="password"
         variant="outlined"
         margin="normal"
         fullWidth
       />
-      <TextField
-        label="First Name"
-        value={firstName}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="Last Name"
-        value={lastName}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="Birthdate"
-        value={birthDate}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="Street Address"
-        value={streetAddress}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="House Number"
-        value={houseNumber}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="City"
-        value={city}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="Postal Code"
-        value={postalCode}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
-      <TextField
-        label="Country"
-        value={country}
-        onChange={handleInputChange}
-        variant="outlined"
-        margin="normal"
-        fullWidth
-      />
+      <TextField label="First Name" variant="outlined" margin="normal" fullWidth />
+      <TextField label="Last Name" variant="outlined" margin="normal" fullWidth />
+      <TextField label="Birthdate" variant="outlined" margin="normal" fullWidth />
+      <TextField label="Street Address" variant="outlined" margin="normal" fullWidth />
+      <TextField label="House Number" variant="outlined" margin="normal" fullWidth />
+      <TextField label="City" variant="outlined" margin="normal" fullWidth />
+      <TextField label="Postal Code" variant="outlined" margin="normal" fullWidth />
+      <TextField label="Country" variant="outlined" margin="normal" fullWidth />
       <Button type="submit" variant="contained" color="primary">
         Register
       </Button>
