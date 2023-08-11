@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
         <AppBar position="static" color='default'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={logo} alt='logo' width={30} height={30} />
+          <img src={logo} alt='logo' width={60} height={60} />
           <Typography
             variant="h6"
             noWrap
