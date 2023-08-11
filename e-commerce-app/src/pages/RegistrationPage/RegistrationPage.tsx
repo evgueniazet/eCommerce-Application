@@ -1,5 +1,12 @@
 import React from 'react';
+import { RegistrationForm } from '../../components/RegistrationForm/RegistrationForm';
 
 export const RegistrationPage: React.FC = () => {
-    return <div>Registration Page</div>;
+  return (
+    <div>
+      {' '}
+      <h2>Registration Page</h2>
+      <RegistrationForm />
+    </div>
+  );
 };
