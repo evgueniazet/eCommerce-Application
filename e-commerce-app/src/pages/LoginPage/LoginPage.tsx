@@ -1,8 +1,9 @@
-// import React from 'react';
 import { Grid, Box, TextField, Button, Alert } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
+// import * as React from 'react';
+
 
 export const LoginPage: React.FC = () => {
     const [error, setError] = useState({
@@ -43,14 +44,24 @@ export const LoginPage: React.FC = () => {
             }}>
             </Grid>
             <Grid item lg={5} sm={7}>
-                <Box component='form' noValidate sx={{ mt: 10, mr:10}} id='login-form' onSubmit={handleSubmit}>
-                    <TextField required fullWidth id='email' name='email' label='Email Address' />
+                <Box component='form' noValidate sx={{ mt: 5, mr:10}} id='login-form' onSubmit={handleSubmit}>
+                    <Box>
+                        {error.status ? <Alert severity={error.type}>{error.message}</Alert> : ''}
+                    </Box>
+                    <TextField sx={{mt: 2}} required fullWidth id='email' name='email' label='Email Address' type='email' />
                     <TextField required fullWidth margin='normal' id='password' name='password' label='Password' type='password'/>
                     <Box textAlign='center'>
-                        <Button type='submit' variant='contained' sx={{px:5, mt: 5}}>Login</Button>
+                        <Button type='submit' variant='contained' sx={{px:5, mt: 2, backgroundColor: 'green'}}>Login</Button>
                     </Box>
-                    <NavLink to='/' >Forgot Password?</NavLink>
-                    <Alert severity={error.type}>{error.message}</Alert>
+                    <Box>
+                        <NavLink to='/'>Forgot Password?</NavLink>
+                    </Box>
+                    <Box sx={{mt: 5}}>
+                        <NavLink to='/'>Don&apos;t have account yet? Sign up</NavLink>
+                    </Box>
+                    <Box textAlign='center'>
+                        <Button type='submit' variant='contained' sx={{px:2, mt: 2, backgroundColor: 'green'}}>Registration</Button>
+                    </Box>
                 </Box>
             </Grid>
         </Grid>

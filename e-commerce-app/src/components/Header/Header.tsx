@@ -37,7 +37,7 @@ export const Header: React.FC = () => {
   };
 
     return (
-        <AppBar position="static" color='default'>
+        <AppBar position="sticky" color='default'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <img src={logo} alt='logo' width={60} height={60} />
