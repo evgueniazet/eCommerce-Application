@@ -44,9 +44,9 @@ export const LoginPage: React.FC = () => {
             }}>
             </Grid>
             <Grid item lg={5} sm={7}>
-                <Box component='form' noValidate sx={{ mt: 5, mr:10}} id='login-form' onSubmit={handleSubmit}>
+                <Box component='form' noValidate sx={{ mt: 5,ml:8, mr:8}} id='login-form' onSubmit={handleSubmit}>
                     <Box>
-                        {error.status ? <Alert severity={error.type}>{error.message}</Alert> : ''}
+                        {error.status ? <Alert severity={'error'}>{error.message}</Alert> : ''}
                     </Box>
                     <TextField sx={{mt: 2}} required fullWidth id='email' name='email' label='Email Address' type='email' />
                     <TextField required fullWidth margin='normal' id='password' name='password' label='Password' type='password'/>
