@@ -123,14 +123,13 @@ export const RegistrationForm: React.FC = () => {
       <TextField label="Street Address" variant="outlined" margin="normal" fullWidth />
       <TextField label="House Number" variant="outlined" margin="normal" fullWidth />
       <TextField label="City" variant="outlined" margin="normal" fullWidth />
-      {/* <TextField label="Postal Code" variant="outlined" margin="normal" fullWidth /> */}
       <TextField
         label="Postal Code"
         variant="outlined"
         margin="normal"
         fullWidth
         {...register('postalCode', {
-          required: 'Postel code is required',
+          required: 'Postal code is required',
           maxLength: {
             value: 20,
             message: 'Postal code must not exceed 20 characters',
@@ -140,8 +139,28 @@ export const RegistrationForm: React.FC = () => {
             message: 'Enter a valid postal code',
           },
         })}
+        error={!!errors.postalCode}
+        helperText={errors.postalCode?.message}
       />
-      <TextField label="Country" variant="outlined" margin="normal" fullWidth />
+      <TextField
+        label="Country"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('country', {
+          required: 'Country is required',
+          maxLength: {
+            value: 20,
+            message: 'Country must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'Enter a valid country',
+          },
+        })}
+        error={!!errors.country}
+        helperText={errors.country?.message}
+      />
       <Button type="submit" variant="contained" color="primary">
         Register
       </Button>
