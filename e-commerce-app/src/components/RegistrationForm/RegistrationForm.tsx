@@ -72,8 +72,8 @@ export const RegistrationForm: React.FC = () => {
         {...register('firstName', {
           required: 'First Name is required',
           maxLength: {
-            value: 50,
-            message: 'First Name must not exceed 50 characters',
+            value: 20,
+            message: 'First Name must not exceed 20 characters',
           },
           pattern: {
             value: /^[A-Za-z\s]+$/,
@@ -92,8 +92,8 @@ export const RegistrationForm: React.FC = () => {
         {...register('lastName', {
           required: 'Last Name is required',
           maxLength: {
-            value: 50,
-            message: 'Last Name must not exceed 50 characters',
+            value: 20,
+            message: 'Last Name must not exceed 20 characters',
           },
           pattern: {
             value: /^[A-Za-z\s]+$/,
@@ -103,11 +103,44 @@ export const RegistrationForm: React.FC = () => {
         error={!!errors.lastName}
         helperText={errors.lastName && errors.lastName.message}
       />
-      <TextField label="Birthdate" variant="outlined" margin="normal" fullWidth />
+      {/* <TextField
+        label="Birth Date"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('birthDate', {
+          required: 'Birth date is required',
+          maxLength: {
+            value: 20,
+            message: 'Birth date  must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[0-9]+$/,
+            message: 'Enter a valid birth date',
+          },
+        })}
+      /> */}
       <TextField label="Street Address" variant="outlined" margin="normal" fullWidth />
       <TextField label="House Number" variant="outlined" margin="normal" fullWidth />
       <TextField label="City" variant="outlined" margin="normal" fullWidth />
-      <TextField label="Postal Code" variant="outlined" margin="normal" fullWidth />
+      {/* <TextField label="Postal Code" variant="outlined" margin="normal" fullWidth /> */}
+      <TextField
+        label="Postal Code"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('postalCode', {
+          required: 'Postel code is required',
+          maxLength: {
+            value: 20,
+            message: 'Postal code must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[0-9]+$/,
+            message: 'Enter a valid postal code',
+          },
+        })}
+      />
       <TextField label="Country" variant="outlined" margin="normal" fullWidth />
       <Button type="submit" variant="contained" color="primary">
         Register
