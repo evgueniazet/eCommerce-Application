@@ -120,9 +120,63 @@ export const RegistrationForm: React.FC = () => {
           },
         })}
       /> */}
-      <TextField label="Street Address" variant="outlined" margin="normal" fullWidth />
-      <TextField label="House Number" variant="outlined" margin="normal" fullWidth />
-      <TextField label="City" variant="outlined" margin="normal" fullWidth />
+      <TextField
+        label="Street Address"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('streetAddress', {
+          required: 'Street address is required',
+          maxLength: {
+            value: 20,
+            message: 'Street address must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'Enter a valid street address',
+          },
+        })}
+        error={!!errors.streetAddress}
+        helperText={errors.streetAddress?.message}
+      />
+      <TextField
+        label="House Number"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('houseNumber', {
+          required: 'House Number is required',
+          maxLength: {
+            value: 10,
+            message: 'House Number must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[0-9]+$/,
+            message: 'Enter a valid house number',
+          },
+        })}
+        error={!!errors.houseNumber}
+        helperText={errors.houseNumber?.message}
+      />
+      <TextField
+        label="City"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('city', {
+          required: 'City is required',
+          maxLength: {
+            value: 20,
+            message: 'City must not exceed 20 characters',
+          },
+          pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'Enter a valid city',
+          },
+        })}
+        error={!!errors.city}
+        helperText={errors.city?.message}
+      />
       <TextField
         label="Postal Code"
         variant="outlined"
