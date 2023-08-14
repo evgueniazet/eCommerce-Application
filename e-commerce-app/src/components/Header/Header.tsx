@@ -13,12 +13,12 @@ import logo from '../../assets/logo/free-icon-tree-740936.png';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 
-const pages = ['Products', 'Login', 'Registration'];
+const pages = ['Catalog', 'About Us', 'Login', 'Registration', 'Home'];
 const settings = ['User', 'Logout'];
 
 
 export const Header: React.FC = () => {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
+  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -40,7 +40,7 @@ export const Header: React.FC = () => {
         <AppBar position="sticky" color='default'>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <img src={logo} alt='logo' width={60} height={60} />
+          <a href="/"><img src={logo} alt='logo' width={60} height={60} /></a>
           <Typography
             variant="h6"
             noWrap
