@@ -1,9 +1,7 @@
-import { Grid, Box, TextField, Button, Alert } from '@mui/material';
+import { Grid, Box, TextField, Button, Alert, Typography } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
 import { NavLink } from 'react-router-dom';
 import { useState } from 'react';
-// import * as React from 'react';
-
 
 export const LoginPage: React.FC = () => {
     const [error, setError] = useState({
@@ -44,7 +42,7 @@ export const LoginPage: React.FC = () => {
             }}>
             </Grid>
             <Grid item lg={5} sm={7}>
-                <Box component='form' noValidate sx={{ mt: 5,ml:8, mr:8}} id='login-form' onSubmit={handleSubmit}>
+                <Box component='form' noValidate sx={{ mt: 5, ml:8, mr:8}} id='login-form' onSubmit={handleSubmit}>
                     <Box>
                         {error.status ? <Alert severity={'error'}>{error.message}</Alert> : ''}
                     </Box>
@@ -52,12 +50,13 @@ export const LoginPage: React.FC = () => {
                     <TextField required fullWidth margin='normal' id='password' name='password' label='Password' type='password'/>
                     <Box textAlign='center'>
                         <Button type='submit' variant='contained' sx={{px:5, mt: 2, backgroundColor: 'green'}}>Login</Button>
+                        <Typography component='p' color='gray'>Remember me</Typography>
                     </Box>
                     <Box>
                         <NavLink to='/'>Forgot Password?</NavLink>
                     </Box>
-                    <Box sx={{mt: 5}}>
-                        <NavLink to='/'>Don&apos;t have account yet? Sign up</NavLink>
+                    <Box sx={{mt: 10}}>
+                        <Typography component='p' textAlign='center'>Don&apos;t have account yet? Sign up</Typography>
                     </Box>
                     <Box textAlign='center'>
                         <Button type='submit' variant='contained' sx={{px:2, mt: 2, backgroundColor: 'green'}}>Registration</Button>
