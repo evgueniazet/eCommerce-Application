@@ -64,8 +64,45 @@ export const RegistrationForm: React.FC = () => {
         error={!!errors.repeatPassword}
         helperText={errors.repeatPassword?.message}
       />
-      <TextField label="First Name" variant="outlined" margin="normal" fullWidth />
-      <TextField label="Last Name" variant="outlined" margin="normal" fullWidth />
+      <TextField
+        label="First Name"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('firstName', {
+          required: 'First Name is required',
+          maxLength: {
+            value: 50,
+            message: 'First Name must not exceed 50 characters',
+          },
+          pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'Enter a valid first name',
+          },
+        })}
+        error={!!errors.firstName}
+        helperText={errors.firstName && errors.firstName.message}
+      />
+
+      <TextField
+        label="Last Name"
+        variant="outlined"
+        margin="normal"
+        fullWidth
+        {...register('lastName', {
+          required: 'Last Name is required',
+          maxLength: {
+            value: 50,
+            message: 'Last Name must not exceed 50 characters',
+          },
+          pattern: {
+            value: /^[A-Za-z\s]+$/,
+            message: 'Enter a valid last name',
+          },
+        })}
+        error={!!errors.lastName}
+        helperText={errors.lastName && errors.lastName.message}
+      />
       <TextField label="Birthdate" variant="outlined" margin="normal" fullWidth />
       <TextField label="Street Address" variant="outlined" margin="normal" fullWidth />
       <TextField label="House Number" variant="outlined" margin="normal" fullWidth />
