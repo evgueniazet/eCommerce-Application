@@ -8,20 +8,11 @@ import Button from '@mui/material/Button';
 
 
 export const FormPage3 = () => {
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-      };
     return (
         <Box
                 component="form"
                 noValidate
-                onSubmit={handleSubmit}
-                sx={{ mt: 5 }}
+                sx={{ mt: 2 }}
               >
                 <p>Address fields:</p>
                 <Grid container spacing={2}>
@@ -75,7 +66,7 @@ export const FormPage3 = () => {
                       control={
                         <Checkbox value="allowExtraEmails" color="primary" />
                       }
-                      label="I want to receive web-site promotions and updates"
+                      label="I want to receive web-site promotions"
                     />
                   </Grid>
                 </Grid>
@@ -83,7 +74,7 @@ export const FormPage3 = () => {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2, backgroundColor: 'green' }}
+                  sx={{ mt: 3, backgroundColor: 'green' }}
                 >
                   Register
                 </Button>
