@@ -10,6 +10,7 @@ import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
 import { UserPage } from './pages/UserPage/UserPage';
 import { ProductPage } from './pages/ProductPage/ProductPage';
 import { ProductsPage } from './pages/ProductsPage/ProductsPage';
+import RootPage from './pages/RootPage/RootPage';
 
 export const App = () => {
   return (
@@ -45,3 +46,4 @@ export const App = () => {
     </Router>
   );
 };
+
