@@ -1,8 +1,12 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import DatePicker from '@mui/lab/DatePicker';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
+import { useValidate } from '../../hooks/useValidate';
 
 export const RegistrationForm: React.FC = () => {
   const {
@@ -10,59 +14,54 @@ export const RegistrationForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
     getValues,
+    setValue,
   } = useForm<IRegistrationFormData>();
+
+  const { errors: validationErrors, validateField } = useValidate();
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
     console.log('data', data);
   };
 
+  const defaultCountry = 'USA';
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
         label="Email"
-        {...register('email', { required: 'Email is required', pattern: /^\S+@\S+$/i })}
+        {...register('email', { required: 'Email is required' })}
         variant="outlined"
         margin="normal"
-        error={!!errors.email}
-        helperText={errors.email && 'Enter a valid e-mail address'}
+        error={!!validationErrors.email}
+        helperText={validationErrors.email || errors.email?.message}
+        onBlur={(e) => validateField('email', e.target.value)}
         fullWidth
       />
       <TextField
         label="Password"
         {...register('password', {
           required: 'Password is required',
-          minLength: {
-            value: 8,
-            message: 'Password must be at least 8 characters long',
-          },
-          maxLength: {
-            value: 15,
-            message: 'Password must not exceed 15 characters',
-          },
         })}
         type="password"
         variant="outlined"
         margin="normal"
         fullWidth
-        error={!!errors.password}
-        helperText={errors.password?.message}
+        error={!!validationErrors.password}
+        helperText={validationErrors.password || errors.password?.message}
+        onChange={(e) => validateField('password', e.target.value)}
       />
-
       <TextField
-        label="Repeat Password"
-        {...register('repeatPassword', {
-          required: 'Repeat Password is required',
-          validate: (value) => {
-            const truePassword = getValues('password');
-            return value === truePassword || 'Passwords do not match';
-          },
+        label="Confirm Password"
+        {...register('confirmPassword', {
+          required: 'Confirm Password is required',
         })}
         type="password"
         variant="outlined"
         margin="normal"
         fullWidth
-        error={!!errors.repeatPassword}
-        helperText={errors.repeatPassword?.message}
+        onChange={(e) => validateField('confirmPassword', e.target.value, getValues('password'))}
+        error={!!validationErrors.confirmPassword}
+        helperText={validationErrors.confirmPassword || errors.confirmPassword?.message}
       />
       <TextField
         label="First Name"
@@ -71,17 +70,10 @@ export const RegistrationForm: React.FC = () => {
         fullWidth
         {...register('firstName', {
           required: 'First Name is required',
-          maxLength: {
-            value: 20,
-            message: 'First Name must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[A-Za-z\s]+$/,
-            message: 'Enter a valid first name',
-          },
         })}
-        error={!!errors.firstName}
-        helperText={errors.firstName && errors.firstName.message}
+        error={!!validationErrors.firstName}
+        helperText={validationErrors.firstName || errors.firstName?.message}
+        onChange={(e) => validateField('firstName', e.target.value)}
       />
 
       <TextField
@@ -91,35 +83,22 @@ export const RegistrationForm: React.FC = () => {
         fullWidth
         {...register('lastName', {
           required: 'Last Name is required',
-          maxLength: {
-            value: 20,
-            message: 'Last Name must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[A-Za-z\s]+$/,
-            message: 'Enter a valid last name',
-          },
         })}
-        error={!!errors.lastName}
-        helperText={errors.lastName && errors.lastName.message}
+        error={!!validationErrors.lastName}
+        helperText={validationErrors.lastName || errors.lastName?.message}
+        onChange={(e) => validateField('lastName', e.target.value)}
       />
-      {/* <TextField
-        label="Birth Date"
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        {...register('birthDate', {
-          required: 'Birth date is required',
-          maxLength: {
-            value: 20,
-            message: 'Birth date  must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[0-9]+$/,
-            message: 'Enter a valid birth date',
-          },
-        })}
-      /> */}
+      <DatePicker
+        label="Birth date"
+        value={getValues('birthDate') || null}
+        // onChange={(date: Date | null) => {
+        //   setValue('birthDate', date, { shouldValidate: true });
+        //   validateField('birthDate', date);
+        // }}
+        // renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" />}
+        error={!!validationErrors.birthDate || !!errors.birthDate}
+        helperText={validationErrors.birthDate || errors.birthDate?.message}
+      />
       <TextField
         label="Street Address"
         variant="outlined"
@@ -127,36 +106,10 @@ export const RegistrationForm: React.FC = () => {
         fullWidth
         {...register('streetAddress', {
           required: 'Street address is required',
-          maxLength: {
-            value: 20,
-            message: 'Street address must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[A-Za-z\s]+$/,
-            message: 'Enter a valid street address',
-          },
         })}
-        error={!!errors.streetAddress}
-        helperText={errors.streetAddress?.message}
-      />
-      <TextField
-        label="House Number"
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        {...register('houseNumber', {
-          required: 'House Number is required',
-          maxLength: {
-            value: 10,
-            message: 'House Number must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[0-9]+$/,
-            message: 'Enter a valid house number',
-          },
-        })}
-        error={!!errors.houseNumber}
-        helperText={errors.houseNumber?.message}
+        error={!!validationErrors.streetAddress}
+        helperText={validationErrors.streetAddress || errors.streetAddress?.message}
+        onChange={(e) => validateField('streetAddress', e.target.value)}
       />
       <TextField
         label="City"
@@ -165,18 +118,31 @@ export const RegistrationForm: React.FC = () => {
         fullWidth
         {...register('city', {
           required: 'City is required',
-          maxLength: {
-            value: 20,
-            message: 'City must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[A-Za-z\s]+$/,
-            message: 'Enter a valid city',
-          },
         })}
-        error={!!errors.city}
-        helperText={errors.city?.message}
+        error={!!validationErrors.city}
+        helperText={validationErrors.city || errors.city?.message}
+        onChange={(e) => validateField('city', e.target.value)}
       />
+
+      <Select
+        label="Country"
+        {...register('country', {
+          required: 'Country is required',
+        })}
+        fullWidth
+        value={getValues('country') || defaultCountry}
+        onChange={(e) => {
+          const selectedCountry = e.target.value as string;
+          setValue('country', selectedCountry);
+          validateField('country', selectedCountry);
+        }}
+        error={!!validationErrors.country}
+      >
+        <MenuItem value="USA">USA</MenuItem>
+        <MenuItem value="Canada">Canada</MenuItem>
+        <MenuItem value="UK">UK</MenuItem>
+        <MenuItem value="Australia">Australia</MenuItem>
+      </Select>
       <TextField
         label="Postal Code"
         variant="outlined"
@@ -184,36 +150,10 @@ export const RegistrationForm: React.FC = () => {
         fullWidth
         {...register('postalCode', {
           required: 'Postal code is required',
-          maxLength: {
-            value: 20,
-            message: 'Postal code must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[0-9]+$/,
-            message: 'Enter a valid postal code',
-          },
         })}
-        error={!!errors.postalCode}
-        helperText={errors.postalCode?.message}
-      />
-      <TextField
-        label="Country"
-        variant="outlined"
-        margin="normal"
-        fullWidth
-        {...register('country', {
-          required: 'Country is required',
-          maxLength: {
-            value: 20,
-            message: 'Country must not exceed 20 characters',
-          },
-          pattern: {
-            value: /^[A-Za-z\s]+$/,
-            message: 'Enter a valid country',
-          },
-        })}
-        error={!!errors.country}
-        helperText={errors.country?.message}
+        onChange={(e) => validateField('postalCode', e.target.value, getValues('country'))}
+        error={!!validationErrors.postalCode}
+        helperText={validationErrors.postalCode || errors.postalCode?.message}
       />
       <Button type="submit" variant="contained" color="primary">
         Register

@@ -1,7 +1,7 @@
 export interface IRegistrationFormData {
   email: string;
   password: string;
-  repeatPassword: string;
+  confirmPassword: string;
   firstName: string;
   lastName: string;
   birthDate: string;
