@@ -1,20 +1,13 @@
 import { useState } from 'react';
+import { IRegistrationFormData } from '../interfaces/IRegistrationFormData';
 
-interface ValidationErrors {
-  email?: string;
+interface IValues {
   password?: string;
-  confirmPassword?: string;
-  firstName?: string;
-  lastName?: string;
-  birthDate?: string;
-  streetAddress?: string;
   country?: string;
-  city?: string;
-  postalCode?: string;
 }
 
 export const useValidate = () => {
-  const [errors, setErrors] = useState<ValidationErrors>({});
+  const [errors, setErrors] = useState<IRegistrationFormData>({});
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
@@ -82,18 +75,14 @@ export const useValidate = () => {
   };
 
   const validatePostalCode = (postalCode: string, country: string) => {
-    console.log('country', country);
-
     if (country === 'USA' || country === 'Canada') {
-      console.log('нужно ввести код для Канады');
-
       if (!/^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(postalCode)) {
-        return 'Invalid postal code format!';
+        return 'Invalid postal code format! Correct format A1B 2C3 for the USA and Canada';
       } else {
         return '';
       }
     } else if (!/^\d{5}$/.test(postalCode)) {
-      return 'Invalid postal code format!';
+      return 'Invalid postal code format! Correct format: 12345';
     } else {
       return '';
     }
@@ -107,7 +96,7 @@ export const useValidate = () => {
     return '';
   };
 
-  const validateField = (fieldName: string, value: string, password?: string, country?: string) => {
+  const validateField = (fieldName: string, value: string, values?: IValues) => {
     let errorMessage = '';
 
     switch (fieldName) {
@@ -118,7 +107,9 @@ export const useValidate = () => {
         errorMessage = validatePassword(value);
         break;
       case 'confirmPassword':
-        errorMessage = validateConfirmPassword(password || '', value);
+        if (values) {
+          errorMessage = validateConfirmPassword(values.password || '', value);
+        }
         break;
       case 'firstName':
       case 'lastName':
@@ -134,7 +125,9 @@ export const useValidate = () => {
         errorMessage = validateCity(value);
         break;
       case 'postalCode':
-        errorMessage = validatePostalCode(value, country || '');
+        if (values) {
+          errorMessage = validatePostalCode(value, values.country || '');
+        }
         break;
       case 'country':
         errorMessage = validateCountry(value);

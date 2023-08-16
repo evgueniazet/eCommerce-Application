@@ -24,6 +24,8 @@ export const RegistrationForm: React.FC = () => {
 
   const defaultCountry = 'USA';
 
+  const values = { country: getValues('country'), password: getValues('password') };
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <TextField
@@ -58,7 +60,7 @@ export const RegistrationForm: React.FC = () => {
         variant="outlined"
         margin="normal"
         fullWidth
-        onChange={(e) => validateField('confirmPassword', e.target.value, getValues('password'))}
+        onChange={(e) => validateField('confirmPassword', e.target.value, values)}
         error={!!validationErrors.confirmPassword}
         helperText={validationErrors.confirmPassword || errors.confirmPassword?.message}
       />
@@ -150,7 +152,9 @@ export const RegistrationForm: React.FC = () => {
         {...register('postalCode', {
           required: 'Postal code is required',
         })}
-        onChange={(e) => validateField('postalCode', e.target.value, getValues('country'))}
+        onChange={(e) => {
+          validateField('postalCode', e.target.value, values);
+        }}
         error={!!validationErrors.postalCode}
         helperText={validationErrors.postalCode || errors.postalCode?.message}
       />
