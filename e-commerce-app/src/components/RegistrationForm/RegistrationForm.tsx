@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
-import DatePicker from '@mui/lab/DatePicker';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
@@ -88,16 +87,16 @@ export const RegistrationForm: React.FC = () => {
         helperText={validationErrors.lastName || errors.lastName?.message}
         onChange={(e) => validateField('lastName', e.target.value)}
       />
-      <DatePicker
-        label="Birth date"
-        value={getValues('birthDate') || null}
-        // onChange={(date: Date | null) => {
-        //   setValue('birthDate', date, { shouldValidate: true });
-        //   validateField('birthDate', date);
-        // }}
-        // renderInput={(params) => <TextField {...params} variant="outlined" margin="normal" />}
-        error={!!validationErrors.birthDate || !!errors.birthDate}
+      <TextField
+        label="Birth Date"
+        fullWidth
+        type="date"
+        {...register('birthDate', {
+          required: 'Birth Date is required',
+        })}
+        error={!!validationErrors.birthDate}
         helperText={validationErrors.birthDate || errors.birthDate?.message}
+        onChange={(e) => validateField('birthDate', e.target.value)}
       />
       <TextField
         label="Street Address"

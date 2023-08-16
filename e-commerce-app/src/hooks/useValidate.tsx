@@ -52,6 +52,20 @@ export const useValidate = () => {
     return '';
   };
 
+  const validateBirthDate = (birthDate: string) => {
+    const minAge = 13;
+    const currentDate = new Date();
+    const selectedDate = new Date(birthDate);
+
+    const ageDifference = currentDate.getFullYear() - selectedDate.getFullYear();
+
+    if (ageDifference < minAge) {
+      return `You must be at least ${minAge} years old to register`;
+    }
+
+    return '';
+  };
+
   const validateStreet = (value: string) => {
     if (value.trim() === '') {
       return 'The street field must contain at least one character';
@@ -109,6 +123,9 @@ export const useValidate = () => {
       case 'firstName':
       case 'lastName':
         errorMessage = validateName(value);
+        break;
+      case 'birthDate':
+        errorMessage = validateBirthDate(value);
         break;
       case 'streetAddress':
         errorMessage = validateStreet(value);
