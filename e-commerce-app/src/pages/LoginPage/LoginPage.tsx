@@ -39,7 +39,6 @@ export const LoginPage: React.FC = () => {
       password: data.get('password'),
     };
     if (actualData.email && actualData.password) {
-      console.log(actualData);
       (document.getElementById('login-form') as HTMLFormElement).reset();
       setError({
         status: true,
