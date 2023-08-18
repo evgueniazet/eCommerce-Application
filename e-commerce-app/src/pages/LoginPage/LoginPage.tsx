@@ -9,7 +9,7 @@ import {
   IconButton,
 } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useValidate } from '../../hooks/useValidate';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -19,7 +19,7 @@ import { useLoginUserMutation } from '../../api/authApi';
 import { setAuth } from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
-import { useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 
 const defaultFormState: ILoginFormData = {
   email: '',
@@ -34,7 +34,12 @@ interface IGlobalError {
 }
 
 export const LoginPage: React.FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
   const dispatch = useAppDispatch();
+  const {isLoggedIn} = useAppSelector(state => state.user);
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
     status: false,
@@ -60,9 +65,12 @@ export const LoginPage: React.FC = () => {
 
   useEffect(() => {
     if (!isSuccess || !data) return;
-    console.log(data);
     dispatch(setAuth({ access_token: data.access_token, refresh_token: data.refresh_token }));
-    reset();
+
+    if (isLoggedIn) {
+      reset();
+      navigate(from, {replace: true});
+    }
   }, [isSuccess, data]);
 
   useEffect(() => {
@@ -157,8 +165,7 @@ export const LoginPage: React.FC = () => {
   const { validateField } = useValidate();
 
   return (
-    <Grid container
-          sx={{ height: '80vh' }}>
+    <Grid container sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -170,9 +177,7 @@ export const LoginPage: React.FC = () => {
           backgroundPosition: 'center',
         }}
       ></Grid>
-      <Grid item
-            lg={5}
-            sm={7}>
+      <Grid item lg={5} sm={7}>
         <Box
           component="form"
           noValidate
@@ -214,11 +219,11 @@ export const LoginPage: React.FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon/>
+                      <VisibilityIcon />
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon/>
+                      <VisibilityOffIcon />
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -238,8 +243,7 @@ export const LoginPage: React.FC = () => {
             >
               Login
             </Button>
-            <Typography component="p"
-                        color="gray">
+            <Typography component="p" color="gray">
               Remember me
             </Typography>
           </Box>
@@ -247,8 +251,7 @@ export const LoginPage: React.FC = () => {
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p"
-                        textAlign="center">
+            <Typography component="p" textAlign="center">
               Don&apos;t have account yet? Sign up
             </Typography>
           </Box>

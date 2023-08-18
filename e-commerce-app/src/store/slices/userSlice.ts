@@ -15,7 +15,6 @@ export const userSlice = createSlice({
   reducers: {
     logout: () => initialState,
     setAuth: (state, action: PayloadAction<Partial<IUserFromSlice>>) => {
-      console.log('auth');
       state.email = action.payload.email ? action.payload.email : state.email;
       state.password = action.payload.password ? action.payload.password : state.password;
       state.access_token = action.payload.access_token
