@@ -119,10 +119,12 @@ export const LoginPage: React.FC = () => {
         message: '',
       });
       try {
-        dispatch(setAuth({
-          email: data.email,
-          password: data.password,
-        }));
+        dispatch(
+          setAuth({
+            email: data.email,
+            password: data.password,
+          }),
+        );
         loginUser({ email: data.email, password: data.password });
       } catch {
         console.log('er');
