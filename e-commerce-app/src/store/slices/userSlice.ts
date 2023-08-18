@@ -20,7 +20,7 @@ export const userSlice = createSlice({
       state.access_token = action.payload.access_token;
       state.refresh_token = action.payload.refresh_token || state.refresh_token;
     },
-    setLogIn: state => {
+    setLogIn: (state) => {
       state.isLoggedIn = true;
     },
     setAnonymousAuth: (state, action: PayloadAction<Pick<IUserFromSlice, 'access_token'>>) => {
@@ -28,8 +28,8 @@ export const userSlice = createSlice({
       state.email = null;
       state.password = null;
       state.refresh_token = null;
-    }
-  }
+    },
+  },
 });
 
 export default userSlice.reducer;
