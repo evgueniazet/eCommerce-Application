@@ -39,7 +39,7 @@ export const LoginPage: React.FC = () => {
   const from = location.state?.from?.pathname || '/';
 
   const dispatch = useAppDispatch();
-  const {isLoggedIn} = useAppSelector(state => state.user);
+  const { isLoggedIn } = useAppSelector((state) => state.user);
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
     status: false,
@@ -69,7 +69,7 @@ export const LoginPage: React.FC = () => {
 
     if (isLoggedIn) {
       reset();
-      navigate(from, {replace: true});
+      navigate(from, { replace: true });
     }
   }, [isSuccess, data]);
 
