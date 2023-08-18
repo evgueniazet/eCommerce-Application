@@ -1,10 +1,6 @@
 import { useState } from 'react';
 import { IRegistrationFormData } from '../interfaces/IRegistrationFormData';
-
-interface IValues {
-  password?: string;
-  country?: string;
-}
+import { IValues } from '../interfaces/IValues';
 
 export const useValidate = () => {
   const [errors, setErrors] = useState<IRegistrationFormData>({});
