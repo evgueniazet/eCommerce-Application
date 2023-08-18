@@ -12,7 +12,7 @@ const defaultErrorsObj: IRegistrationFormData = {
   firstName: null,
   lastName: null,
   postalCode: null,
-  streetAddress: null
+  streetAddress: null,
 };
 
 export const useValidate = () => {

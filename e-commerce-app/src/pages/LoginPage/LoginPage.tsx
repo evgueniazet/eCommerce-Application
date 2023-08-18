@@ -28,12 +28,11 @@ const defaultFormState: ILoginFormData = {
 type fieldNameType = 'email' | 'password' | `root.${string}` | 'root';
 
 interface IGlobalError {
-  status: boolean,
-  message: string
+  status: boolean;
+  message: string;
 }
 
 export const LoginPage: React.FC = () => {
-
   const [globalError, setGlobalError] = useState<IGlobalError>({
     status: false,
     message: '',
@@ -50,8 +49,8 @@ export const LoginPage: React.FC = () => {
     clearErrors,
   } = useForm<ILoginFormData>({
     defaultValues: {
-      ...defaultFormState
-    }
+      ...defaultFormState,
+    },
   });
 
   const [showPassword, setShowPassword] = React.useState(false);
@@ -84,7 +83,6 @@ export const LoginPage: React.FC = () => {
         status: false,
         message: '',
       });
-
     }
 
     if (data.password) {
@@ -107,7 +105,7 @@ export const LoginPage: React.FC = () => {
     if (errors.password || errors.email) {
       setGlobalError({
         status: true,
-        message: errors.password?.message || errors.email?.message || 'Error. Try Again Later'
+        message: errors.password?.message || errors.email?.message || 'Error. Try Again Later',
       });
       return;
     }
@@ -144,7 +142,7 @@ export const LoginPage: React.FC = () => {
     if (errString.length) {
       setError(fieldName, {
         type: 'required',
-        message: errString
+        message: errString,
       });
     } else {
       clearErrors(fieldName);
@@ -154,8 +152,7 @@ export const LoginPage: React.FC = () => {
   const { validateField } = useValidate();
 
   return (
-    <Grid container
-          sx={{ height: '80vh' }}>
+    <Grid container sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -167,9 +164,7 @@ export const LoginPage: React.FC = () => {
           backgroundPosition: 'center',
         }}
       ></Grid>
-      <Grid item
-            lg={5}
-            sm={7}>
+      <Grid item lg={5} sm={7}>
         <Box
           component="form"
           noValidate
@@ -177,7 +172,11 @@ export const LoginPage: React.FC = () => {
           id="login-form"
           onSubmit={handleSubmit(submitHandler)}
         >
-          {globalError.status && <Box><Alert severity={'error'}>{globalError.message}</Alert></Box>}
+          {globalError.status && (
+            <Box>
+              <Alert severity={'error'}>{globalError.message}</Alert>
+            </Box>
+          )}
           <TextField
             sx={{ mt: 2 }}
             fullWidth
@@ -207,11 +206,11 @@ export const LoginPage: React.FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon/>
+                      <VisibilityIcon />
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon/>
+                      <VisibilityOffIcon />
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -231,8 +230,7 @@ export const LoginPage: React.FC = () => {
             >
               Login
             </Button>
-            <Typography component="p"
-                        color="gray">
+            <Typography component="p" color="gray">
               Remember me
             </Typography>
           </Box>
@@ -240,8 +238,7 @@ export const LoginPage: React.FC = () => {
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p"
-                        textAlign="center">
+            <Typography component="p" textAlign="center">
               Don&apos;t have account yet? Sign up
             </Typography>
           </Box>

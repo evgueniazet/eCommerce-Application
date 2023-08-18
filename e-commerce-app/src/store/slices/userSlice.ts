@@ -17,8 +17,12 @@ export const userSlice = createSlice({
     setAuth: (state, action: PayloadAction<Partial<IUserFromSlice>>) => {
       state.email = action.payload.email ? action.payload.email : state.email;
       state.password = action.payload.password ? action.payload.password : state.password;
-      state.access_token = action.payload.access_token ? action.payload.access_token : state.access_token;
-      state.refresh_token = action.payload.refresh_token ? action.payload.refresh_token : state.refresh_token;
+      state.access_token = action.payload.access_token
+        ? action.payload.access_token
+        : state.access_token;
+      state.refresh_token = action.payload.refresh_token
+        ? action.payload.refresh_token
+        : state.refresh_token;
       state.isLoggedIn = true;
     },
     setLogIn: (state) => {
