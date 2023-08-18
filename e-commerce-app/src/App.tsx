@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
 import { HomePage } from './pages/HomePage/HomePage';
@@ -16,12 +15,7 @@ export const App = () => {
 
     return (
         <Router>
-            <div className="App">
-                <header className="App-header">
-                    <img src={logo} className="App-logo" alt="logo" />
-                    <p>
-                        Edit <code>src/App.tsx</code> and save to reload.
-                    </p>
+                <header>
                     <NavLink to="/">Home</NavLink>
                     <NavLink to="/about">About</NavLink>
                     <NavLink to="/basket">Basket</NavLink>
@@ -32,7 +26,6 @@ export const App = () => {
                     <NavLink to="/products">Products</NavLink>
                     <NavLink to="*">Error</NavLink>
                 </header>
-            </div>
             <Routes>
                 <Route path={'/'} element={<RootPage />}>
                 <Route index element={<HomePage />} />
