@@ -9,14 +9,14 @@ export const ErrorPage: React.FC = () => {
         <Box sx={{ 
           backgroundImage: `url(${notFound})`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'contein',
+          backgroundSize: 'contain',
           backgroundPosition: 'center',
           display: 'flex',
-        justifyContent: 'end',
-        alignItems: 'center',
-        flexDirection: 'column',
-        minHeight: '80vh',
-        marginBottom: '5%'
+          justifyContent: 'start',
+          alignItems: 'center',
+          flexDirection: 'column',
+          minHeight: '80vh',
+          marginBottom: '3%'
         }}
         >
             <Typography variant="h5" style={{ color: 'darkgreen' }}>
