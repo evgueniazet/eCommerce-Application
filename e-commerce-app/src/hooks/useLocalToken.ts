@@ -12,7 +12,7 @@ export const useLocalToken = () => {
     localStorage.removeItem(tokenName);
   };
 
-  const isTokenInStorage = ():boolean => {
+  const isTokenInStorage = (): boolean => {
     return !!localStorage.getItem(tokenName);
   };
 

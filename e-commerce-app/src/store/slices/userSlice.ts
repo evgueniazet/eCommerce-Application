@@ -30,9 +30,16 @@ export const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     setLogOut: (state) => {
+      state.access_token = null;
+      state.refresh_token = null;
+      state.email = null;
+      state.password = null;
       state.isLoggedIn = false;
     },
-    setAnonymousAuth: (state, action: PayloadAction<Pick<IUserFromSlice, 'access_token' | 'refresh_token'>>) => {
+    setAnonymousAuth: (
+      state,
+      action: PayloadAction<Pick<IUserFromSlice, 'access_token' | 'refresh_token'>>,
+    ) => {
       state.access_token = action.payload.access_token;
       state.email = null;
       state.password = null;
@@ -41,7 +48,7 @@ export const userSlice = createSlice({
     },
     toggleRememberMe: (state, action: PayloadAction<boolean>) => {
       state.rememberMe = action.payload;
-    }
+    },
   },
 });
 
@@ -49,6 +56,8 @@ export default userSlice.reducer;
 
 export const getLoggedIn = (state: RootStateType) => state.user.isLoggedIn;
 export const isRememberedMe = (state: RootStateType) => state.user.rememberMe;
-export const refreshToken = (state: RootStateType) => state.user.refresh_token;
+export const getRefreshToken = (state: RootStateType) => state.user.refresh_token;
+export const getAccessToken = (state: RootStateType) => state.user.access_token;
 
-export const { logout, setAuth, setLogIn, setLogOut, setAnonymousAuth, toggleRememberMe } = userSlice.actions;
+export const { logout, setAuth, setLogIn, setLogOut, setAnonymousAuth, toggleRememberMe } =
+  userSlice.actions;

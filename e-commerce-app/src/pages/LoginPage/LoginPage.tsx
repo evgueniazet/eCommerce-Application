@@ -6,7 +6,9 @@ import {
   Alert,
   Typography,
   InputAdornment,
-  IconButton, Checkbox, FormControlLabel,
+  IconButton,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -21,7 +23,7 @@ import {
   isRememberedMe,
   setAuth,
   setLogIn,
-  toggleRememberMe
+  toggleRememberMe,
 } from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
@@ -180,8 +182,7 @@ export const LoginPage: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Grid container
-          sx={{ height: '80vh' }}>
+    <Grid container sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -193,9 +194,7 @@ export const LoginPage: FC = () => {
           backgroundPosition: 'center',
         }}
       ></Grid>
-      <Grid item
-            lg={5}
-            sm={7}>
+      <Grid item lg={5} sm={7}>
         <Box
           component="form"
           noValidate
@@ -236,11 +235,11 @@ export const LoginPage: FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon/>
+                      <VisibilityIcon />
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon/>
+                      <VisibilityOffIcon />
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -260,16 +259,17 @@ export const LoginPage: FC = () => {
               Login
             </Button>
             <Box py={2}>
-              <FormControlLabel control={<Checkbox {...register('rememberMe')}/>}
-                                label={'Remember me'}/>
+              <FormControlLabel
+                control={<Checkbox {...register('rememberMe')} />}
+                label={'Remember me'}
+              />
             </Box>
           </Box>
           <Box>
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p"
-                        textAlign="center">
+            <Typography component="p" textAlign="center">
               Don&apos;t have account yet? Sign up
             </Typography>
           </Box>
