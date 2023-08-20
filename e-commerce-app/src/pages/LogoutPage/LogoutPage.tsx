@@ -18,12 +18,12 @@ export const LogoutPage = (): JSX.Element => {
     }
   }, [isLoggedIn]);
 
-  const {delTokenFromStorage, getTokenFromStorage} = useLocalToken();
+  const { delTokenFromStorage, getTokenFromStorage } = useLocalToken();
   const accessToken = useAppSelector(getAccessToken);
   const dispatch = useAppDispatch();
   const refreshToken = getTokenFromStorage();
 
-  const [logoutUser, {isSuccess, isError}] = useLogoutUserMutation();
+  const [logoutUser, { isSuccess, isError }] = useLogoutUserMutation();
 
   useEffect(() => {
     dispatch(setLogOut());
@@ -33,15 +33,12 @@ export const LogoutPage = (): JSX.Element => {
   useEffect(() => {
     if (accessToken) {
       logoutUser(accessToken);
-    } else if(refreshToken) {
+    } else if (refreshToken) {
       logoutUser(refreshToken);
     } else {
       dispatch(setLogOut());
     }
   }, []);
 
-  return (
-    <CircularProgress />
-  );
+  return <CircularProgress />;
 };
-
