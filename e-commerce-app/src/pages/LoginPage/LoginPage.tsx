@@ -9,7 +9,7 @@ import {
   IconButton,
 } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useValidate } from '../../hooks/useValidate';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -35,11 +35,16 @@ interface IGlobalError {
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/';
+  const from = '/';
 
   const dispatch = useAppDispatch();
   const { isLoggedIn } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(from, { replace: true });
+    }
+  }, [isLoggedIn]);
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
     status: false,
