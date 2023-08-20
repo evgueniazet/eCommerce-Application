@@ -1,4 +1,4 @@
 export interface IValues {
-  password?: string;
-  country?: string;
+  password: string;
+  country: string;
 }

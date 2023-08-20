@@ -8,20 +8,84 @@ import RegPageImg from '../../assets/images/RegPageImg.png';
 import { auto } from '@popperjs/core';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 import { FormPage1 } from './FormPage1';
 import { FormPage2 } from './FormPage2';
 import { FormPage3 } from './FormPage3';
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
+import { useValidate } from '../../hooks/useValidate';
+import { IValues } from '../../interfaces/IValues';
+import { fieldNameType } from '../../types/fieldNameType';
+import { IGlobalError } from '../../interfaces/IGlobalError';
 
 export const RegistrationPage: React.FC = () => {
   const [page, setPage] = useState(1);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    getValues,
+    setError,
+    clearErrors,
+    reset,
+  } = useForm<IRegistrationFormData>();
+
+  const { errors: validationErrors, validateField } = useValidate();
+
+  console.log('validationErrors', validationErrors);
+
+  const [globalError, setGlobalError] = useState<IGlobalError>({
+    status: false,
+    message: '',
+  });
+
+  const values = {
+    country: getValues('country') ?? '',
+    password: getValues('password') ?? '',
+  };
+
+  console.log('values', values);
+  
+
+  const withEmptyValidation = (value: string, fieldName: string, validationError: string) => {
+    if (!value.trim()) {
+      return `${fieldName} is required`;
+    }
+
+    return validationError;
+  };
+
+  const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
+    if (!value) {
+      clearErrors(fieldName);
+      return;
+    }
+    const errString = withEmptyValidation(
+      value,
+      fieldName,
+      validateField(fieldName, value, values),
+    );
+    console.log('errString', errString);
+
+    if (errString.length) {
+      setError(fieldName, {
+        type: 'required',
+        message: errString,
+      });
+    } else {
+      clearErrors(fieldName);
+    }
+  };
+
+  const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
+    console.log(data);
+    reset();
+  };
+
+  const handleRegister = () => {
+    handleSubmit(onSubmit);
   };
 
   return (
@@ -41,17 +105,52 @@ export const RegistrationPage: React.FC = () => {
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
         <p>Page {page}/3</p>
-        <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
-          {page == 1 ? <FormPage1 /> : page == 2 ? <FormPage2 /> : <FormPage3 />}
-        </Box>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, backgroundColor: 'green' }}
+        {/* {globalError.status && (
+          <Box>
+            <Alert severity={'error'}>{globalError.message}</Alert>
+          </Box>
+        )} */}
+        <Box
+          component="form"
+          noValidate
+            onSubmit={handleSubmit(onSubmit)}
+          sx={{ mt: 2, position: 'relative' }}
         >
-          Register
-        </Button>
+          {/* {page == 1 ? ( */}
+          <FormPage1
+            isActive={page === 1}
+            register={register}
+            errors={errors}
+            validationHandler={validationHandler}
+            values={values}
+          />
+          {/* ) : page == 2 ? ( */}
+          <FormPage2
+            isActive={page === 2}
+            register={register}
+            errors={errors}
+            validationHandler={validationHandler}
+          />
+          {/* ) : ( */}
+          <FormPage3
+            isActive={page === 3}
+            register={register}
+            errors={errors}
+            validationHandler={validationHandler}
+            values={values}
+          />
+          {/* )} */}
+
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, backgroundColor: 'green' }}
+            // onClick={handleRegister}
+          >
+            Register
+          </Button>
+        </Box>
       </Box>
       <Box textAlign="center">
         <p>We don&apos;t share your personal information with anyone</p>

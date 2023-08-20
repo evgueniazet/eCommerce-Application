@@ -1,39 +1,68 @@
+import classNames from 'classnames';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import { IFormPageProps } from '../../interfaces/IFormPageProps';
+import styles from './RegPage.module.scss';
 
-export const FormPage1 = () => {
+/* eslint-disable react/prop-types */
+
+export const FormPage1: React.FC<IFormPageProps> = ({
+  register,
+  errors,
+  validationHandler,
+  values,
+  isActive,
+}) => {
   return (
-    <Grid container spacing={2}>
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        position: 'relative',
+        height: isActive ? 'auto' : 0,
+        opacity: isActive ? 1 : 0,
+      }}
+    >
       <Grid item xs={12}>
         <TextField
-          required
           fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
+          label="Email"
+          type="email"
+          autoComplete="off"
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email', {
+            required: 'Email is required',
+            onChange: (e) => validationHandler('email', e.target.value),
+          })}
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          required
           fullWidth
-          name="password"
           label="Password"
           type="password"
-          id="password"
-          autoComplete="new-password"
+          autoComplete="off"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          {...register('password', {
+            required: 'Password is required',
+            onChange: (e) => validationHandler('password', e.target.value),
+          })}
         />
       </Grid>
       <Grid item xs={12}>
         <TextField
-          required
           fullWidth
-          name="repassword"
-          label="Repeat Password"
+          label="Confirm Password"
           type="password"
-          id="password"
-          autoComplete="new-password"
+          autoComplete="off"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          {...register('confirmPassword', {
+            required: 'Conform password is required',
+            onChange: (e) => validationHandler('confirmPassword', e.target.value, values),
+          })}
         />
       </Grid>
     </Grid>
