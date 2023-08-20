@@ -1,10 +1,10 @@
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
+import { FC } from 'react';
 
-/* eslint-disable react/prop-types */
 
-export const FormPage1: React.FC<IFormPageProps> = ({
+export const FormPage1: FC<IFormPageProps> = ({
   register,
   errors,
   validationHandler,
