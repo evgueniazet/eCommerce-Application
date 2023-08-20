@@ -1,12 +1,12 @@
 export interface IRegistrationFormData {
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-  firstName?: string;
-  lastName?: string;
-  birthDate?: string;
-  streetAddress?: string;
-  country?: string;
-  city?: string;
-  postalCode?: string;
+  email: string | null;
+  password: string | null;
+  confirmPassword: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  birthDate: string | null;
+  streetAddress: string | null;
+  country: string | null;
+  city: string | null;
+  postalCode: string | null;
 }
