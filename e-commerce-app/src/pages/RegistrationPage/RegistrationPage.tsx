@@ -177,3 +177,4 @@ export const RegistrationPage: React.FC = () => {
       </Grid>
     </Container>
   );
+};
