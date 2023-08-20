@@ -1,58 +1,68 @@
-import React from 'react';
-import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
+import { IFormPageProps } from '../../interfaces/IFormPageProps';
 
-export const FormPage1 =()=>{
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        console.log({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-      };
-    return (
-        <Box
-            component="form"
-                noValidate
-                onSubmit={handleSubmit}
-                sx={{ mt: 2 }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="email"
-                      label="Email Address"
-                      name="email"
-                      autoComplete="email"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      name="repassword"
-                      label="Repeat Password"
-                      type="password"
-                      id="password"
-                      autoComplete="new-password"
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-    );
+/* eslint-disable react/prop-types */
+
+export const FormPage1: React.FC<IFormPageProps> = ({
+  register,
+  errors,
+  validationHandler,
+  values,
+  isActive,
+}) => {
+  return (
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        position: 'relative',
+        height: isActive ? 'auto' : 0,
+        opacity: isActive ? 1 : 0,
+      }}
+    >
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Email"
+          type="email"
+          autoComplete="off"
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email', {
+            required: 'Email is required',
+            onChange: (e) => validationHandler('email', e.target.value),
+          })}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Password"
+          type="password"
+          autoComplete="off"
+          error={!!errors.password}
+          helperText={errors.password?.message}
+          {...register('password', {
+            required: 'Password is required',
+            onChange: (e) => validationHandler('password', e.target.value),
+          })}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Confirm Password"
+          type="password"
+          autoComplete="off"
+          error={!!errors.confirmPassword}
+          helperText={errors.confirmPassword?.message}
+          {...register('confirmPassword', {
+            required: 'Conform password is required',
+            onChange: (e) => validationHandler('confirmPassword', e.target.value, values),
+          })}
+        />
+      </Grid>
+    </Grid>
+  );
 };

@@ -1,48 +1,64 @@
-import React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import Grid from '@mui/material/Grid';
+import { TextField, Grid } from '@mui/material';
+import { IFormPageProps } from '../../interfaces/IFormPageProps';
+/* eslint-disable react/prop-types */
 
-export const FormPage2 = () => {
-    return (
-        <Box
-                component="form"
-                noValidate
-                sx={{ mt: 2 }}
-              >
-                <Grid container spacing={2}>
-                  <Grid item xs={12}>
-                    <TextField
-                      autoComplete="given-name"
-                      name="firstName"
-                      required
-                      fullWidth
-                      id="firstName"
-                      label="First Name"
-                      autoFocus
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      required
-                      fullWidth
-                      id="lastName"
-                      label="Last Name"
-                      name="lastName"
-                      autoComplete="family-name"
-                    />
-                  </Grid>
-                  <Grid item xs={12}>
-                    <TextField
-                      fullWidth
-                      name="dateOfBirth"
-                      type="date"
-                      id="dateOfBirth"
-                      label='Date of birth'
-                      autoComplete="birth-day"
-                    />
-                  </Grid>
-                </Grid>
-              </Box>
-    );
+export const FormPage2: React.FC<IFormPageProps> = ({
+  register,
+  errors,
+  validationHandler,
+  isActive,
+}) => {
+  return (
+    <Grid
+      container
+      spacing={2}
+      sx={{
+        position: 'relative',
+        height: isActive ? 'auto' : 0,
+        opacity: isActive ? 1 : 0,
+      }}
+    >
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="First Name"
+          autoComplete="off"
+          error={!!errors.firstName}
+          helperText={errors.firstName?.message}
+          {...register('firstName', {
+            required: 'First Name is required',
+            onChange: (e) => validationHandler('firstName', e.target.value),
+          })}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          label="Last Name"
+          autoComplete="off"
+          error={!!errors.lastName}
+          helperText={errors.lastName?.message}
+          {...register('lastName', {
+            required: 'Last Name is required',
+            onChange: (e) => validationHandler('lastName', e.target.value),
+          })}
+        />
+      </Grid>
+      <Grid item xs={12}>
+        <TextField
+          fullWidth
+          type="date"
+          label="Date of birth"
+          autoComplete="off"
+          InputLabelProps={{ shrink: true }}
+          error={!!errors.birthDate}
+          helperText={errors.birthDate?.message}
+          {...register('birthDate', {
+            required: 'Birth Date is required',
+            onChange: (e) => validationHandler('birthDate', e.target.value),
+          })}
+        />
+      </Grid>
+    </Grid>
+  );
 };

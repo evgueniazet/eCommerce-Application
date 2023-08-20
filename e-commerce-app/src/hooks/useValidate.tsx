@@ -44,7 +44,7 @@ export const useValidate = () => {
     const hasSpecialCharacter = /[!@#$%^&*]/.test(trimmedPassword);
 
     if (!(hasLowercase && hasUppercase && hasDigit) && !hasSpecialCharacter) {
-      return 'Password must contain at least one lowercase letter, one uppercase letter, and one number, or use special characters';
+      return 'Password must contain at least one lowercase letter, one uppercase letter, and one number.Special characters are allowed';
     }
 
     return '';
