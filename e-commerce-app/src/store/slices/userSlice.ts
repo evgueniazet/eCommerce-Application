@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IUserFromSlice } from '../../types/slicesTypes/userSliceTypes';
+import { RootStateType } from '../store';
 
 const initialState: IUserFromSlice = {
   email: null,
@@ -39,5 +40,7 @@ export const userSlice = createSlice({
 });
 
 export default userSlice.reducer;
+
+export const getLoggedIn = (state: RootStateType) => state.user.isLoggedIn;
 
 export const { logout, setAuth, setLogIn, setAnonymousAuth } = userSlice.actions;

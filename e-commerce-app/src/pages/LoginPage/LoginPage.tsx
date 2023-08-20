@@ -16,7 +16,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useLoginUserMutation } from '../../api/authApi';
-import { setAuth } from '../../store/slices/userSlice';
+import { getLoggedIn, setAuth } from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -38,7 +38,7 @@ export const LoginPage: React.FC = () => {
   const from = '/';
 
   const dispatch = useAppDispatch();
-  const { isLoggedIn } = useAppSelector((state) => state.user);
+  const isLoggedIn = useAppSelector(getLoggedIn);
 
   useEffect(() => {
     if (isLoggedIn) {
