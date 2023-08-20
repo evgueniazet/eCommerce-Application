@@ -49,11 +49,15 @@ export const myCustomerApi = createApi({
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-          }
+          },
         };
-      }
-    })
+      },
+    }),
   }),
 });
 
-export const { useAuthenticateMyCustomerMutation, useSignUpMyCustomerMutation, useGetMyCustomerDetailsMutation } = myCustomerApi;
+export const {
+  useAuthenticateMyCustomerMutation,
+  useSignUpMyCustomerMutation,
+  useGetMyCustomerDetailsMutation,
+} = myCustomerApi;
