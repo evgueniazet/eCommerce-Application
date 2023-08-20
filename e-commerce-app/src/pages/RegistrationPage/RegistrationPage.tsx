@@ -65,6 +65,7 @@ export const RegistrationPage: React.FC = () => {
       fieldName,
       validateField(fieldName, value, values),
     );
+    
     console.log('errString', errString);
 
     if (errString.length) {
@@ -177,4 +178,3 @@ export const RegistrationPage: React.FC = () => {
       </Grid>
     </Container>
   );
-};

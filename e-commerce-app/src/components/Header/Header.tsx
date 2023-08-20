@@ -16,7 +16,6 @@ import Menu from '@mui/material/Menu';
 const pages = ['Catalog', 'About Us', 'Login', 'Registration', 'Home'];
 const settings = ['User', 'Logout'];
 
-
 export const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -36,11 +35,13 @@ export const Header: React.FC = () => {
     setAnchorElUser(null);
   };
 
-    return (
-        <AppBar position="sticky" color='default'>
+  return (
+    <AppBar position="sticky" color="default">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <a href="/"><img src={logo} alt='logo' width={60} height={60} /></a>
+          <a href="/">
+            <img src={logo} alt="logo" width={60} height={60} />
+          </a>
           <Typography
             variant="h6"
             noWrap
@@ -157,5 +158,5 @@ export const Header: React.FC = () => {
         </Toolbar>
       </Container>
     </AppBar>
-    );
+  );
 };
