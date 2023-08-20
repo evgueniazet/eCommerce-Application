@@ -1,7 +1,5 @@
-import classNames from 'classnames';
 import { TextField, Grid } from '@mui/material';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
-import styles from './RegPage.module.scss';
 /* eslint-disable react/prop-types */
 
 export const FormPage2: React.FC<IFormPageProps> = ({
@@ -52,7 +50,6 @@ export const FormPage2: React.FC<IFormPageProps> = ({
           type="date"
           label="Date of birth"
           autoComplete="off"
-          //   value=""
           InputLabelProps={{ shrink: true }}
           error={!!errors.birthDate}
           helperText={errors.birthDate?.message}

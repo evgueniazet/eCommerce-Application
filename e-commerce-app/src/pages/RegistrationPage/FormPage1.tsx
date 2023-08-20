@@ -1,8 +1,6 @@
-import classNames from 'classnames';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
-import styles from './RegPage.module.scss';
 
 /* eslint-disable react/prop-types */
 

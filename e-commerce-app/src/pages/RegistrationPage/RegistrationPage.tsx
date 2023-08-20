@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
@@ -17,7 +17,6 @@ import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
 import { fieldNameType } from '../../types/fieldNameType';
-import { IGlobalError } from '../../interfaces/IGlobalError';
 
 export const RegistrationPage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -34,20 +33,18 @@ export const RegistrationPage: React.FC = () => {
 
   const { errors: validationErrors, validateField } = useValidate();
 
-  console.log('validationErrors', validationErrors);
-
-  const [globalError, setGlobalError] = useState<IGlobalError>({
-    status: false,
-    message: '',
-  });
-
   const values = {
-    country: getValues('country') ?? '',
+    email: getValues('email') ?? '',
     password: getValues('password') ?? '',
+    confirmPassword: getValues('confirmPassword') ?? '',
+    firstName: getValues('firstName') ?? '',
+    lastName: getValues('lastName') ?? '',
+    birthDate: getValues('birthDate') ?? '',
+    streetAddress: getValues('streetAddress') ?? '',
+    country: getValues('country') ?? '',
+    city: getValues('city') ?? '',
+    postalCode: getValues('postalCode') ?? '',
   };
-
-  console.log('values', values);
-  
 
   const withEmptyValidation = (value: string, fieldName: string, validationError: string) => {
     if (!value.trim()) {
@@ -62,6 +59,7 @@ export const RegistrationPage: React.FC = () => {
       clearErrors(fieldName);
       return;
     }
+
     const errString = withEmptyValidation(
       value,
       fieldName,
@@ -81,11 +79,6 @@ export const RegistrationPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
     console.log(data);
-    reset();
-  };
-
-  const handleRegister = () => {
-    handleSubmit(onSubmit);
   };
 
   return (
@@ -105,18 +98,17 @@ export const RegistrationPage: React.FC = () => {
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
         <p>Page {page}/3</p>
-        {/* {globalError.status && (
+        {!!Object.keys(errors).length && (
           <Box>
-            <Alert severity={'error'}>{globalError.message}</Alert>
+            <Alert severity={'error'}>All fields are required!</Alert>
           </Box>
-        )} */}
+        )}
         <Box
           component="form"
           noValidate
-            onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(onSubmit)}
           sx={{ mt: 2, position: 'relative' }}
         >
-          {/* {page == 1 ? ( */}
           <FormPage1
             isActive={page === 1}
             register={register}
@@ -124,14 +116,12 @@ export const RegistrationPage: React.FC = () => {
             validationHandler={validationHandler}
             values={values}
           />
-          {/* ) : page == 2 ? ( */}
           <FormPage2
             isActive={page === 2}
             register={register}
             errors={errors}
             validationHandler={validationHandler}
           />
-          {/* ) : ( */}
           <FormPage3
             isActive={page === 3}
             register={register}
@@ -139,14 +129,11 @@ export const RegistrationPage: React.FC = () => {
             validationHandler={validationHandler}
             values={values}
           />
-          {/* )} */}
-
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, backgroundColor: 'green' }}
-            // onClick={handleRegister}
           >
             Register
           </Button>

@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import {
   TextField,
   FormControlLabel,
@@ -9,7 +8,6 @@ import {
   InputLabel,
 } from '@mui/material';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
-import styles from './RegPage.module.scss';
 
 /* eslint-disable react/prop-types */
 
