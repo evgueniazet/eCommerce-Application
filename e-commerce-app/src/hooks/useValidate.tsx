@@ -2,8 +2,21 @@ import { useState } from 'react';
 import { IRegistrationFormData } from '../interfaces/IRegistrationFormData';
 import { IValues } from '../interfaces/IValues';
 
+const defaultErrorsObj: IRegistrationFormData = {
+  email: null,
+  birthDate: null,
+  city: null,
+  country: null,
+  confirmPassword: null,
+  password: null,
+  firstName: null,
+  lastName: null,
+  postalCode: null,
+  streetAddress: null,
+};
+
 export const useValidate = () => {
-  const [errors, setErrors] = useState<IRegistrationFormData>({});
+  const [errors, setErrors] = useState<IRegistrationFormData>(defaultErrorsObj);
 
   const validateEmail = (email: string) => {
     const trimmedEmail = email.trim();
@@ -104,7 +117,7 @@ export const useValidate = () => {
     return '';
   };
 
-  const validateField = (fieldName: string, value: string, values?: IValues) => {
+  const validateField = (fieldName: string, value: string, values?: IValues): string => {
     let errorMessage = '';
 
     switch (fieldName) {
@@ -144,7 +157,8 @@ export const useValidate = () => {
         break;
     }
 
-    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: errorMessage }));
+    setErrors((prevErrors) => ({ ...prevErrors, [fieldName]: errorMessage || null }));
+    return errorMessage;
   };
 
   return { errors, validateField };
