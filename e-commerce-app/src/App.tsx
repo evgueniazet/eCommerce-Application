@@ -17,7 +17,6 @@ export const App = () => {
   useEffect(() => {
     if (isSuccess && data) {
       dispatch(setAuth({ access_token: data.access_token }));
-      console.log(data);
       getDetails(data.access_token).then((res) => {
         if ('data' in res) {
           dispatch(setAuth({ email: res.data.email }));
@@ -37,14 +36,15 @@ export const App = () => {
   useEffect(() => {
     if (isTokenInStorage()) {
       const token = getTokenFromStorage();
-      console.log(token);
       if (token) {
         getAccessToken(token);
       }
     } else {
       getAnonymousToken().then((res) => {
         if ('data' in res) {
-          dispatch(setAuth({ access_token: res.data.access_token, refresh_token: res.data.refresh_token }));
+          dispatch(
+            setAuth({ access_token: res.data.access_token, refresh_token: res.data.refresh_token }),
+          );
         }
       });
     }
@@ -52,7 +52,7 @@ export const App = () => {
 
   return (
     <>
-      <AppRoutes/>
+      <AppRoutes />
     </>
   );
 };
