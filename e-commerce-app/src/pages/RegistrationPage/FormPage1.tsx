@@ -14,14 +14,13 @@ export const FormPage1: React.FC<IFormPageProps> = ({
   return (
     <Grid
       container
-      spacing={2}
       sx={{
         position: 'relative',
-        height: isActive ? 'auto' : 0,
+        height: isActive ? 'initial' : 0,
         opacity: isActive ? 1 : 0,
       }}
     >
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           label="Email"
@@ -35,7 +34,7 @@ export const FormPage1: React.FC<IFormPageProps> = ({
           })}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           label="Password"
@@ -49,7 +48,7 @@ export const FormPage1: React.FC<IFormPageProps> = ({
           })}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           label="Confirm Password"
