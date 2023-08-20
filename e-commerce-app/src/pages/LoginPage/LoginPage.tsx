@@ -6,24 +6,32 @@ import {
   Alert,
   Typography,
   InputAdornment,
-  IconButton,
+  IconButton, Checkbox, FormControlLabel,
 } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
 import { NavLink, useNavigate } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { useValidate } from '../../hooks/useValidate';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useLoginUserMutation } from '../../api/authApi';
-import { getLoggedIn, setAuth } from '../../store/slices/userSlice';
+import {
+  getLoggedIn,
+  isRememberedMe,
+  setAuth,
+  setLogIn,
+  toggleRememberMe
+} from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import { useLocalToken } from '../../hooks/useLocalToken';
 
 const defaultFormState: ILoginFormData = {
   email: '',
   password: '',
+  rememberMe: false,
 };
 
 type fieldNameType = 'email' | 'password' | `root.${string}` | 'root';
@@ -33,18 +41,23 @@ interface IGlobalError {
   message: string;
 }
 
-export const LoginPage: React.FC = () => {
+export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const from = '/';
 
-  const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(getLoggedIn);
+  const isRememberedUser = useAppSelector(isRememberedMe);
 
   useEffect(() => {
     if (isLoggedIn) {
+      reset();
       navigate(from, { replace: true });
     }
   }, [isLoggedIn]);
+
+  const { validateField } = useValidate();
+  const { setTokenInStorage } = useLocalToken();
+  const dispatch = useAppDispatch();
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
     status: false,
@@ -66,16 +79,13 @@ export const LoginPage: React.FC = () => {
     },
   });
 
-  const [showPassword, setShowPassword] = React.useState(false);
-
   useEffect(() => {
     if (!isSuccess || !data) return;
     dispatch(setAuth({ access_token: data.access_token, refresh_token: data.refresh_token }));
-
-    if (isLoggedIn) {
-      reset();
-      navigate(from, { replace: true });
+    if (isRememberedUser) {
+      setTokenInStorage(data.refresh_token);
     }
+    dispatch(setLogIn());
   }, [isSuccess, data]);
 
   useEffect(() => {
@@ -125,19 +135,19 @@ export const LoginPage: React.FC = () => {
       });
       return;
     }
-
     if (data.email && data.password) {
+      dispatch(toggleRememberMe(!!data.rememberMe));
       setGlobalError({
         status: false,
         message: '',
       });
+      dispatch(
+        setAuth({
+          email: data.email,
+          password: data.password,
+        }),
+      );
       try {
-        dispatch(
-          setAuth({
-            email: data.email,
-            password: data.password,
-          }),
-        );
         loginUser({ email: data.email, password: data.password });
       } catch {
         console.log('er');
@@ -167,10 +177,11 @@ export const LoginPage: React.FC = () => {
     }
   };
 
-  const { validateField } = useValidate();
+  const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Grid container sx={{ height: '80vh' }}>
+    <Grid container
+          sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -182,7 +193,9 @@ export const LoginPage: React.FC = () => {
           backgroundPosition: 'center',
         }}
       ></Grid>
-      <Grid item lg={5} sm={7}>
+      <Grid item
+            lg={5}
+            sm={7}>
         <Box
           component="form"
           noValidate
@@ -207,7 +220,6 @@ export const LoginPage: React.FC = () => {
             {...register('email', {
               required: 'Email is required',
               onChange: (e) => validationHandler('email', e.target.value),
-              // onBlur: (e) => validationHandler('email', e.target.value),
             })}
           />
           <TextField
@@ -224,11 +236,11 @@ export const LoginPage: React.FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon />
+                      <VisibilityIcon/>
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon />
+                      <VisibilityOffIcon/>
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -237,7 +249,6 @@ export const LoginPage: React.FC = () => {
             {...register('password', {
               required: 'Password is required',
               onChange: (e) => validationHandler('password', e.target.value),
-              // onBlur: (e) => validationHandler('password', e.target.value),
             })}
           />
           <Box textAlign="center">
@@ -248,15 +259,17 @@ export const LoginPage: React.FC = () => {
             >
               Login
             </Button>
-            <Typography component="p" color="gray">
-              Remember me
-            </Typography>
+            <Box py={2}>
+              <FormControlLabel control={<Checkbox {...register('rememberMe')}/>}
+                                label={'Remember me'}/>
+            </Box>
           </Box>
           <Box>
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p" textAlign="center">
+            <Typography component="p"
+                        textAlign="center">
               Don&apos;t have account yet? Sign up
             </Typography>
           </Box>
