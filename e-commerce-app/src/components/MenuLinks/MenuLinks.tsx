@@ -14,7 +14,9 @@ const MenuLinks: FC<IMenuLinksProps> = ({ navigation, handler }): JSX.Element =>
     <>
       {Object.entries(navigation).map(([title, path]) => (
         <MenuItem key={title} onClick={handler}>
-          <Button href={path} sx={{color: 'green'}}>{title}</Button>
+          <Button href={path} sx={{ color: 'green' }}>
+            {title}
+          </Button>
         </MenuItem>
       ))}
     </>
