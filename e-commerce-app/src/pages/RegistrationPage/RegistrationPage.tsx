@@ -21,6 +21,8 @@ import { fieldNameType, globalErrors } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { getLoggedIn } from '../../store/slices/userSlice';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Checkbox from '@mui/material/Checkbox';
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -187,13 +189,18 @@ export const RegistrationPage: React.FC = () => {
           </Button>
         )}
           </Box>
-          
+          <Grid item xs={12} sx={{mt: 2}}>
+            <FormControlLabel
+              control={<Checkbox value="allowExtraEmails" color="primary" />}
+              label="I want to receive web-site promotions"
+            />
+          </Grid>
           <Button
             type="submit"
             onClick={buttonSubmitClick}
             fullWidth
             variant="contained"
-            sx={{ mt: 3, backgroundColor: 'green' }}
+            sx={{ backgroundColor: 'green' }}
           >
             Sugn Up
           </Button>

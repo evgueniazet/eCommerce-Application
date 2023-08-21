@@ -90,10 +90,10 @@ export const FormPage3: FC<IFormPageProps> = ({
             })}
           />
         </Grid>
-      
-        <FormGroup sx={{display: 'inline-flex'}}>
-          <FormControlLabel control={<Switch defaultChecked />} label="Set as default address" />
-          <FormControlLabel control={<Checkbox defaultChecked />} label="Also use as billing address" />
+        
+        <FormGroup>
+          <FormControlLabel control={<Switch defaultChecked />} label="Use as default Shipping Address" />
+          <FormControlLabel control={<Checkbox defaultChecked />} label="Also use as Billing Address" />
         </FormGroup>
       </Grid>
     </div>
