@@ -92,8 +92,8 @@ export const FormPage3: FC<IFormPageProps> = ({
         </Grid>
         
         <FormGroup>
-          <FormControlLabel control={<Switch defaultChecked />} label="Use as default Shipping Address" />
-          <FormControlLabel control={<Checkbox defaultChecked />} label="Also use as Billing Address" />
+          <FormControlLabel control={<Switch defaultChecked />} label="use as default shipping address" />
+          <FormControlLabel control={<Checkbox defaultChecked />} label="also use as billing address" />
         </FormGroup>
       </Grid>
     </div>

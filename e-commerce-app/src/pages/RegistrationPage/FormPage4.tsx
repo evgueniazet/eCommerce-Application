@@ -91,9 +91,9 @@ import Switch from '@mui/material/Switch';
           </Grid>
 
           <FormGroup>
-            <FormControlLabel control={<Switch defaultChecked />} label="Use as default Billing Address" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Also use as Shipping Address" />
-            <FormControlLabel control={<Checkbox defaultChecked />} label="Use only one address" />
+            <FormControlLabel control={<Switch defaultChecked />} label="use as default billing address" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="also use as shipping address" />
+            <FormControlLabel control={<Checkbox defaultChecked />} label="use only one address" />
           </FormGroup>
 
         </Grid>
