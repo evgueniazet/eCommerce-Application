@@ -5,9 +5,13 @@ export type fieldNameType =
   | 'lastName'
   | 'firstName'
   | 'birthDate'
-  | 'streetAddress'
-  | 'country'
-  | 'city'
-  | 'postalCode'
+  | 'streetAddressBilling'
+  | 'streetAddressShipping'
+  | 'countryBilling'
+  | 'countryShipping'
+  | 'cityShipping'
+  | 'cityBilling'
+  | 'postalCodeShipping'
+  | 'postalCodeBilling'
   | `root.${string}`
   | 'root';

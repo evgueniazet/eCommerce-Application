@@ -1,5 +1,6 @@
 export interface IValues {
   password: string;
   confirmPassword: string;
-  country: string;
+  countryShipping: string;
+  countryBilling: string;
 }

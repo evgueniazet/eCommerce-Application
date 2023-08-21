@@ -22,7 +22,8 @@ import {
   getLoggedIn,
   isRememberedMe,
   setAuth,
-  setLogIn, setLogOut,
+  setLogIn,
+  setLogOut,
   toggleRememberMe,
 } from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';

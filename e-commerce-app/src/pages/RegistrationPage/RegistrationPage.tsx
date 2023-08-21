@@ -23,12 +23,17 @@ import { useAppSelector } from '../../store/hooks';
 import { getLoggedIn } from '../../store/slices/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
+import { IMyCustomerApiSignupRequest } from '../../types/slicesTypes/myCustomerApiSliceTypes';
+import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
+import countryData from '../../data/countries.json';
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
   const from = '/';
-
   const isLoggedIn = useAppSelector(getLoggedIn);
+  const isShippingChecked = false;
+  const isBillingChecked = false;
+  let pageCount = 3;
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -44,6 +49,10 @@ export const RegistrationPage: React.FC = () => {
   const { errors: validationErrors, validateField } = useValidate();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const [shippingFlag, setShippingFlag] = useState(isShippingChecked);
+
+  const [billingFlag, setBillingFlag] = useState(isBillingChecked);
 
   const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
     (acc, item) => {
@@ -68,10 +77,25 @@ export const RegistrationPage: React.FC = () => {
     {},
   );
 
+  if (!shippingFlag && !billingFlag) {
+    pageCount = 4;
+  }
+
+  let pagesToRender: number[];
+
+  if (billingFlag && !shippingFlag) {
+    pagesToRender = [1, 2, 4];
+  } else if (shippingFlag && !billingFlag) {
+    pagesToRender = [1, 2, 3];
+  } else {
+    pagesToRender = [1, 2, 3, 4];
+  }
+
   const values = {
     password: getValues('password') ?? '',
     confirmPassword: getValues('confirmPassword') ?? '',
-    country: getValues('country') ?? '',
+    countryShipping: getValues('countryShipping') ?? '',
+    countryBilling: getValues('countryBilling') ?? '',
   };
 
   const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
@@ -98,8 +122,53 @@ export const RegistrationPage: React.FC = () => {
     }
   };
 
+  const getCountryCode = (countryName: string): string => {
+    const country = countryData.find((c) => c.name === countryName);
+    return country ? country.code : '';
+  };
+
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
-    console.log(data);
+    const shippingAddress: IMyCustomerApiAddressRequest = {
+      streetName: data.streetAddressShipping || '',
+      postalCode: data.postalCodeShipping || '',
+      city: data.cityShipping || '',
+      country: getCountryCode(data.countryShipping || ''),
+    };
+
+    const billingAddress: IMyCustomerApiAddressRequest = {
+      streetName: data.streetAddressBilling || '',
+      postalCode: data.postalCodeBilling || '',
+      city: data.cityBilling || '',
+      country: getCountryCode(data.countryBilling || ''),
+    };
+
+    const transformedAddresses: IMyCustomerApiAddressRequest[] = [];
+
+    if (!shippingFlag && !billingFlag) {
+      transformedAddresses.push(shippingAddress);
+      transformedAddresses.push(billingAddress);
+    } else {
+      if (shippingFlag) {
+        transformedAddresses.push(shippingAddress);
+        transformedAddresses.push(shippingAddress);
+      }
+
+      if (billingFlag) {
+        transformedAddresses.push(billingAddress);
+        transformedAddresses.push(billingAddress);
+      }
+    }
+
+    const transformedData: IMyCustomerApiSignupRequest = {
+      email: data.email || '',
+      firstName: data.firstName || '',
+      lastName: data.lastName || '',
+      password: data.password || '',
+      dateOfBirth: data.birthDate || '',
+      addresses: transformedAddresses,
+      shippingAddresses: [],
+      billingAddresses: [],
+    };
   };
 
   const buttonSubmitClick = () => {
@@ -122,7 +191,9 @@ export const RegistrationPage: React.FC = () => {
           Welcome to Registration!
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
-        <p>Page {page}/4</p>
+        <p>
+          Page {page}/{pageCount}
+        </p>
         {!!formSubmitted && !!Object.keys(formState.errors).length && (
           <Box>
             <Alert severity={'error'}>All fields are required!</Alert>
@@ -134,62 +205,74 @@ export const RegistrationPage: React.FC = () => {
           onSubmit={handleSubmit(onSubmit)}
           sx={{ position: 'relative', mt: 2 }}
         >
-          <FormPage1
-            isActive={page === 1}
-            register={register}
-            errors={globalErrors}
-            validationHandler={validationHandler}
-            values={values}
-          />
-          <FormPage2
-            isActive={page === 2}
-            register={register}
-            errors={globalErrors}
-            validationHandler={validationHandler}
-          />
-          <FormPage3
-            isActive={page === 3}
-            register={register}
-            errors={globalErrors}
-            validationHandler={validationHandler}
-            values={values}
-          />
-          <FormPage4
-            isActive={page === 4}
-            register={register}
-            errors={globalErrors}
-            validationHandler={validationHandler}
-            values={values}
-          />
+          {pagesToRender.includes(1) && (
+            <FormPage1
+              isActive={page === 1}
+              register={register}
+              errors={globalErrors}
+              validationHandler={validationHandler}
+              values={values}
+            />
+          )}
+          {pagesToRender.includes(2) && (
+            <FormPage2
+              isActive={page === 2}
+              register={register}
+              errors={globalErrors}
+              validationHandler={validationHandler}
+            />
+          )}
+          {pagesToRender.includes(3) && (
+            <FormPage3
+              isActive={page === 3}
+              register={register}
+              errors={globalErrors}
+              validationHandler={validationHandler}
+              values={values}
+              shippingFlag={shippingFlag}
+              setShippingFlag={setShippingFlag}
+            />
+          )}
+          {pagesToRender.includes(4) && (
+            <FormPage4
+              isActive={page === (billingFlag ? 3 : 4)}
+              register={register}
+              errors={globalErrors}
+              validationHandler={validationHandler}
+              values={values}
+              billingFlag={billingFlag}
+              setBillingFlag={setBillingFlag}
+            />
+          )}
           <Box textAlign="center">
-          {page > 1 && (
-          <Button
-            size="small"
-            variant="contained"
-            sx={{ px: 4, mt: 2, backgroundColor: 'mediumaquamarine' }}
-            onClick={() => {
-              const nextPage = page - 1;
-              setPage(nextPage);
-            }}
-          >
-            Back
-          </Button>
-        )}
-        {page < 4 && (
-          <Button
-            size="small"
-            variant="contained"
-            sx={{ px: 4, mt: 2, mx: 4, backgroundColor: 'mediumaquamarine' }}
-            onClick={() => {
-              const nextPage = page + 1;
-              setPage(nextPage);
-            }}
-          >
-            Next
-          </Button>
-        )}
+            {page > 1 && (
+              <Button
+                size="small"
+                variant="contained"
+                sx={{ px: 4, mt: 2, backgroundColor: 'mediumaquamarine' }}
+                onClick={() => {
+                  const prevPage = page - 1;
+                  setPage(prevPage);
+                }}
+              >
+                Back
+              </Button>
+            )}
+            {page < (!shippingFlag && !billingFlag ? 4 : 3) && (
+              <Button
+                size="small"
+                variant="contained"
+                sx={{ px: 4, mt: 2, mx: 4, backgroundColor: 'mediumaquamarine' }}
+                onClick={() => {
+                  const nextPage = page + 1;
+                  setPage(nextPage);
+                }}
+              >
+                Next
+              </Button>
+            )}
           </Box>
-          <Grid item xs={12} sx={{mt: 2}}>
+          <Grid item xs={12} sx={{ mt: 2 }}>
             <FormControlLabel
               control={<Checkbox value="allowExtraEmails" color="primary" />}
               label="I want to receive web-site promotions"
@@ -202,13 +285,12 @@ export const RegistrationPage: React.FC = () => {
             variant="contained"
             sx={{ backgroundColor: 'green' }}
           >
-            Sugn Up
+            Sign Up
           </Button>
         </Box>
       </Box>
       <Box textAlign="center">
         <small>We don&apos;t share your personal information with anyone</small>
-        
       </Box>
       <Grid sx={{ mt: 2, mb: 5 }} container justifyContent="center">
         <Grid item>

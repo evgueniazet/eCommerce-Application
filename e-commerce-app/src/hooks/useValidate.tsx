@@ -14,14 +14,18 @@ import { validateName } from '../validators/validateName';
 const defaultErrorsObj: IRegistrationFormData = {
   email: null,
   birthDate: null,
-  city: null,
-  country: null,
+  cityShipping: null,
+  cityBilling: null,
+  countryShipping: null,
+  countryBilling: null,
   confirmPassword: null,
   password: null,
   firstName: null,
   lastName: null,
-  postalCode: null,
-  streetAddress: null,
+  postalCodeShipping: null,
+  postalCodeBilling: null,
+  streetAddressBilling: null,
+  streetAddressShipping: null,
 };
 
 export const useValidate = () => {
@@ -56,9 +60,14 @@ export const useValidate = () => {
       case 'city':
         errorMessage = validateCity(value);
         break;
-      case 'postalCode':
+      case 'postalCodeShipping':
         if (values) {
-          errorMessage = validatePostalCode(value, values.country || '');
+          errorMessage = validatePostalCode(value, values.countryShipping || '');
+        }
+        break;
+      case 'postalCodeBilling':
+        if (values) {
+          errorMessage = validatePostalCode(value, values.countryBilling || '');
         }
         break;
       case 'country':
