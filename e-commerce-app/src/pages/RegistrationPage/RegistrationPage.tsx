@@ -12,6 +12,7 @@ import Alert from '@mui/material/Alert';
 import { FormPage1 } from './FormPage1';
 import { FormPage2 } from './FormPage2';
 import { FormPage3 } from './FormPage3';
+import { FormPage4 } from './FormPage4';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
@@ -119,7 +120,7 @@ export const RegistrationPage: React.FC = () => {
           Welcome to Registration!
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
-        <p>Page {page}/3</p>
+        <p>Page {page}/4</p>
         {!!formSubmitted && !!Object.keys(formState.errors).length && (
           <Box>
             <Alert severity={'error'}>All fields are required!</Alert>
@@ -151,20 +152,15 @@ export const RegistrationPage: React.FC = () => {
             validationHandler={validationHandler}
             values={values}
           />
-          <Button
-            type="submit"
-            onClick={buttonSubmitClick}
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, backgroundColor: 'green' }}
-          >
-            Register
-          </Button>
-        </Box>
-      </Box>
-      <Box textAlign="center">
-        <p>We don&apos;t share your personal information with anyone</p>
-        {page > 1 && (
+          <FormPage4
+            isActive={page === 4}
+            register={register}
+            errors={globalErrors}
+            validationHandler={validationHandler}
+            values={values}
+          />
+          <Box textAlign="center">
+          {page > 1 && (
           <Button
             size="small"
             variant="contained"
@@ -177,7 +173,7 @@ export const RegistrationPage: React.FC = () => {
             Back
           </Button>
         )}
-        {page < 3 && (
+        {page < 4 && (
           <Button
             size="small"
             variant="contained"
@@ -190,6 +186,22 @@ export const RegistrationPage: React.FC = () => {
             Next
           </Button>
         )}
+          </Box>
+          
+          <Button
+            type="submit"
+            onClick={buttonSubmitClick}
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, backgroundColor: 'green' }}
+          >
+            Sugn Up
+          </Button>
+        </Box>
+      </Box>
+      <Box textAlign="center">
+        <small>We don&apos;t share your personal information with anyone</small>
+        
       </Box>
       <Grid sx={{ mt: 2, mb: 5 }} container justifyContent="center">
         <Grid item>
