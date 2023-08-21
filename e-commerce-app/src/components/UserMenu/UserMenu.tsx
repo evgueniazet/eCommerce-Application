@@ -23,9 +23,8 @@ const UserMenu = (): JSX.Element => {
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
-        <IconButton onClick={handleOpenUserMenu}
-                    sx={{ p: 0 }}>
-          <Avatar alt=""/>
+        <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+          <Avatar alt="" />
         </IconButton>
       </Tooltip>
       <Menu
@@ -44,8 +43,10 @@ const UserMenu = (): JSX.Element => {
         open={Boolean(anchorElUser)}
         onClose={handleCloseUserMenu}
       >
-        <MenuLinks navigation={isLoggedIn ? userLogoutRoutes : userLoginRoutes}
-                   handler={handleCloseUserMenu}/>
+        <MenuLinks
+          navigation={isLoggedIn ? userLogoutRoutes : userLoginRoutes}
+          handler={handleCloseUserMenu}
+        />
       </Menu>
     </Box>
   );

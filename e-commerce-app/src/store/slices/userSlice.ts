@@ -52,7 +52,7 @@ export const userSlice = createSlice({
   },
 });
 
-export default userSlice.reducer;
+export const UserReducer = userSlice.reducer;
 
 export const getLoggedIn = (state: RootStateType) => state.user.isLoggedIn;
 export const isRememberedMe = (state: RootStateType) => state.user.rememberMe;

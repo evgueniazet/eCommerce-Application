@@ -19,5 +19,5 @@ export const unusedNavigation = {
   user: '/user',
   product: '/product',
   products: '/products',
-  error: '*'
+  error: '*',
 };

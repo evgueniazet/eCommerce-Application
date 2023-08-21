@@ -13,21 +13,16 @@ import MenuLinks from '../MenuLinks/MenuLinks';
 import { navigationRoutes } from '../../routes/navigation';
 import UserMenu from '../UserMenu/UserMenu';
 
-
 export const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
-
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
-
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
-
-
 
   return (
     <AppBar position="sticky" color="default">
@@ -110,7 +105,6 @@ export const Header: React.FC = () => {
           </Box>
 
           <UserMenu />
-
         </Toolbar>
       </Container>
     </AppBar>
