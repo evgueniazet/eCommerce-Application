@@ -44,7 +44,7 @@ export const FormPage1: FC<IFormPageProps> = ({
           helperText={errors.password?.message}
           {...register('password', {
             required: 'Password is required',
-            onChange: (e) => validationHandler('password', e.target.value),
+            onChange: (e) => validationHandler('password', e.target.value, values),
           })}
         />
       </Grid>

@@ -21,7 +21,6 @@ import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { getLoggedIn } from '../../store/slices/userSlice';
 
-
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
   const from = '/';
@@ -39,7 +38,7 @@ export const RegistrationPage: React.FC = () => {
   const { register, handleSubmit, formState, getValues, setError, clearErrors } =
     useForm<IRegistrationFormData>();
 
-  const { validateField } = useValidate();
+  const { errors: validationErrors, validateField } = useValidate();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 
@@ -68,6 +67,7 @@ export const RegistrationPage: React.FC = () => {
 
   const values = {
     password: getValues('password') ?? '',
+    confirmPassword: getValues('confirmPassword') ?? '',
     country: getValues('country') ?? '',
   };
 
