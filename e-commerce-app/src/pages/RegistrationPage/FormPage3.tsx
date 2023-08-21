@@ -1,17 +1,9 @@
-import {
-  TextField,
-  FormControlLabel,
-  Grid,
-  Select,
-  MenuItem,
-  InputLabel,
-} from '@mui/material';
-import { FC } from 'react';
+import { TextField, FormControlLabel, Grid, Select, MenuItem, InputLabel } from '@mui/material';
+import { FC, useState, useEffect } from 'react';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 import Checkbox from '@mui/material/Checkbox';
-
 
 export const FormPage3: FC<IFormPageProps> = ({
   register,
@@ -19,8 +11,19 @@ export const FormPage3: FC<IFormPageProps> = ({
   validationHandler,
   values,
   isActive,
+  shippingFlag,
+  setShippingFlag,
 }) => {
   const defaultCountry = 'Poland';
+
+  const [isChecked, setShippingChecked] = useState(shippingFlag);
+
+  const handleCheckboxChange = () => {
+    if (setShippingFlag !== undefined) {
+      setShippingFlag(!shippingFlag);
+      setShippingChecked(!shippingFlag);
+    }
+  };
 
   return (
     <div
@@ -38,11 +41,11 @@ export const FormPage3: FC<IFormPageProps> = ({
             fullWidth
             label="Street"
             autoComplete="off"
-            error={!!errors.streetAddress}
-            helperText={errors.streetAddress?.message}
-            {...register('streetAddress', {
+            error={!!errors.streetAddressShipping}
+            helperText={errors.streetAddressShipping?.message}
+            {...register('streetAddressShipping', {
               required: 'Street address is required',
-              onChange: (e) => validationHandler('streetAddress', e.target.value),
+              onChange: (e) => validationHandler('streetAddressShipping', e.target.value),
             })}
           />
         </Grid>
@@ -51,11 +54,11 @@ export const FormPage3: FC<IFormPageProps> = ({
             fullWidth
             label="City"
             autoComplete="off"
-            error={!!errors.city}
-            helperText={errors.city?.message}
-            {...register('city', {
+            error={!!errors.cityShipping}
+            helperText={errors.cityShipping?.message}
+            {...register('cityShipping', {
               required: 'City is required',
-              onChange: (e) => validationHandler('city', e.target.value),
+              onChange: (e) => validationHandler('cityShipping', e.target.value),
             })}
           />
         </Grid>
@@ -65,10 +68,10 @@ export const FormPage3: FC<IFormPageProps> = ({
           <Select
             fullWidth
             label="Country"
-            value={values?.country || defaultCountry}
-            {...register('country', {
+            value={values?.countryShipping || defaultCountry}
+            {...register('countryShipping', {
               required: 'Country is required',
-              onChange: (e) => validationHandler('country', e.target.value),
+              onChange: (e) => validationHandler('countryShipping', e.target.value),
             })}
           >
             <MenuItem value="Canada">Canada</MenuItem>
@@ -82,18 +85,25 @@ export const FormPage3: FC<IFormPageProps> = ({
             fullWidth
             label="Postal Code"
             autoComplete="off"
-            error={!!errors.postalCode}
-            helperText={errors.postalCode?.message}
-            {...register('postalCode', {
+            error={!!errors.postalCodeShipping}
+            helperText={errors.postalCodeShipping?.message}
+            {...register('postalCodeShipping', {
               required: 'Postal code is required',
-              onChange: (e) => validationHandler('postalCode', e.target.value, values),
+              onChange: (e) => validationHandler('postalCodeShipping', e.target.value, values),
             })}
           />
         </Grid>
-        
+
         <FormGroup>
-          <FormControlLabel control={<Switch defaultChecked />} label="use as default shipping address" />
-          <FormControlLabel control={<Checkbox defaultChecked />} label="also use as billing address" />
+          <FormControlLabel
+            control={<Switch defaultChecked />}
+            label="use as default shipping address"
+          />
+          <FormControlLabel
+            control={<Checkbox checked={isChecked} />}
+            onChange={handleCheckboxChange}
+            label="also use as billing address"
+          />
         </FormGroup>
       </Grid>
     </div>

@@ -5,8 +5,12 @@ export interface IRegistrationFormData {
   firstName: string | null;
   lastName: string | null;
   birthDate: string | null;
-  streetAddress: string | null;
-  country: string | null;
-  city: string | null;
-  postalCode: string | null;
+  streetAddressBilling: string | null;
+  countryShipping: string | null;
+  countryBilling: string | null;
+  cityShipping: string | null;
+  cityBilling: string | null;
+  postalCodeShipping: string | null;
+  postalCodeBilling: string | null;
+  streetAddressShipping: string | null;
 }
