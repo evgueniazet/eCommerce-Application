@@ -2,6 +2,8 @@ import { TextField, Grid } from '@mui/material';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 import { FC } from 'react';
 
+/* eslint-disable react/prop-types */
+
 export const FormPage2: FC<IFormPageProps> = ({
   register,
   errors,
@@ -11,14 +13,13 @@ export const FormPage2: FC<IFormPageProps> = ({
   return (
     <Grid
       container
-      spacing={2}
       sx={{
         position: 'relative',
-        height: isActive ? 'auto' : 0,
+        height: isActive ? 'initial' : 0,
         opacity: isActive ? 1 : 0,
       }}
     >
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           label="First Name"
@@ -31,7 +32,7 @@ export const FormPage2: FC<IFormPageProps> = ({
           })}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           label="Last Name"
@@ -44,7 +45,7 @@ export const FormPage2: FC<IFormPageProps> = ({
           })}
         />
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={12} mt={2}>
         <TextField
           fullWidth
           type="date"

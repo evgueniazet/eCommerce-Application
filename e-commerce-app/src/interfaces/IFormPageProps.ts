@@ -1,11 +1,12 @@
 import { IRegistrationFormData } from './IRegistrationFormData';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister } from 'react-hook-form';
+import { globalErrors } from '../types';
 import { IValues } from './IValues';
 
 export interface IFormPageProps {
   isActive: boolean;
   register: UseFormRegister<IRegistrationFormData>;
-  errors: FieldErrors<IRegistrationFormData>;
+  errors: globalErrors<IRegistrationFormData>;
   validationHandler: (
     fieldName: keyof IRegistrationFormData,
     value: string,

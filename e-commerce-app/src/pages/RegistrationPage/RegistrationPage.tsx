@@ -12,14 +12,15 @@ import Alert from '@mui/material/Alert';
 import { FormPage1 } from './FormPage1';
 import { FormPage2 } from './FormPage2';
 import { FormPage3 } from './FormPage3';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
-import { fieldNameType } from '../../types/fieldNameType';
+import { fieldNameType, globalErrors } from '../../types';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { getLoggedIn } from '../../store/slices/userSlice';
+
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -35,52 +36,54 @@ export const RegistrationPage: React.FC = () => {
 
   const [page, setPage] = useState(1);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    setError,
-    clearErrors,
-    reset,
-  } = useForm<IRegistrationFormData>();
+  const { register, handleSubmit, formState, getValues, setError, clearErrors } =
+    useForm<IRegistrationFormData>();
 
   const { validateField } = useValidate();
 
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
+  const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
+    (acc, item) => {
+      if (validationErrors[item as keyof IRegistrationFormData]) {
+        acc[item as keyof IRegistrationFormData] = {
+          message: validationErrors[item as keyof IRegistrationFormData],
+        };
+      }
+
+      if (
+        formState.errors[item as keyof FieldErrors<IRegistrationFormData>] &&
+        !validationErrors[item as keyof IRegistrationFormData]
+      ) {
+        acc[item as keyof IRegistrationFormData] = {
+          message:
+            formState.errors[item as keyof FieldErrors<IRegistrationFormData>]?.message ?? null,
+        };
+      }
+
+      return acc;
+    },
+    {},
+  );
+
   const values = {
-    email: getValues('email') ?? '',
     password: getValues('password') ?? '',
-    confirmPassword: getValues('confirmPassword') ?? '',
-    firstName: getValues('firstName') ?? '',
-    lastName: getValues('lastName') ?? '',
-    birthDate: getValues('birthDate') ?? '',
-    streetAddress: getValues('streetAddress') ?? '',
     country: getValues('country') ?? '',
-    city: getValues('city') ?? '',
-    postalCode: getValues('postalCode') ?? '',
-  };
-
-  const withEmptyValidation = (value: string, fieldName: string, validationError: string) => {
-    if (!value.trim()) {
-      return `${fieldName} is required`;
-    }
-
-    return validationError;
   };
 
   const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
     if (!value) {
+      const updatedErrors = {
+        ...validationErrors,
+        [fieldName]: '',
+      };
+
       clearErrors(fieldName);
+      Object.assign(validationErrors, updatedErrors);
       return;
     }
 
-    const errString = withEmptyValidation(
-      value,
-      fieldName,
-      validateField(fieldName, value, values),
-    );
-
-    console.log('errString', errString);
+    const errString = validateField(fieldName, value, values);
 
     if (errString.length) {
       setError(fieldName, {
@@ -94,6 +97,10 @@ export const RegistrationPage: React.FC = () => {
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
     console.log(data);
+  };
+
+  const buttonSubmitClick = () => {
+    setFormSubmitted(true);
   };
 
   return (
@@ -113,7 +120,7 @@ export const RegistrationPage: React.FC = () => {
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
         <p>Page {page}/3</p>
-        {!!Object.keys(errors).length && (
+        {!!formSubmitted && !!Object.keys(formState.errors).length && (
           <Box>
             <Alert severity={'error'}>All fields are required!</Alert>
           </Box>
@@ -122,30 +129,31 @@ export const RegistrationPage: React.FC = () => {
           component="form"
           noValidate
           onSubmit={handleSubmit(onSubmit)}
-          sx={{ mt: 2, position: 'relative' }}
+          sx={{ position: 'relative', mt: 2 }}
         >
           <FormPage1
             isActive={page === 1}
             register={register}
-            errors={errors}
+            errors={globalErrors}
             validationHandler={validationHandler}
             values={values}
           />
           <FormPage2
             isActive={page === 2}
             register={register}
-            errors={errors}
+            errors={globalErrors}
             validationHandler={validationHandler}
           />
           <FormPage3
             isActive={page === 3}
             register={register}
-            errors={errors}
+            errors={globalErrors}
             validationHandler={validationHandler}
             values={values}
           />
           <Button
             type="submit"
+            onClick={buttonSubmitClick}
             fullWidth
             variant="contained"
             sx={{ mt: 3, backgroundColor: 'green' }}

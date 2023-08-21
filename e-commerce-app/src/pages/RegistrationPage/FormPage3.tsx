@@ -18,19 +18,20 @@ export const FormPage3: FC<IFormPageProps> = ({
   values,
   isActive,
 }) => {
-  const defaultCountry = 'USA';
+  const defaultCountry = 'Poland';
 
   return (
     <div
       style={{
         position: 'relative',
-        height: isActive ? 'auto' : 0,
+        height: isActive ? 'initial' : 0,
         opacity: isActive ? 1 : 0,
+        visibility: isActive ? 'visible' : 'hidden',
       }}
     >
-      <p>Address fields:</p>
-      <Grid container spacing={2}>
-        <Grid item xs={12}>
+      <p style={{ margin: 0 }}>Address fields:</p>
+      <Grid container>
+        <Grid item xs={12} mt={2}>
           <TextField
             fullWidth
             label="Street"
@@ -43,7 +44,7 @@ export const FormPage3: FC<IFormPageProps> = ({
             })}
           />
         </Grid>
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
           <TextField
             fullWidth
             label="City"
@@ -57,7 +58,7 @@ export const FormPage3: FC<IFormPageProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
           <InputLabel>Country</InputLabel>
           <Select
             fullWidth
@@ -68,14 +69,13 @@ export const FormPage3: FC<IFormPageProps> = ({
               onChange: (e) => validationHandler('country', e.target.value),
             })}
           >
-            <MenuItem value="USA">USA</MenuItem>
             <MenuItem value="Canada">Canada</MenuItem>
-            <MenuItem value="UK">UK</MenuItem>
-            <MenuItem value="Australia">Australia</MenuItem>
+            <MenuItem value="Poland">Poland</MenuItem>
+            <MenuItem value="Germany">Germany</MenuItem>
           </Select>
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item xs={12} mt={2}>
           <TextField
             fullWidth
             label="Postal Code"
