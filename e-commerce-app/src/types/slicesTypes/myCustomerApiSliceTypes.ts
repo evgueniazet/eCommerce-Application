@@ -36,8 +36,7 @@ export interface IMyCustomerApiSignupRequest {
   defaultBillingAddress?: number;
 }
 
-
 export interface ISignUpMyCustomer {
-  token: string,
-  customerData: IMyCustomerApiSignupRequest
+  token: string;
+  customerData: IMyCustomerApiSignupRequest;
 }

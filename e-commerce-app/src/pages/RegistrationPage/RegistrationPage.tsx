@@ -26,7 +26,7 @@ import {
   getUserEmail,
   getUserPassword,
   setAuth,
-  setLogIn
+  setLogIn,
 } from '../../store/slices/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -135,19 +135,20 @@ export const RegistrationPage: React.FC = () => {
     const country = countryData.find((c) => c.name === countryName);
     return country ? country.code : '';
   };
-  const [loginUser, {
-    isSuccess: isSuccessLogin,
-    error: errorLogin,
-    isError: isErrorLogin,
-    data: dataLogin
-  }] = useLoginUserMutation();
+  const [
+    loginUser,
+    { isSuccess: isSuccessLogin, error: errorLogin, isError: isErrorLogin, data: dataLogin },
+  ] = useLoginUserMutation();
 
-  const [signupMyCustomer, {
-    isSuccess: isSuccessRegistration,
-    data: dataRegistration,
-    isError: isErrorRegistration,
-    error: ApiErrorRegistration
-  }] = useSignUpMyCustomerMutation();
+  const [
+    signupMyCustomer,
+    {
+      isSuccess: isSuccessRegistration,
+      data: dataRegistration,
+      isError: isErrorRegistration,
+      error: ApiErrorRegistration,
+    },
+  ] = useSignUpMyCustomerMutation();
   const accessToken = useAppSelector(getAccessToken);
 
   const userPwd = useAppSelector(getUserPassword);
@@ -172,11 +173,12 @@ export const RegistrationPage: React.FC = () => {
   useEffect(() => {
     if (!isSuccessLogin || !dataLogin) return;
     console.log(dataLogin);
-    dispatch(setAuth({ access_token: dataLogin.access_token, refresh_token: dataLogin.refresh_token }));
+    dispatch(
+      setAuth({ access_token: dataLogin.access_token, refresh_token: dataLogin.refresh_token }),
+    );
     dispatch(setLogIn());
     setTokenInStorage(dataLogin.refresh_token);
   }, [isSuccessLogin, dataLogin]);
-
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
     const shippingAddress: IMyCustomerApiAddressRequest = {
@@ -207,7 +209,6 @@ export const RegistrationPage: React.FC = () => {
       transformedAddresses.push(billingAddress);
     }
 
-
     const transformedData: IMyCustomerApiSignupRequest = {
       email: data.email || '',
       firstName: data.firstName || '',
@@ -234,15 +235,13 @@ export const RegistrationPage: React.FC = () => {
     });
   };
 
-
   const buttonSubmitClick = () => {
     setFormSubmitted(true);
   };
 
   return (
-    <Container component="main"
-               maxWidth="xs">
-      <CssBaseline/>
+    <Container component="main" maxWidth="xs">
+      <CssBaseline />
       <Box
         sx={{
           marginTop: 8,
@@ -252,15 +251,10 @@ export const RegistrationPage: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1"
-                    variant="h5"
-                    sx={{ mb: 3, color: 'green', fontWeight: '900' }}>
+        <Typography component="h1" variant="h5" sx={{ mb: 3, color: 'green', fontWeight: '900' }}>
           Welcome to Registration!
         </Typography>
-        <img src={RegPageImg}
-             alt="Image1"
-             width={200}
-             height={auto}/>
+        <img src={RegPageImg} alt="Image1" width={200} height={auto} />
         <p>
           Page {page}/{pageCount}
         </p>
@@ -359,12 +353,9 @@ export const RegistrationPage: React.FC = () => {
               </Button>
             )}
           </Box>
-          <Grid item
-                xs={12}
-                sx={{ mt: 2 }}>
+          <Grid item xs={12} sx={{ mt: 2 }}>
             <FormControlLabel
-              control={<Checkbox value="allowExtraEmails"
-                                 color="primary"/>}
+              control={<Checkbox value="allowExtraEmails" color="primary" />}
               label="I want to receive web-site promotions"
             />
           </Grid>
@@ -382,12 +373,13 @@ export const RegistrationPage: React.FC = () => {
       <Box textAlign="center">
         <small>We don&apos;t share your personal information with anyone</small>
       </Box>
-      <Grid sx={{ mt: 2, mb: 5, zIndex: 33, position: 'relative' }}
-            container
-            justifyContent="center">
+      <Grid
+        sx={{ mt: 2, mb: 5, zIndex: 33, position: 'relative' }}
+        container
+        justifyContent="center"
+      >
         <Grid item>
-          <Link href={'/login'}
-                variant="body2">
+          <Link href={'/login'} variant="body2">
             Already have an account? Login
           </Link>
         </Grid>

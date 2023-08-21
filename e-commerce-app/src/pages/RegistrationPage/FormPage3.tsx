@@ -14,7 +14,7 @@ export const FormPage3: FC<IFormPageProps> = ({
   shippingFlag,
   setShippingFlag,
   checkDefault,
-  setCheckDefault
+  setCheckDefault,
 }) => {
   const defaultCountry = 'Poland';
 
@@ -97,11 +97,17 @@ export const FormPage3: FC<IFormPageProps> = ({
         </Grid>
 
         <FormGroup>
-          {setCheckDefault && <FormControlLabel
-            control={<Switch checked={checkDefault}
-                             onChange={e => setCheckDefault(e.target.checked)}/>}
-            label="use as default shipping address"
-          />}
+          {setCheckDefault && (
+            <FormControlLabel
+              control={
+                <Switch
+                  checked={checkDefault}
+                  onChange={(e) => setCheckDefault(e.target.checked)}
+                />
+              }
+              label="use as default shipping address"
+            />
+          )}
           <FormControlLabel
             control={<Checkbox checked={isChecked} />}
             onChange={handleCheckboxChange}

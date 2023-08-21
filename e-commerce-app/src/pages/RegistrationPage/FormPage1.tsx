@@ -3,7 +3,6 @@ import Grid from '@mui/material/Grid';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 import { FC } from 'react';
 
-
 export const FormPage1: FC<IFormPageProps> = ({
   register,
   errors,
@@ -11,7 +10,6 @@ export const FormPage1: FC<IFormPageProps> = ({
   values,
   isActive,
 }) => {
-    
   return (
     <Grid
       container

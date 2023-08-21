@@ -31,7 +31,6 @@ const defaultErrorsObj: IRegistrationFormData = {
 export const useValidate = () => {
   const [errors, setErrors] = useState<IRegistrationFormData>(defaultErrorsObj);
 
-
   const validateField = (fieldName: string, value: string, values?: IValues): string => {
     let errorMessage = '';
 
