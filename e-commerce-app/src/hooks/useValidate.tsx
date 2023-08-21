@@ -34,7 +34,7 @@ export const useValidate = () => {
     return '';
   };
 
-  const validatePassword = (password: string) => {
+  const validatePassword = (confirmPassword: string, password: string) => {
     const trimmedPassword = password.trim();
     const minLength = 8;
     const specialCharacterRegex = /[!@#$%^&*]/;
@@ -55,6 +55,10 @@ export const useValidate = () => {
 
     if (!(hasLowercase && hasUppercase && hasDigit) || !hasSpecialCharacter) {
       return 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (e.g., !@#$%^&*)';
+    }
+
+    if (confirmPassword && confirmPassword !== password) {
+      return 'Passwords do not match';
     }
 
     return '';
@@ -155,7 +159,7 @@ export const useValidate = () => {
         errorMessage = validateEmail(value);
         break;
       case 'password':
-        errorMessage = validatePassword(value);
+        errorMessage = validatePassword(values?.confirmPassword || '', value);
         break;
       case 'confirmPassword':
         if (values) {

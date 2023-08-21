@@ -1,7 +1,6 @@
 import {
   TextField,
   FormControlLabel,
-  Checkbox,
   Grid,
   Select,
   MenuItem,
@@ -9,6 +8,9 @@ import {
 } from '@mui/material';
 import { FC } from 'react';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
+import FormGroup from '@mui/material/FormGroup';
+import Switch from '@mui/material/Switch';
+import Checkbox from '@mui/material/Checkbox';
 
 
 export const FormPage3: FC<IFormPageProps> = ({
@@ -29,7 +31,7 @@ export const FormPage3: FC<IFormPageProps> = ({
         visibility: isActive ? 'visible' : 'hidden',
       }}
     >
-      <p style={{ margin: 0 }}>Address fields:</p>
+      <p style={{ margin: 0 }}>Shipping Address:</p>
       <Grid container>
         <Grid item xs={12} mt={2}>
           <TextField
@@ -88,12 +90,11 @@ export const FormPage3: FC<IFormPageProps> = ({
             })}
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox value="allowExtraEmails" color="primary" />}
-            label="I want to receive web-site promotions"
-          />
-        </Grid>
+        
+        <FormGroup>
+          <FormControlLabel control={<Switch defaultChecked />} label="use as default shipping address" />
+          <FormControlLabel control={<Checkbox defaultChecked />} label="also use as billing address" />
+        </FormGroup>
       </Grid>
     </div>
   );
