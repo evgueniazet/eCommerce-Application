@@ -22,7 +22,7 @@ import {
   getLoggedIn,
   isRememberedMe,
   setAuth,
-  setLogIn,
+  setLogIn, setLogOut,
   toggleRememberMe,
 } from '../../store/slices/userSlice';
 import { IResponseError } from '../../types/AuthTypes';
@@ -93,6 +93,7 @@ export const LoginPage: FC = () => {
   useEffect(() => {
     if (!isError || !errorApi) return;
     setGlobalError({ status: true, message: (errorApi as IResponseError).data.message });
+    dispatch(setLogOut());
   }, [isError]);
 
   const submitHandler: SubmitHandler<ILoginFormData> = (data) => {
@@ -190,8 +191,8 @@ export const LoginPage: FC = () => {
         sx={{
           backgroundImage: `url(${LoginImage})`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: 'contain',
+          backgroundPosition: 'top',
         }}
       ></Grid>
       <Grid item lg={5} sm={7}>
