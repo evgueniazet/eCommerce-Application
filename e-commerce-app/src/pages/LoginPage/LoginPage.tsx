@@ -190,8 +190,8 @@ export const LoginPage: FC = () => {
         sx={{
           backgroundImage: `url(${LoginImage})`,
           backgroundRepeat: 'no-repeat',
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: 'contain',
+          backgroundPosition: 'top',
         }}
       ></Grid>
       <Grid item lg={5} sm={7}>
