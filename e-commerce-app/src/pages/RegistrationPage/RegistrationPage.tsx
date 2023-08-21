@@ -17,14 +17,29 @@ import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
 import { fieldNameType, globalErrors } from '../../types';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import { getLoggedIn } from '../../store/slices/userSlice';
+
 
 export const RegistrationPage: React.FC = () => {
+  const navigate = useNavigate();
+  const from = '/';
+
+  const isLoggedIn = useAppSelector(getLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(from, { replace: true });
+    }
+  }, [isLoggedIn]);
+
   const [page, setPage] = useState(1);
 
   const { register, handleSubmit, formState, getValues, setError, clearErrors } =
     useForm<IRegistrationFormData>();
 
-  const { errors: validationErrors, validateField } = useValidate();
+  const { validateField } = useValidate();
 
   const [formSubmitted, setFormSubmitted] = useState(false);
 

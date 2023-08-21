@@ -1,43 +1,58 @@
 import './App.css';
-import { BrowserRouter as Router, Route, NavLink, Routes } from 'react-router-dom';
-import { HomePage } from './pages/HomePage/HomePage';
-import { AboutPage } from './pages/AbouPage/AboutPage';
-import { ErrorPage } from './pages/ErrorPage/ErrorPage';
-import { BasketPage } from './pages/BasketPage/BasketPage';
-import { LoginPage } from './pages/LoginPage/LoginPage';
-import { RegistrationPage } from './pages/RegistrationPage/RegistrationPage';
-import { UserPage } from './pages/UserPage/UserPage';
-import { ProductPage } from './pages/ProductPage/ProductPage';
-import { ProductsPage } from './pages/ProductsPage/ProductsPage';
-import RootPage from './pages/RootPage/RootPage';
+import AppRoutes from './routes/AppRoutes';
+import { useGetAccessTokenFromRefreshMutation, useGetAnonymousTokenMutation } from './api/authApi';
+import { useEffect } from 'react';
+import { useLocalToken } from './hooks/useLocalToken';
+import { useAppDispatch } from './store/hooks';
+import { setAuth, setLogIn, setLogOut } from './store/slices/userSlice';
+import { useGetMyCustomerDetailsMutation } from './api/myCustomerApi';
 
 export const App = () => {
+  const [getAnonymousToken] = useGetAnonymousTokenMutation();
+  const { isTokenInStorage, getTokenFromStorage, delTokenFromStorage } = useLocalToken();
+  const [getAccessToken, { data, isSuccess, isError }] = useGetAccessTokenFromRefreshMutation();
+  const [getDetails] = useGetMyCustomerDetailsMutation();
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setAuth({ access_token: data.access_token }));
+      getDetails(data.access_token).then((res) => {
+        if ('data' in res) {
+          dispatch(setAuth({ email: res.data.email }));
+        }
+      });
+      dispatch(setLogIn());
+    }
+  }, [isSuccess, data]);
+
+  useEffect(() => {
+    if (isError) {
+      delTokenFromStorage();
+      dispatch(setLogOut());
+    }
+  }, [isError]);
+
+  useEffect(() => {
+    if (isTokenInStorage()) {
+      const token = getTokenFromStorage();
+      if (token) {
+        getAccessToken(token);
+      }
+    } else {
+      getAnonymousToken().then((res) => {
+        if ('data' in res) {
+          dispatch(
+            setAuth({ access_token: res.data.access_token, refresh_token: res.data.refresh_token }),
+          );
+        }
+      });
+    }
+  }, []);
+
   return (
-    <Router>
-      <header>
-        <NavLink to="/">Home</NavLink>
-        <NavLink to="/about">About</NavLink>
-        <NavLink to="/basket">Basket</NavLink>
-        <NavLink to="/login">Login</NavLink>
-        <NavLink to="/registration">Registration</NavLink>
-        <NavLink to="/user">User</NavLink>
-        <NavLink to="/product">Product</NavLink>
-        <NavLink to="/products">Products</NavLink>
-        <NavLink to="*">Error</NavLink>
-      </header>
-      <Routes>
-        <Route path={'/'} element={<RootPage />}>
-          <Route index element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/basket" element={<BasketPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route path="/user" element={<UserPage />} />
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-        </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </Routes>
-    </Router>
+    <>
+      <AppRoutes />
+    </>
   );
 };

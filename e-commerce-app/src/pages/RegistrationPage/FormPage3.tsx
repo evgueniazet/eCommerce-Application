@@ -7,11 +7,11 @@ import {
   MenuItem,
   InputLabel,
 } from '@mui/material';
+import { FC } from 'react';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 
-/* eslint-disable react/prop-types */
 
-export const FormPage3: React.FC<IFormPageProps> = ({
+export const FormPage3: FC<IFormPageProps> = ({
   register,
   errors,
   validationHandler,
