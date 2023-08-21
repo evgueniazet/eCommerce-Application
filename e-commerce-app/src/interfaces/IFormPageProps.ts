@@ -19,4 +19,6 @@ export interface IFormPageProps {
   billingFlag?: boolean;
   setShippingFlag?: Dispatch<SetStateAction<boolean>>;
   setBillingFlag?: Dispatch<SetStateAction<boolean>>;
+  checkDefault?: boolean;
+  setCheckDefault?: Dispatch<SetStateAction<boolean>>;
 }

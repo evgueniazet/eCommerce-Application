@@ -5,6 +5,7 @@ export interface IRegistrationFormData {
   firstName: string | null;
   lastName: string | null;
   birthDate: string | null;
+  streetAddressShipping: string | null;
   streetAddressBilling: string | null;
   countryShipping: string | null;
   countryBilling: string | null;
@@ -12,5 +13,4 @@ export interface IRegistrationFormData {
   cityBilling: string | null;
   postalCodeShipping: string | null;
   postalCodeBilling: string | null;
-  streetAddressShipping: string | null;
 }

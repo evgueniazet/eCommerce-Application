@@ -88,6 +88,7 @@ export const LoginPage: FC = () => {
     if (isRememberedUser) {
       setTokenInStorage(data.refresh_token);
     }
+    setTokenInStorage(data.refresh_token);
     dispatch(setLogIn());
   }, [isSuccess, data]);
 
@@ -272,16 +273,16 @@ export const LoginPage: FC = () => {
           </Box>
           <Box sx={{ mt: 10 }}>
             <Typography component="p" textAlign="center">
-              Don&apos;t have account yet? Sign up
+              Don&apos;t have account yet?
             </Typography>
           </Box>
           <Box textAlign="center">
             <Button
-              type="submit"
+              href={'/registration'}
               variant="contained"
               sx={{ px: 2, mt: 2, backgroundColor: 'green' }}
             >
-              Registration
+              Sign Up
             </Button>
           </Box>
         </Box>

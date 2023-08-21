@@ -19,20 +19,29 @@ import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
 import { fieldNameType, globalErrors } from '../../types';
 import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../store/hooks';
-import { getLoggedIn } from '../../store/slices/userSlice';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import {
+  getAccessToken,
+  getLoggedIn,
+  getUserEmail,
+  getUserPassword,
+  setAuth,
+  setLogIn
+} from '../../store/slices/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import { IMyCustomerApiSignupRequest } from '../../types/slicesTypes/myCustomerApiSliceTypes';
 import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 import countryData from '../../data/countries.json';
+import { useSignUpMyCustomerMutation } from '../../api/myCustomerApi';
+import { useLoginUserMutation } from '../../api/authApi';
+import { useLocalToken } from '../../hooks/useLocalToken';
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
   const from = '/';
   const isLoggedIn = useAppSelector(getLoggedIn);
   const isShippingChecked = false;
-  const isBillingChecked = false;
   let pageCount = 3;
 
   useEffect(() => {
@@ -51,8 +60,9 @@ export const RegistrationPage: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
 
   const [shippingFlag, setShippingFlag] = useState(isShippingChecked);
+  const [defaultShippingFlag, setDefaultShippingFlag] = useState(false);
 
-  const [billingFlag, setBillingFlag] = useState(isBillingChecked);
+  const [defaultBillingFlag, setDefaultBillingFlag] = useState(false);
 
   const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
     (acc, item) => {
@@ -77,15 +87,13 @@ export const RegistrationPage: React.FC = () => {
     {},
   );
 
-  if (!shippingFlag && !billingFlag) {
+  if (!shippingFlag) {
     pageCount = 4;
   }
 
   let pagesToRender: number[];
 
-  if (billingFlag && !shippingFlag) {
-    pagesToRender = [1, 2, 4];
-  } else if (shippingFlag && !billingFlag) {
+  if (shippingFlag) {
     pagesToRender = [1, 2, 3];
   } else {
     pagesToRender = [1, 2, 3, 4];
@@ -122,10 +130,53 @@ export const RegistrationPage: React.FC = () => {
     }
   };
 
+  const dispatch = useAppDispatch();
   const getCountryCode = (countryName: string): string => {
     const country = countryData.find((c) => c.name === countryName);
     return country ? country.code : '';
   };
+  const [loginUser, {
+    isSuccess: isSuccessLogin,
+    error: errorLogin,
+    isError: isErrorLogin,
+    data: dataLogin
+  }] = useLoginUserMutation();
+
+  const [signupMyCustomer, {
+    isSuccess: isSuccessRegistration,
+    data: dataRegistration,
+    isError: isErrorRegistration,
+    error: ApiErrorRegistration
+  }] = useSignUpMyCustomerMutation();
+  const accessToken = useAppSelector(getAccessToken);
+
+  const userPwd = useAppSelector(getUserPassword);
+  const userEmail = useAppSelector(getUserEmail);
+
+  useEffect(() => {
+    if (!dataRegistration || !isSuccessRegistration) return;
+    loginUser({
+      email: userEmail || '',
+      password: userPwd || '',
+    });
+  }, [isSuccessRegistration, dataRegistration]);
+
+  useEffect(() => {
+    if (isErrorLogin && errorLogin) {
+      navigate(from, { replace: true });
+    }
+  }, [isErrorLogin, errorLogin]);
+
+  const { setTokenInStorage } = useLocalToken();
+
+  useEffect(() => {
+    if (!isSuccessLogin || !dataLogin) return;
+    console.log(dataLogin);
+    dispatch(setAuth({ access_token: dataLogin.access_token, refresh_token: dataLogin.refresh_token }));
+    dispatch(setLogIn());
+    setTokenInStorage(dataLogin.refresh_token);
+  }, [isSuccessLogin, dataLogin]);
+
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
     const shippingAddress: IMyCustomerApiAddressRequest = {
@@ -144,20 +195,18 @@ export const RegistrationPage: React.FC = () => {
 
     const transformedAddresses: IMyCustomerApiAddressRequest[] = [];
 
-    if (!shippingFlag && !billingFlag) {
+    const shippingAddressesArray = [0];
+    const billingAddressesArray = [];
+
+    if (shippingFlag) {
+      transformedAddresses.push(shippingAddress);
+      billingAddressesArray.push(0);
+    } else {
+      billingAddressesArray.push(1);
       transformedAddresses.push(shippingAddress);
       transformedAddresses.push(billingAddress);
-    } else {
-      if (shippingFlag) {
-        transformedAddresses.push(shippingAddress);
-        transformedAddresses.push(shippingAddress);
-      }
-
-      if (billingFlag) {
-        transformedAddresses.push(billingAddress);
-        transformedAddresses.push(billingAddress);
-      }
     }
+
 
     const transformedData: IMyCustomerApiSignupRequest = {
       email: data.email || '',
@@ -166,18 +215,34 @@ export const RegistrationPage: React.FC = () => {
       password: data.password || '',
       dateOfBirth: data.birthDate || '',
       addresses: transformedAddresses,
-      shippingAddresses: [],
-      billingAddresses: [],
+      shippingAddresses: shippingAddressesArray,
+      billingAddresses: billingAddressesArray,
     };
+
+    if (defaultShippingFlag) {
+      transformedData.defaultShippingAddress = 0;
+    }
+    if (defaultBillingFlag) {
+      transformedData.defaultBillingAddress = 1;
+    }
+
+    dispatch(setAuth({ email: transformedData.email, password: transformedData.password }));
+
+    signupMyCustomer({
+      customerData: transformedData,
+      token: accessToken || '',
+    });
   };
+
 
   const buttonSubmitClick = () => {
     setFormSubmitted(true);
   };
 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
+    <Container component="main"
+               maxWidth="xs">
+      <CssBaseline/>
       <Box
         sx={{
           marginTop: 8,
@@ -187,16 +252,36 @@ export const RegistrationPage: React.FC = () => {
           alignItems: 'center',
         }}
       >
-        <Typography component="h1" variant="h5" sx={{ mb: 3, color: 'green', fontWeight: '900' }}>
+        <Typography component="h1"
+                    variant="h5"
+                    sx={{ mb: 3, color: 'green', fontWeight: '900' }}>
           Welcome to Registration!
         </Typography>
-        <img src={RegPageImg} alt="Image1" width={200} height={auto} />
+        <img src={RegPageImg}
+             alt="Image1"
+             width={200}
+             height={auto}/>
         <p>
           Page {page}/{pageCount}
         </p>
         {!!formSubmitted && !!Object.keys(formState.errors).length && (
           <Box>
             <Alert severity={'error'}>All fields are required!</Alert>
+          </Box>
+        )}
+        {isErrorRegistration && ApiErrorRegistration && (
+          <Box>
+            <Alert severity={'error'}>Registration Failed Try Again Later!</Alert>
+          </Box>
+        )}
+        {isErrorLogin && (
+          <Box>
+            <Alert severity={'error'}>Try to login later</Alert>
+          </Box>
+        )}
+        {isSuccessRegistration && dataRegistration && (
+          <Box>
+            <Alert severity={'success'}>You have been registered</Alert>
           </Box>
         )}
         <Box
@@ -231,17 +316,19 @@ export const RegistrationPage: React.FC = () => {
               values={values}
               shippingFlag={shippingFlag}
               setShippingFlag={setShippingFlag}
+              checkDefault={defaultShippingFlag}
+              setCheckDefault={setDefaultShippingFlag}
             />
           )}
           {pagesToRender.includes(4) && (
             <FormPage4
-              isActive={page === (billingFlag ? 3 : 4)}
+              isActive={page === 4}
               register={register}
               errors={globalErrors}
               validationHandler={validationHandler}
               values={values}
-              billingFlag={billingFlag}
-              setBillingFlag={setBillingFlag}
+              checkDefault={defaultBillingFlag}
+              setCheckDefault={setDefaultBillingFlag}
             />
           )}
           <Box textAlign="center">
@@ -258,7 +345,7 @@ export const RegistrationPage: React.FC = () => {
                 Back
               </Button>
             )}
-            {page < (!shippingFlag && !billingFlag ? 4 : 3) && (
+            {page < (shippingFlag ? 3 : 4) && (
               <Button
                 size="small"
                 variant="contained"
@@ -272,9 +359,12 @@ export const RegistrationPage: React.FC = () => {
               </Button>
             )}
           </Box>
-          <Grid item xs={12} sx={{ mt: 2 }}>
+          <Grid item
+                xs={12}
+                sx={{ mt: 2 }}>
             <FormControlLabel
-              control={<Checkbox value="allowExtraEmails" color="primary" />}
+              control={<Checkbox value="allowExtraEmails"
+                                 color="primary"/>}
               label="I want to receive web-site promotions"
             />
           </Grid>
@@ -292,9 +382,12 @@ export const RegistrationPage: React.FC = () => {
       <Box textAlign="center">
         <small>We don&apos;t share your personal information with anyone</small>
       </Box>
-      <Grid sx={{ mt: 2, mb: 5 }} container justifyContent="center">
+      <Grid sx={{ mt: 2, mb: 5, zIndex: 33, position: 'relative' }}
+            container
+            justifyContent="center">
         <Grid item>
-          <Link href="#" variant="body2">
+          <Link href={'/login'}
+                variant="body2">
             Already have an account? Login
           </Link>
         </Grid>

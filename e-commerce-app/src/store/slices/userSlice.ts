@@ -58,6 +58,8 @@ export const getLoggedIn = (state: RootStateType) => state.user.isLoggedIn;
 export const isRememberedMe = (state: RootStateType) => state.user.rememberMe;
 export const getRefreshToken = (state: RootStateType) => state.user.refresh_token;
 export const getAccessToken = (state: RootStateType) => state.user.access_token;
+export const getUserPassword = (state: RootStateType) => state.user.password;
+export const getUserEmail = (state: RootStateType) => state.user.email;
 
 export const { logout, setAuth, setLogIn, setLogOut, setAnonymousAuth, toggleRememberMe } =
   userSlice.actions;

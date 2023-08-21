@@ -1,5 +1,5 @@
 import { TextField, FormControlLabel, Grid, Select, MenuItem, InputLabel } from '@mui/material';
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
@@ -13,6 +13,8 @@ export const FormPage3: FC<IFormPageProps> = ({
   isActive,
   shippingFlag,
   setShippingFlag,
+  checkDefault,
+  setCheckDefault
 }) => {
   const defaultCountry = 'Poland';
 
@@ -95,10 +97,11 @@ export const FormPage3: FC<IFormPageProps> = ({
         </Grid>
 
         <FormGroup>
-          <FormControlLabel
-            control={<Switch defaultChecked />}
+          {setCheckDefault && <FormControlLabel
+            control={<Switch checked={checkDefault}
+                             onChange={e => setCheckDefault(e.target.checked)}/>}
             label="use as default shipping address"
-          />
+          />}
           <FormControlLabel
             control={<Checkbox checked={isChecked} />}
             onChange={handleCheckboxChange}

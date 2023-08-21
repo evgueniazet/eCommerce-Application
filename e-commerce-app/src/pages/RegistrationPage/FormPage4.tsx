@@ -1,37 +1,27 @@
 import {
   TextField,
   FormControlLabel,
-  Checkbox,
   Grid,
   Select,
   MenuItem,
   InputLabel,
 } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
 import FormGroup from '@mui/material/FormGroup';
 import Switch from '@mui/material/Switch';
 
 export const FormPage4: FC<IFormPageProps> = ({
-  register,
-  errors,
-  validationHandler,
-  values,
-  isActive,
-  billingFlag,
-  setBillingFlag,
-}) => {
+                                                register,
+                                                errors,
+                                                validationHandler,
+                                                values,
+                                                isActive,
+                                                checkDefault,
+                                                setCheckDefault
+                                              }) => {
   const defaultCountry = 'Poland';
 
-  const [isChecked, setBillingChecked] = useState(billingFlag);
-
-  const handleCheckboxChange = () => {
-    if (setBillingFlag !== undefined) {
-      setBillingFlag(!billingFlag);
-      setBillingChecked(!billingFlag);
-      !isActive;
-    }
-  };
 
   return (
     <div
@@ -44,7 +34,9 @@ export const FormPage4: FC<IFormPageProps> = ({
     >
       <p style={{ margin: 0 }}>Billing Address:</p>
       <Grid container>
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <TextField
             fullWidth
             label="Street"
@@ -57,7 +49,9 @@ export const FormPage4: FC<IFormPageProps> = ({
             })}
           />
         </Grid>
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <TextField
             fullWidth
             label="City"
@@ -71,7 +65,9 @@ export const FormPage4: FC<IFormPageProps> = ({
           />
         </Grid>
 
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <InputLabel>Country</InputLabel>
           <Select
             fullWidth
@@ -88,7 +84,9 @@ export const FormPage4: FC<IFormPageProps> = ({
           </Select>
         </Grid>
 
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <TextField
             fullWidth
             label="Postal Code"
@@ -103,16 +101,11 @@ export const FormPage4: FC<IFormPageProps> = ({
         </Grid>
 
         <FormGroup>
-          <FormControlLabel
-            control={<Switch defaultChecked />}
-            label="use as default billing address"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={isChecked} />}
-            onChange={handleCheckboxChange}
-            label="also use as shipping address"
-          />
-          <FormControlLabel control={<Checkbox defaultChecked />} label="use only one address" />
+          {setCheckDefault && <FormControlLabel
+              control={<Switch checked={checkDefault}
+                               onChange={(e) => setCheckDefault(e.target.checked)}/>}
+              label="use as default billing address"
+          />}
         </FormGroup>
       </Grid>
     </div>

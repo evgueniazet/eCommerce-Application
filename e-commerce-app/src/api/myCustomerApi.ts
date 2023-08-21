@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   IMyCustomerBaseResponse,
   IMyCustomerLoginRequest,
-  IMyCustomerApiSignupRequest,
+  ISignUpMyCustomer,
 } from '../types/slicesTypes/myCustomerApiSliceTypes';
 
 export const myCustomerApi = createApi({
@@ -26,16 +26,14 @@ export const myCustomerApi = createApi({
         };
       },
     }),
-    signUpMyCustomer: build.mutation<IMyCustomerBaseResponse, IMyCustomerApiSignupRequest>({
-      query(customerData) {
+    signUpMyCustomer: build.mutation<IMyCustomerBaseResponse, ISignUpMyCustomer>({
+      query(signUpData) {
         return {
           url: '/signup',
           method: 'POST',
-          body: JSON.stringify(customerData),
+          body: JSON.stringify(signUpData.customerData),
           headers: {
-            Authorization: `Bearer ${btoa(
-              process.env.REACT_APP_CTP_CLIENT_ID + ':' + process.env.REACT_APP_CTP_CLIENT_SECRET,
-            )}`,
+            Authorization: `Bearer ${signUpData.token}`,
             'Content-Type': 'application/x-www-form-urlencoded',
           },
         };
