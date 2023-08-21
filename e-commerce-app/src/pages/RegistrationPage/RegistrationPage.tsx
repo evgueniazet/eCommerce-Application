@@ -17,8 +17,22 @@ import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
 import { fieldNameType } from '../../types/fieldNameType';
+import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/hooks';
+import { getLoggedIn } from '../../store/slices/userSlice';
 
 export const RegistrationPage: React.FC = () => {
+  const navigate = useNavigate();
+  const from = '/';
+
+  const isLoggedIn = useAppSelector(getLoggedIn);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate(from, { replace: true });
+    }
+  }, [isLoggedIn]);
+
   const [page, setPage] = useState(1);
 
   const {
@@ -31,7 +45,7 @@ export const RegistrationPage: React.FC = () => {
     reset,
   } = useForm<IRegistrationFormData>();
 
-  const { errors: validationErrors, validateField } = useValidate();
+  const { validateField } = useValidate();
 
   const values = {
     email: getValues('email') ?? '',
@@ -65,7 +79,7 @@ export const RegistrationPage: React.FC = () => {
       fieldName,
       validateField(fieldName, value, values),
     );
-    
+
     console.log('errString', errString);
 
     if (errString.length) {
@@ -178,3 +192,4 @@ export const RegistrationPage: React.FC = () => {
       </Grid>
     </Container>
   );
+};
