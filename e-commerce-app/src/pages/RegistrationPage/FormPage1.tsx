@@ -24,7 +24,7 @@ export const FormPage1: React.FC<IFormPageProps> = ({
         <TextField
           fullWidth
           label="Email"
-          type="email"
+          type="text"
           autoComplete="off"
           error={!!errors.email}
           helperText={errors.email?.message}

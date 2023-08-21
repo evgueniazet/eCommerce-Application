@@ -21,16 +21,12 @@ import { fieldNameType, globalErrors } from '../../types';
 export const RegistrationPage: React.FC = () => {
   const [page, setPage] = useState(1);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    getValues,
-    setError,
-    clearErrors,
-  } = useForm<IRegistrationFormData>();
+  const { register, handleSubmit, formState, getValues, setError, clearErrors } =
+    useForm<IRegistrationFormData>();
 
   const { errors: validationErrors, validateField } = useValidate();
+
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
     (acc, item) => {
@@ -41,11 +37,12 @@ export const RegistrationPage: React.FC = () => {
       }
 
       if (
-        errors[item as keyof FieldErrors<IRegistrationFormData>] &&
+        formState.errors[item as keyof FieldErrors<IRegistrationFormData>] &&
         !validationErrors[item as keyof IRegistrationFormData]
       ) {
         acc[item as keyof IRegistrationFormData] = {
-          message: errors[item as keyof FieldErrors<IRegistrationFormData>]?.message ?? null,
+          message:
+            formState.errors[item as keyof FieldErrors<IRegistrationFormData>]?.message ?? null,
         };
       }
 
@@ -61,7 +58,13 @@ export const RegistrationPage: React.FC = () => {
 
   const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
     if (!value) {
+      const updatedErrors = {
+        ...validationErrors,
+        [fieldName]: '',
+      };
+
       clearErrors(fieldName);
+      Object.assign(validationErrors, updatedErrors);
       return;
     }
 
@@ -81,6 +84,10 @@ export const RegistrationPage: React.FC = () => {
     console.log(data);
   };
 
+  const buttonSubmitClick = () => {
+    setFormSubmitted(true);
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -98,7 +105,7 @@ export const RegistrationPage: React.FC = () => {
         </Typography>
         <img src={RegPageImg} alt="Image1" width={200} height={auto} />
         <p>Page {page}/3</p>
-        {!!Object.keys(errors).length && (
+        {!!formSubmitted && !!Object.keys(formState.errors).length && (
           <Box>
             <Alert severity={'error'}>All fields are required!</Alert>
           </Box>
@@ -131,6 +138,7 @@ export const RegistrationPage: React.FC = () => {
           />
           <Button
             type="submit"
+            onClick={buttonSubmitClick}
             fullWidth
             variant="contained"
             sx={{ mt: 3, backgroundColor: 'green' }}

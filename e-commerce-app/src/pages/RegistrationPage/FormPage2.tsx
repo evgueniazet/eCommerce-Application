@@ -1,5 +1,6 @@
 import { TextField, Grid } from '@mui/material';
 import { IFormPageProps } from '../../interfaces/IFormPageProps';
+
 /* eslint-disable react/prop-types */
 
 export const FormPage2: React.FC<IFormPageProps> = ({
@@ -11,7 +12,6 @@ export const FormPage2: React.FC<IFormPageProps> = ({
   return (
     <Grid
       container
-    //   spacing={2}
       sx={{
         position: 'relative',
         height: isActive ? 'initial' : 0,

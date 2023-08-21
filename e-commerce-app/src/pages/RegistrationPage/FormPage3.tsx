@@ -18,7 +18,7 @@ export const FormPage3: React.FC<IFormPageProps> = ({
   values,
   isActive,
 }) => {
-  const defaultCountry = 'USA';
+  const defaultCountry = 'Poland';
 
   return (
     <div
@@ -69,10 +69,9 @@ export const FormPage3: React.FC<IFormPageProps> = ({
               onChange: (e) => validationHandler('country', e.target.value),
             })}
           >
-            <MenuItem value="USA">USA</MenuItem>
             <MenuItem value="Canada">Canada</MenuItem>
-            <MenuItem value="UK">UK</MenuItem>
-            <MenuItem value="Australia">Australia</MenuItem>
+            <MenuItem value="Poland">Poland</MenuItem>
+            <MenuItem value="Germany">Germany</MenuItem>
           </Select>
         </Grid>
 

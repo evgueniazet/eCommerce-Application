@@ -19,12 +19,16 @@ export const useValidate = () => {
   const [errors, setErrors] = useState<IRegistrationFormData>(defaultErrorsObj);
 
   const validateEmail = (email: string) => {
-    const trimmedEmail = email.trim();
+    const noSpacesEmail = email.replace(/\s/g, '');
+
+    if (noSpacesEmail !== email) {
+      return 'Email address cannot contain spaces';
+    }
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 
-    if (!emailRegex.test(trimmedEmail)) {
-      return 'A properly formatted email address is required';
+    if (!emailRegex.test(email)) {
+      return 'A properly formatted email address is required. E.g.: user@example.com';
     }
 
     return '';
@@ -33,18 +37,24 @@ export const useValidate = () => {
   const validatePassword = (password: string) => {
     const trimmedPassword = password.trim();
     const minLength = 8;
+    const specialCharacterRegex = /[!@#$%^&*]/;
 
     if (trimmedPassword.length < minLength) {
-      return 'Password must contain at least 8 characters';
+      return 'Password must contain at least 8 characters, including at least one uppercase letter, one lowercase letter, one digit, and one special character (e.g., !@#$%^&*)';
     }
 
     const hasLowercase = /[a-z]/.test(trimmedPassword);
     const hasUppercase = /[A-Z]/.test(trimmedPassword);
     const hasDigit = /[0-9]/.test(trimmedPassword);
-    const hasSpecialCharacter = /[!@#$%^&*]/.test(trimmedPassword);
+    const hasSpecialCharacter = specialCharacterRegex.test(trimmedPassword);
+    const hasWhitespace = /\s/.test(password);
 
-    if (!(hasLowercase && hasUppercase && hasDigit) && !hasSpecialCharacter) {
-      return 'Password must contain at least one lowercase letter, one uppercase letter, and one number.Special characters are allowed';
+    if (hasWhitespace) {
+      return 'Password cannot contain whitespace characters';
+    }
+
+    if (!(hasLowercase && hasUppercase && hasDigit) || !hasSpecialCharacter) {
+      return 'Password must contain at least one lowercase letter, one uppercase letter, one digit, and one special character (e.g., !@#$%^&*)';
     }
 
     return '';
@@ -60,7 +70,7 @@ export const useValidate = () => {
 
   const validateName = (name: string) => {
     if (!/^[A-Za-z\s]+$/.test(name)) {
-      return 'The field must not contain any special characters';
+      return 'The field must not contain any special characters or numbers';
     }
 
     return '';
@@ -73,7 +83,17 @@ export const useValidate = () => {
 
     const ageDifference = currentDate.getFullYear() - selectedDate.getFullYear();
 
+    const monthDifference = currentDate.getMonth() - selectedDate.getMonth();
+    const dayDifference = currentDate.getDate() - selectedDate.getDate();
+
     if (ageDifference < minAge) {
+      return `You must be at least ${minAge} years old to register`;
+    }
+
+    if (
+      ageDifference === minAge &&
+      (monthDifference < 0 || (monthDifference === 0 && dayDifference < 0))
+    ) {
       return `You must be at least ${minAge} years old to register`;
     }
 
@@ -88,7 +108,7 @@ export const useValidate = () => {
   };
 
   const validateCity = (city: string) => {
-    if (!/^[A-Za-z\s]+$/.test(city)) {
+    if (!/^[A-Za-zА-Яа-я\s]+$/.test(city)) {
       return 'The field must not contain any special characters';
     }
 
@@ -96,16 +116,26 @@ export const useValidate = () => {
   };
 
   const validatePostalCode = (postalCode: string, country: string) => {
-    if (country === 'USA' || country === 'Canada') {
+    if (country === 'Canada') {
       if (!/^[A-Za-z]\d[A-Za-z] \d[A-Za-z]\d$/.test(postalCode)) {
-        return 'Invalid postal code format! Correct format A1B 2C3 for the USA and Canada';
+        return 'Invalid postal code format! Correct format A1B 2C3 for Canada';
       } else {
         return '';
       }
-    } else if (!/^\d{5}$/.test(postalCode)) {
-      return 'Invalid postal code format! Correct format: 12345';
+    } else if (country === 'Poland') {
+      if (!/^\d{2}-\d{3}$/.test(postalCode)) {
+        return 'Invalid postal code format! Correct format: 12-345 for Poland';
+      } else {
+        return '';
+      }
+    } else if (country === 'Germany') {
+      if (!/^\d{5}$/.test(postalCode)) {
+        return 'Invalid postal code format! Correct format: 12345 for Germany';
+      } else {
+        return '';
+      }
     } else {
-      return '';
+      return 'Country not supported';
     }
   };
 
