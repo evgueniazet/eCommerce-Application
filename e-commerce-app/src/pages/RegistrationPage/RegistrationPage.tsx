@@ -35,7 +35,6 @@ import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 import countryData from '../../data/countries.json';
 import { useSignUpMyCustomerMutation } from '../../api/myCustomerApi';
 import { useLoginUserMutation } from '../../api/authApi';
-import { useLocalToken } from '../../hooks/useLocalToken';
 
 export const RegistrationPage: React.FC = () => {
   const navigate = useNavigate();
@@ -168,8 +167,6 @@ export const RegistrationPage: React.FC = () => {
     }
   }, [isErrorLogin, errorLogin]);
 
-  const { setTokenInStorage } = useLocalToken();
-
   useEffect(() => {
     if (!isSuccessLogin || !dataLogin) return;
     console.log(dataLogin);
@@ -177,7 +174,6 @@ export const RegistrationPage: React.FC = () => {
       setAuth({ access_token: dataLogin.access_token, refresh_token: dataLogin.refresh_token }),
     );
     dispatch(setLogIn());
-    setTokenInStorage(dataLogin.refresh_token);
   }, [isSuccessLogin, dataLogin]);
 
   const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {

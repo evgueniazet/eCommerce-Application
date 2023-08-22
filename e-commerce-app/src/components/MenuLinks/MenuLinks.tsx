@@ -1,6 +1,7 @@
 import React, { FC, JSX } from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface IMenuLinksProps {
   navigation: {
@@ -10,11 +11,14 @@ interface IMenuLinksProps {
 }
 
 const MenuLinks: FC<IMenuLinksProps> = ({ navigation, handler }): JSX.Element => {
+  const navigate = useNavigate();
   return (
     <>
       {Object.entries(navigation).map(([title, path]) => (
-        <MenuItem key={title} onClick={handler}>
-          <Button href={path} sx={{ color: 'green' }}>
+        <MenuItem key={title}
+                  onClick={handler}>
+          <Button onClick={() => navigate(path)}
+                  sx={{ color: 'green' }}>
             {title}
           </Button>
         </MenuItem>

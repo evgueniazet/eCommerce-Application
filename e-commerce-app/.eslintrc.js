@@ -29,7 +29,6 @@ module.exports = {
         quotes: ['error', 'single'],
         'no-duplicate-imports': 'error',
         semi: 'error',
-        'linebreak-style': ['error', 'unix'],
         'spaced-comment': ['error', 'always', { markers: ['/'] }],
     },
     settings: {

@@ -88,7 +88,6 @@ export const LoginPage: FC = () => {
     if (isRememberedUser) {
       setTokenInStorage(data.refresh_token);
     }
-    setTokenInStorage(data.refresh_token);
     dispatch(setLogIn());
   }, [isSuccess, data]);
 
