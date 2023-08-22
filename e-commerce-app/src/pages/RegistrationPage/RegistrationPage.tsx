@@ -6,7 +6,6 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import RegPageImg from '../../assets/images/RegPageImg.png';
 import { auto } from '@popperjs/core';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Alert from '@mui/material/Alert';
 import { FormPage1 } from './FormPage1';
@@ -18,7 +17,7 @@ import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useValidate } from '../../hooks/useValidate';
 import { IValues } from '../../interfaces/IValues';
 import { fieldNameType, globalErrors } from '../../types';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import {
   getAccessToken,
@@ -26,7 +25,7 @@ import {
   getUserEmail,
   getUserPassword,
   setAuth,
-  setLogIn,
+  setLogIn, setLogOut,
 } from '../../store/slices/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -43,16 +42,18 @@ export const RegistrationPage: React.FC = () => {
   const isShippingChecked = false;
   let pageCount = 3;
 
+  const { register, handleSubmit, formState, getValues, setError, clearErrors, reset: resetForm } =
+    useForm<IRegistrationFormData>();
+
   useEffect(() => {
     if (isLoggedIn) {
+      resetForm();
       navigate(from, { replace: true });
     }
   }, [isLoggedIn]);
 
   const [page, setPage] = useState(1);
 
-  const { register, handleSubmit, formState, getValues, setError, clearErrors } =
-    useForm<IRegistrationFormData>();
 
   const { errors: validationErrors, validateField } = useValidate();
 
@@ -163,13 +164,14 @@ export const RegistrationPage: React.FC = () => {
 
   useEffect(() => {
     if (isErrorLogin && errorLogin) {
+      dispatch(setLogOut());
+      resetForm();
       navigate(from, { replace: true });
     }
   }, [isErrorLogin, errorLogin]);
 
   useEffect(() => {
     if (!isSuccessLogin || !dataLogin) return;
-    console.log(dataLogin);
     dispatch(
       setAuth({ access_token: dataLogin.access_token, refresh_token: dataLogin.refresh_token }),
     );
@@ -375,7 +377,7 @@ export const RegistrationPage: React.FC = () => {
         justifyContent="center"
       >
         <Grid item>
-          <Link href={'/login'} variant="body2">
+          <Link to={'/login'}>
             Already have an account? Login
           </Link>
         </Grid>

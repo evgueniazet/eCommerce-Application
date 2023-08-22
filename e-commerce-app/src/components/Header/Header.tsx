@@ -83,11 +83,10 @@ export const Header: React.FC = () => {
               <MenuLinks navigation={navigationRoutes} handler={handleCloseNavMenu} />
             </Menu>
           </Box>
-          <Typography
+          <Link to={'/'}><Typography
             variant="h5"
             noWrap
             component="a"
-            href="/"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },
@@ -100,7 +99,7 @@ export const Header: React.FC = () => {
             }}
           >
             RSdzen
-          </Typography>
+          </Typography></Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <NavLinks />
