@@ -8,7 +8,11 @@ const NavLinks = (): JSX.Element => {
   return (
     <>
       {Object.entries(navigationRoutes).map(([title, path]) => (
-        <Button key={title} onClick={() => navigate(path)} sx={{ my: 2, color: 'green', display: 'block' }}>
+        <Button
+          key={title}
+          onClick={() => navigate(path)}
+          sx={{ my: 2, color: 'green', display: 'block' }}
+        >
           {title}
         </Button>
       ))}

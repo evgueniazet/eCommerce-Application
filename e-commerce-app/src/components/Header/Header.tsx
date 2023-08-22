@@ -26,17 +26,13 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="sticky"
-            color="default">
+    <AppBar position="sticky" color="default">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={'/'}>
-            <img src={logo}
-                 alt="logo"
-                 width={60}
-                 height={60}/>
+            <img src={logo} alt="logo" width={60} height={60} />
           </Link>
-          <Link to={'/'} style={{textDecoration: 'none'}}>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
             <Typography
               variant="h6"
               noWrap
@@ -64,7 +60,7 @@ export const Header: React.FC = () => {
               onClick={handleOpenNavMenu}
               color="inherit"
             >
-              <MenuIcon/>
+              <MenuIcon />
             </IconButton>
             <Menu
               id="menu-appbar"
@@ -84,8 +80,7 @@ export const Header: React.FC = () => {
                 display: { xs: 'block', md: 'none' },
               }}
             >
-              <MenuLinks navigation={navigationRoutes}
-                         handler={handleCloseNavMenu}/>
+              <MenuLinks navigation={navigationRoutes} handler={handleCloseNavMenu} />
             </Menu>
           </Box>
           <Typography
@@ -108,10 +103,10 @@ export const Header: React.FC = () => {
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-            <NavLinks/>
+            <NavLinks />
           </Box>
 
-          <UserMenu/>
+          <UserMenu />
         </Toolbar>
       </Container>
     </AppBar>
