@@ -25,7 +25,8 @@ import {
   getUserEmail,
   getUserPassword,
   setAuth,
-  setLogIn, setLogOut,
+  setLogIn,
+  setLogOut,
 } from '../../store/slices/userSlice';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -42,8 +43,15 @@ export const RegistrationPage: React.FC = () => {
   const isShippingChecked = false;
   let pageCount = 3;
 
-  const { register, handleSubmit, formState, getValues, setError, clearErrors, reset: resetForm } =
-    useForm<IRegistrationFormData>();
+  const {
+    register,
+    handleSubmit,
+    formState,
+    getValues,
+    setError,
+    clearErrors,
+    reset: resetForm,
+  } = useForm<IRegistrationFormData>();
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -53,7 +61,6 @@ export const RegistrationPage: React.FC = () => {
   }, [isLoggedIn]);
 
   const [page, setPage] = useState(1);
-
 
   const { errors: validationErrors, validateField } = useValidate();
 
@@ -377,9 +384,7 @@ export const RegistrationPage: React.FC = () => {
         justifyContent="center"
       >
         <Grid item>
-          <Link to={'/login'}>
-            Already have an account? Login
-          </Link>
+          <Link to={'/login'}>Already have an account? Login</Link>
         </Grid>
       </Grid>
     </Container>
