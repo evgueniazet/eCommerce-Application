@@ -1,5 +1,5 @@
 import {
-  createBrowserRouter,
+  createHashRouter,
   createRoutesFromElements,
   Route,
   RouterProvider,
@@ -16,7 +16,7 @@ import { ProductsPage } from '../pages/ProductsPage/ProductsPage';
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
 import { LogoutPage } from '../pages/LogoutPage/LogoutPage';
 
-const router = createBrowserRouter(
+const router = createHashRouter(
   createRoutesFromElements(
     <>
       <Route path={'/'} element={<RootPage />}>

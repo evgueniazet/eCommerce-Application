@@ -15,7 +15,6 @@ export const userSlice = createSlice({
   initialState,
   name: 'userSlice',
   reducers: {
-    logout: () => initialState,
     setAuth: (state, action: PayloadAction<Partial<IUserFromSlice>>) => {
       state.email = action.payload.email ? action.payload.email : state.email;
       state.password = action.payload.password ? action.payload.password : state.password;
@@ -61,5 +60,5 @@ export const getAccessToken = (state: RootStateType) => state.user.access_token;
 export const getUserPassword = (state: RootStateType) => state.user.password;
 export const getUserEmail = (state: RootStateType) => state.user.email;
 
-export const { logout, setAuth, setLogIn, setLogOut, setAnonymousAuth, toggleRememberMe } =
+export const { setAuth, setLogIn, setLogOut, setAnonymousAuth, toggleRememberMe } =
   userSlice.actions;

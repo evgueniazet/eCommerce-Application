@@ -88,7 +88,6 @@ export const LoginPage: FC = () => {
     if (isRememberedUser) {
       setTokenInStorage(data.refresh_token);
     }
-    setTokenInStorage(data.refresh_token);
     dispatch(setLogIn());
   }, [isSuccess, data]);
 
@@ -278,7 +277,7 @@ export const LoginPage: FC = () => {
           </Box>
           <Box textAlign="center">
             <Button
-              href={'/registration'}
+              onClick={() => navigate('/registration')}
               variant="contained"
               sx={{ px: 2, mt: 2, backgroundColor: 'green' }}
             >

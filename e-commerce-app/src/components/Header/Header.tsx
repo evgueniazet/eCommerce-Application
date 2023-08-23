@@ -12,6 +12,7 @@ import NavLinks from '../NavLinks/NavLinks';
 import MenuLinks from '../MenuLinks/MenuLinks';
 import { navigationRoutes } from '../../routes/navigation';
 import UserMenu from '../UserMenu/UserMenu';
+import { Link } from 'react-router-dom';
 
 export const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -28,26 +29,27 @@ export const Header: React.FC = () => {
     <AppBar position="sticky" color="default">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <a href="/">
+          <Link to={'/'}>
             <img src={logo} alt="logo" width={60} height={60} />
-          </a>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'none', md: 'flex' },
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'green',
-              textDecoration: 'none',
-            }}
-          >
-            RSdzen
-          </Typography>
+          </Link>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
+            <Typography
+              variant="h6"
+              noWrap
+              component="span"
+              sx={{
+                mr: 2,
+                display: { xs: 'none', md: 'flex' },
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'green',
+                textDecoration: 'none',
+              }}
+            >
+              RSdzen
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
@@ -81,24 +83,25 @@ export const Header: React.FC = () => {
               <MenuLinks navigation={navigationRoutes} handler={handleCloseNavMenu} />
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: { xs: 'flex', md: 'none' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'green',
-              textDecoration: 'none',
-            }}
-          >
-            RSdzen
-          </Typography>
+          <Link to={'/'}>
+            <Typography
+              variant="h5"
+              noWrap
+              component="a"
+              sx={{
+                mr: 2,
+                display: { xs: 'flex', md: 'none' },
+                flexGrow: 1,
+                fontFamily: 'monospace',
+                fontWeight: 700,
+                letterSpacing: '.3rem',
+                color: 'green',
+                textDecoration: 'none',
+              }}
+            >
+              RSdzen
+            </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <NavLinks />
