@@ -1,9 +1,10 @@
 import React from 'react';
 import './ProductsPage.scss';
 import { Grid, Box, Typography, FormGroup, FormControlLabel, Stack, RadioGroup, Radio } from '@mui/material';
-import { Container } from '@mui/system';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
+import ProductsPageImg from '../../assets/images/ProductsPageImg.png';
+import { ProductsList } from '../../components/ProductsList/ProductsList';
 
 export const ProductsPage: React.FC = () => {
   const [state, setState] = React.useState({
@@ -27,12 +28,11 @@ export const ProductsPage: React.FC = () => {
     setValue(newValue as number);
   };
 
-
   return (
     <Grid container sx={{ height: '80vh'}}>
-      <Container component='aside'>
+      <Box className='left'>
         <Box>
-          <Typography variant='h4'>
+          <Typography variant='h5'>
             Product Categories
           </Typography>
           <FormGroup>
@@ -58,20 +58,20 @@ export const ProductsPage: React.FC = () => {
         </Box>
 
         <Box>
-          <Typography variant='h4'>
+          <Typography variant='h5'>
             Filter by price
           </Typography>
           <Box sx={{ width: 200 }}>
             <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
               <p>0</p>
-              <Slider aria-label="priceRange" value={value} onChange={handleChange2} />
+              <Slider aria-label="priceRange" value={value} min={0} max={1000} onChange={handleChange2} />
               <p>1000</p>
             </Stack>
           </Box>
         </Box>
 
         <Box>
-          <Typography variant='h4'>
+          <Typography variant='h5'>
             Sort by
           </Typography>
           <RadioGroup
@@ -83,11 +83,11 @@ export const ProductsPage: React.FC = () => {
             <FormControlLabel value="highPrice" control={<Radio />} label="Price (highest first)" />
           </RadioGroup>
         </Box>
-      </Container>
-
-      <Container component='main'>
-        
-      </Container>
+      </Box>
+      <Box className='right'>
+        <img src={ ProductsPageImg } alt='img1' width='60%'/>
+        <ProductsList/>
+      </Box>
     </Grid>
   );
 };
