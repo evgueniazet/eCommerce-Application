@@ -2,6 +2,7 @@ import { Box } from '@mui/material';
 import React from 'react';
 import TestImg from '../../assets/images/TestImg.jpeg';
 import { Card } from '../Card/Card';
+import './ProductsList.scss';
 
 export const ProductsList: React.FC = () => {
     const data=[
@@ -32,10 +33,10 @@ export const ProductsList: React.FC = () => {
     ];
 
     return (
-        <Box>
+        <Box className='cards-container'>
             {data?.map(item=>(
                 // не хватает item={item}
-                <Card key={item.id}/>
+                <Card key={item.id}/>                  
             ))}
         </Box>
     );

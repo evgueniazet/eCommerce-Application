@@ -1,3 +1,9 @@
-.card{
-    display: block;
+.Card{
+    display: flex;
+    width: 250px;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 40px;
+
+    
 }

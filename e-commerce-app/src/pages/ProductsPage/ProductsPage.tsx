@@ -85,7 +85,7 @@ export const ProductsPage: React.FC = () => {
         </Box>
       </Box>
       <Box className='right'>
-        <img src={ ProductsPageImg } alt='img1' width='60%'/>
+        <img src={ ProductsPageImg } alt='img1' width='100%'/>
         <ProductsList/>
       </Box>
     </Grid>

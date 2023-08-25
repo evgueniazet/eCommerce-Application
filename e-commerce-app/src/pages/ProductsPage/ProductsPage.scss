@@ -14,3 +14,16 @@
     margin-right: 0.5rem;
     margin-top: 1rem;
 }
+
+.ProductsPage {
+    padding: 30px 50px;
+    display: flex;
+
+    .left {
+        flex: 1;
+    }
+
+    .right {
+        flex: 3;
+    }
+}
