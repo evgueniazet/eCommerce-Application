@@ -32,22 +32,24 @@ export const ProductsPage: React.FC = () => {
 
   return (
     <Grid container sx={{ height: '80vh'}}>
-      <Paper
+      <Box className='top'>
+        <img src={ ProductsPageImg } alt='img1' width='100%'/>
+        <Paper
             component="form"
-            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '70%' }}>
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '30%' }}>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
             placeholder="What plant are you looking for?"
             inputProps={{ 'aria-label': 'search google maps' }}/>
-          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+          <IconButton type="button" sx={{ p: '10px', backgroundColor: 'lightgreen' }} aria-label="search">
             <SearchIcon />
           </IconButton>
           <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-      </Paper>
-      
+        </Paper>
+      </Box>
       <Box className='left'>
         <Box>
-        <img src={ ProductsPageImg } alt='img1' width='100%'/>
+        
           <Typography variant='h5' mt='40px'>
             Product Categories
           </Typography>

@@ -1,6 +1,22 @@
-.form {
-    height: 60px;
-    margin: auto;
+.grid {
+    align-content: baseline;
+}
+
+.top {
+    display: flex;
+    width: 100%;
+    height: min-content;
+    margin-top: 30px;
+    
+    img {
+        width: 20rem;
+        height: fit-content;
+    }
+    form {
+        height: fit-content;
+        margin: auto;
+        background-color: beige;
+    }
 }
 
 .left {
@@ -19,5 +35,4 @@
     float: right;
     padding-right: 0.5rem;
     margin-right: 0.5rem;
-    margin-top: 3rem;
 }
