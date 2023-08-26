@@ -36,7 +36,7 @@ export const ProductsList: React.FC = () => {
         <Box className='cards-container'>
             {data?.map(item=>(
                 // не хватает item={item}
-                <Card key={item.id}/>                  
+                <Card key={item.id}/>              
             ))}
         </Box>
     );

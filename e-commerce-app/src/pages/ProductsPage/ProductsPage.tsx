@@ -1,10 +1,12 @@
 import React from 'react';
 import './ProductsPage.scss';
-import { Grid, Box, Typography, FormGroup, FormControlLabel, Stack, RadioGroup, Radio } from '@mui/material';
+import { Grid, Box, Divider, Typography, FormGroup, FormControlLabel, InputBase, IconButton, Paper, Stack, RadioGroup, Radio } from '@mui/material';
 import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
 import ProductsPageImg from '../../assets/images/ProductsPageImg.png';
 import { ProductsList } from '../../components/ProductsList/ProductsList';
+import SearchIcon from '@mui/icons-material/Search';
+
 
 export const ProductsPage: React.FC = () => {
   const [state, setState] = React.useState({
@@ -30,9 +32,23 @@ export const ProductsPage: React.FC = () => {
 
   return (
     <Grid container sx={{ height: '80vh'}}>
+      <Paper
+            component="form"
+            sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '70%' }}>
+          <InputBase
+            sx={{ ml: 1, flex: 1 }}
+            placeholder="What plant are you looking for?"
+            inputProps={{ 'aria-label': 'search google maps' }}/>
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+          <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+      </Paper>
+      
       <Box className='left'>
         <Box>
-          <Typography variant='h5'>
+        <img src={ ProductsPageImg } alt='img1' width='100%'/>
+          <Typography variant='h5' mt='40px'>
             Product Categories
           </Typography>
           <FormGroup>
@@ -62,7 +78,7 @@ export const ProductsPage: React.FC = () => {
             Filter by price
           </Typography>
           <Box sx={{ width: 200 }}>
-            <Stack spacing={2} direction="row" sx={{ mb: 1 }} alignItems="center">
+            <Stack spacing={2} direction="row" alignItems="center">
               <p>0</p>
               <Slider aria-label="priceRange" value={value} min={0} max={1000} onChange={handleChange2} />
               <p>1000</p>
@@ -84,8 +100,9 @@ export const ProductsPage: React.FC = () => {
           </RadioGroup>
         </Box>
       </Box>
+
       <Box className='right'>
-        <img src={ ProductsPageImg } alt='img1' width='100%'/>
+        
         <ProductsList/>
       </Box>
     </Grid>
