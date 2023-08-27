@@ -11,7 +11,7 @@ interface ICardProps {
 export const Card: FC<ICardProps> = ({item}) => {
     const navigate = useNavigate();
     const handlerNavigation =()=>{
-        navigate('/product');
+        navigate('/product/${item.id}');
     };
 
     return (
