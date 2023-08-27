@@ -39,7 +39,7 @@ export const ProductsPage: React.FC = () => {
             sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '30%' }}>
           <InputBase
             sx={{ ml: 1, flex: 1 }}
-            placeholder="What plant are you looking for?"
+            placeholder="Search plant"
             inputProps={{ 'aria-label': 'search google maps' }}/>
           <IconButton type="button" sx={{ p: '10px', backgroundColor: 'lightgreen' }} aria-label="search">
             <SearchIcon />
@@ -104,7 +104,6 @@ export const ProductsPage: React.FC = () => {
       </Box>
 
       <Box className='right'>
-        
         <ProductsList/>
       </Box>
     </Grid>

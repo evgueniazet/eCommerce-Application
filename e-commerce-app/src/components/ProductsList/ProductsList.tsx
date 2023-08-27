@@ -4,7 +4,16 @@ import TestImg from '../../assets/images/TestImg.jpeg';
 import { Card } from '../Card/Card';
 import './ProductsList.scss';
 
-export const ProductsList: React.FC = () => {
+export type Product ={
+    id: number,
+    img: object,
+    title: string,
+    isNew: boolean,
+    oldPrice: number,
+    price: number
+}
+
+export const ProductsList: React.FC= () => {
     const data=[
         {
             id: 1,
@@ -13,7 +22,7 @@ export const ProductsList: React.FC = () => {
             isNew: true,
             oldPrice: 100,
             price: 80,
-        },
+        }, 
         {
             id: 2,
             img: { TestImg },
@@ -30,14 +39,22 @@ export const ProductsList: React.FC = () => {
             oldPrice: 100,
             price: 80,
         },
+        {
+            id: 4,
+            img: { TestImg },
+            title: 'Product 4',
+            isNew: true,
+            oldPrice: 100,
+            price: 80,
+        },
     ];
 
     return (
         <Box className='cards-container'>
-            {data?.map(item=>(
-                // не хватает item={item}
-                <Card key={item.id}/>              
-            ))}
+            {data?.map(item =>(
+                <Card item={item} key={item.id}/>       
+            ))},
+
         </Box>
     );
 };
