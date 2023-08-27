@@ -1,5 +1,6 @@
-import React from 'react';
+import {FC} from 'react';
+import './ProductPage.scss';
 
-export const ProductPage: React.FC = () => {
+export const ProductPage: FC = () => {
   return <div>Product Page</div>;
 };
