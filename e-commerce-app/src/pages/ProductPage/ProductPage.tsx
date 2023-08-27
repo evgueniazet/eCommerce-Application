@@ -9,11 +9,11 @@ export const ProductPage: FC = () => {
     <Box className='product'>
       <Box className='left'>
         <Box className='smallImg'>
-          <img src='' alt='img1' onClick={e=>setSelectedImg(0)}/>
-          <img src={TestImg2} alt='img2' onClick={e=>setSelectedImg(1)}/>
+          <img src='' alt='img1' />
+          <img src={TestImg2} alt='img2'/>
         </Box>
         <Box className='bigImg'>
-          <img src={smallImg[selectedImg]} alt=''/>
+          <img src='' alt=''/>
         </Box>
       </Box>
 
