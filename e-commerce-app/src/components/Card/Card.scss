@@ -1,0 +1,41 @@
+.card{
+    display: flex;
+    width: 200px;
+    flex-direction: column;
+    margin: 1rem;
+    border: 2px green;
+    border-style: double;
+    align-items: center;
+    
+    .image {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        position: relative;
+    }
+    
+    .img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+    }
+
+    .prices {
+        display: flex;
+        gap: 15px;
+
+        h2{
+            font-size: large;
+            color: cadetblue;
+            font-weight: 900;
+        }
+    }
+
+    button {
+        background-color: beige;
+        color: green;
+        width: 70%;
+        margin: 10px 5px;
+    }
+}
