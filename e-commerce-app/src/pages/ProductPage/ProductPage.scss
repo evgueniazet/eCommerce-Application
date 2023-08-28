@@ -1,15 +1,19 @@
 .product {
     display: flex;
-    padding: 30px 60px;
+    flex-wrap: wrap;
+    padding: 50px 60px;
     gap: 55px;
+    }
 
     .left {
         display: flex;
+        align-items: center;
         flex: 1;
         gap: 25px;
         
         .images {
             flex: 1;
+            min-width: max-content;
 
             img {
                 width: 100%;
@@ -22,6 +26,7 @@
 
         .bigImg {
             flex: 3;
+            min-width: max-content;
 
             img {
                 width: 100%;
@@ -32,6 +37,38 @@
     }
 
     .right {
+        display: flex;
         flex: 1;
+        flex-direction: column;
+        gap: 40px;
+
+        .price {
+            font-weight: 500;
+            color: green;
+        }
+
+        .quantity {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+
+            button {
+                background-color: greenyellow;
+                cursor: pointer;
+            }
+        }
+
+        .add-btn, .wish-btn {
+            button {
+            width: 250px;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            font-weight: 700;
+            background-color: green;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            }
+        }
     }
-}
