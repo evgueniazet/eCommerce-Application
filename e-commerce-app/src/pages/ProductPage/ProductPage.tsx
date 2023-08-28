@@ -8,6 +8,8 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Modal from '@mui/material/Modal';
+import CloseIcon from '@mui/icons-material/Close';
+import IconButton from '@mui/material/IconButton';
 
 const style = {
   position: 'absolute',
@@ -46,6 +48,18 @@ export const ProductPage: FC = () => {
         </Box>
         <Modal open={open} onClose={handleClose} aria-labelledby="modal-image">
           <Box className="modal" sx={style}>
+            <IconButton
+              aria-label="close"
+              onClick={handleClose}
+              sx={{
+                position: 'absolute',
+                right: 8,
+                top: 8,
+                color: 'green',
+              }}
+            >
+              <CloseIcon />
+            </IconButton>
             <Box id="modal-image">
               <img src={images[selectedImg]} alt="img3" width="130%" height="130%" />
             </Box>
