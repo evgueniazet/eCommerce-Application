@@ -7,6 +7,18 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
+import Modal from '@mui/material/Modal';
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+};
 
 export const ProductPage: FC = () => {
   const [selectedImg, setSelectedImg] = useState(0);
@@ -15,6 +27,12 @@ export const ProductPage: FC = () => {
 
   const [count, setCount] = useState(1);
 
+  // Modal window
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   return (
     <Box className="product">
       <Box className="left">
@@ -22,9 +40,17 @@ export const ProductPage: FC = () => {
           <img src={images[0]} alt="img1" onClick={() => setSelectedImg(0)} />
           <img src={images[1]} alt="img2" onClick={() => setSelectedImg(1)} />
         </Box>
-        <Box className="bigImg">
+
+        <Box className="bigImg" onClick={handleOpen}>
           <img src={images[selectedImg]} alt="img3" />
         </Box>
+        <Modal open={open} onClose={handleClose} aria-labelledby="modal-image">
+          <Box className="modal" sx={style}>
+            <Box id="modal-image">
+              <img src={images[selectedImg]} alt="img3" width="130%" height="130%" />
+            </Box>
+          </Box>
+        </Modal>
       </Box>
 
       <Box className="right">
