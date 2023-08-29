@@ -14,7 +14,7 @@ import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
-  top: '40%',
+  top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
   width: '36%',
