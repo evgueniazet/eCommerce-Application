@@ -15,27 +15,37 @@ import { ProductPage } from '../pages/ProductPage/ProductPage';
 import { ProductsPage } from '../pages/ProductsPage/ProductsPage';
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
 import { LogoutPage } from '../pages/LogoutPage/LogoutPage';
-
-const router = createHashRouter(
-  createRoutesFromElements(
-    <>
-      <Route path={'/'} element={<RootPage />}>
-        <Route index element={<HomePage />} />
-        <Route path="/about" element={<AboutPage />} />
-        <Route path="/basket" element={<BasketPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/logout" element={<LogoutPage />} />
-        <Route path="/registration" element={<RegistrationPage />} />
-        <Route path="/user" element={<UserPage />} />
-        <Route path="/product" element={<ProductPage />} />
-        <Route path="/products" element={<ProductsPage />} />
-      </Route>
-      <Route path="*" element={<ErrorPage />} />
-    </>,
-  ),
-);
+import { PrivateRoute } from './PrivateRoute';
+import { useAppSelector } from '../store/hooks';
+import { getLoggedIn } from '../store/slices/userSlice';
 
 const AppRoutes = () => {
+  const isLoggedIn = useAppSelector(getLoggedIn);
+
+  const router = createHashRouter(
+    createRoutesFromElements(
+      <>
+        <Route path={'/'} element={<RootPage />}>
+          <Route index element={<HomePage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/basket" element={<BasketPage />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/logout" element={<LogoutPage />} />
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route
+            path="/user"
+            element={
+              <PrivateRoute element={<UserPage />} isLoggedIn={isLoggedIn} fallbackPath="/login" />
+            }
+          />
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/products" element={<ProductsPage />} />
+        </Route>
+        <Route path="*" element={<ErrorPage />} />
+      </>,
+    ),
+  );
+
   return <RouterProvider router={router} />;
 };
 
