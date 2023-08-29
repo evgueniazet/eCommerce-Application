@@ -10,16 +10,22 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Modal from '@mui/material/Modal';
 import CloseIcon from '@mui/icons-material/Close';
 import IconButton from '@mui/material/IconButton';
+import { ArrowBackIos, ArrowForwardIos } from '@mui/icons-material';
 
 const style = {
   position: 'absolute',
-  top: '50%',
+  top: '40%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: 400,
+  width: '36%',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
+};
+
+const styleArrows = {
+  display: 'flex',
+  justifyContent: 'space-around',
 };
 
 export const ProductPage: FC = () => {
@@ -46,22 +52,32 @@ export const ProductPage: FC = () => {
         <Box className="bigImg" onClick={handleOpen}>
           <img src={images[selectedImg]} alt="img3" />
         </Box>
-        <Modal open={open} onClose={handleClose} aria-labelledby="modal-image">
+        <Modal open={open} onClose={handleClose} aria-discription="modal-image">
           <Box className="modal" sx={style}>
             <IconButton
               aria-label="close"
               onClick={handleClose}
               sx={{
                 position: 'absolute',
-                right: 8,
-                top: 8,
+                right: 3,
+                top: 3,
                 color: 'green',
               }}
             >
               <CloseIcon />
             </IconButton>
             <Box id="modal-image">
-              <img src={images[selectedImg]} alt="img3" width="130%" height="130%" />
+              <img src={images[selectedImg]} alt="img3" width="100%" />
+              <Box className="slider" sx={styleArrows}>
+                <IconButton>
+                  <ArrowBackIos />
+                  Prev
+                </IconButton>
+                <IconButton>
+                  Next
+                  <ArrowForwardIos />
+                </IconButton>
+              </Box>
             </Box>
           </Box>
         </Modal>
