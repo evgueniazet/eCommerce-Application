@@ -43,28 +43,14 @@ export const ProductsPage: React.FC = () => {
   };
 
   return (
-    <Grid container
-          spacing={2}
-          sx={{ height: '80vh' }}>
-      <Grid item
-            xs={12}>
-        <Grid container
-              pt={2}
-              alignItems={'center'}>
-          <Grid item
-                md={2}
-                sx={{ display: { xs: 'none', md: 'block' } }}>
-            <img className={styles.top__img}
-                 src={ProductsPageImg}
-                 alt="img1"
-                 width="100%"/>
+    <Grid container spacing={2} sx={{ height: '80vh' }}>
+      <Grid item xs={12}>
+        <Grid container pt={2} alignItems={'center'}>
+          <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <img className={styles.top__img} src={ProductsPageImg} alt="img1" width="100%" />
           </Grid>
-          <Grid item
-                sm={12}
-                md={10}
-                m={'auto'}>
-            <Paper component="form"
-                   className={styles.top__form}>
+          <Grid item sm={12} md={10} m={'auto'}>
+            <Paper component="form" className={styles.top__form}>
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search plant"
@@ -75,41 +61,31 @@ export const ProductsPage: React.FC = () => {
                 sx={{ p: '10px', backgroundColor: 'lightgreen' }}
                 aria-label="search"
               >
-                <SearchIcon/>
+                <SearchIcon />
               </IconButton>
-              <Divider sx={{ height: 28, m: 0.5 }}
-                       orientation="vertical"/>
+              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
             </Paper>
           </Grid>
         </Grid>
       </Grid>
 
-      <Grid item
-            xs={12}
-            md={3}>
+      <Grid item xs={12} md={3}>
         <Box className={styles.left}>
           <Box>
-            <Typography variant="h5"
-                        mt="40px">
+            <Typography variant="h5" mt="40px">
               Product Categories
             </Typography>
             <FormGroup>
               <FormControlLabel
-                control={<Checkbox checked={category1}
-                                   onChange={handleChange1}
-                                   name="category1"/>}
+                control={<Checkbox checked={category1} onChange={handleChange1} name="category1" />}
                 label="Category 1"
               />
               <FormControlLabel
-                control={<Checkbox checked={category2}
-                                   onChange={handleChange1}
-                                   name="category2"/>}
+                control={<Checkbox checked={category2} onChange={handleChange1} name="category2" />}
                 label="Category 2"
               />
               <FormControlLabel
-                control={<Checkbox checked={category3}
-                                   onChange={handleChange1}
-                                   name="category3"/>}
+                control={<Checkbox checked={category3} onChange={handleChange1} name="category3" />}
                 label="Category 3"
               />
             </FormGroup>
@@ -118,9 +94,7 @@ export const ProductsPage: React.FC = () => {
           <Box>
             <Typography variant="h5">Filter by price</Typography>
             <Box sx={{ width: 200 }}>
-              <Stack spacing={2}
-                     direction="row"
-                     alignItems="center">
+              <Stack spacing={2} direction="row" alignItems="center">
                 <p>0</p>
                 <Slider
                   aria-label="priceRange"
@@ -141,12 +115,10 @@ export const ProductsPage: React.FC = () => {
               defaultValue="lowPrice"
               name="radio-buttons-group"
             >
-              <FormControlLabel value="lowPrice"
-                                control={<Radio/>}
-                                label="Price (lowest first)"/>
+              <FormControlLabel value="lowPrice" control={<Radio />} label="Price (lowest first)" />
               <FormControlLabel
                 value="highPrice"
-                control={<Radio/>}
+                control={<Radio />}
                 label="Price (highest first)"
               />
             </RadioGroup>
@@ -154,11 +126,9 @@ export const ProductsPage: React.FC = () => {
         </Box>
       </Grid>
 
-      <Grid item
-            xs={12}
-            md={9}>
+      <Grid item xs={12} md={9}>
         <Box className={styles.right}>
-          <ProductsList/>
+          <ProductsList />
         </Box>
       </Grid>
     </Grid>
