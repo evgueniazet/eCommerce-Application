@@ -46,7 +46,6 @@ export const ProductsPage: React.FC = () => {
     <Grid container
           spacing={2}
           sx={{ height: '80vh' }}>
-
       <Grid item
             xs={12}>
         <Grid container
@@ -64,9 +63,8 @@ export const ProductsPage: React.FC = () => {
                 sm={12}
                 md={10}
                 m={'auto'}>
-            <Paper
-              component="form"
-              className={styles.top__form}>
+            <Paper component="form"
+                   className={styles.top__form}>
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search plant"
@@ -88,7 +86,7 @@ export const ProductsPage: React.FC = () => {
 
       <Grid item
             xs={12}
-            md={2}>
+            md={3}>
         <Box className={styles.left}>
           <Box>
             <Typography variant="h5"
@@ -146,9 +144,11 @@ export const ProductsPage: React.FC = () => {
               <FormControlLabel value="lowPrice"
                                 control={<Radio/>}
                                 label="Price (lowest first)"/>
-              <FormControlLabel value="highPrice"
-                                control={<Radio/>}
-                                label="Price (highest first)"/>
+              <FormControlLabel
+                value="highPrice"
+                control={<Radio/>}
+                label="Price (highest first)"
+              />
             </RadioGroup>
           </Box>
         </Box>
@@ -156,7 +156,7 @@ export const ProductsPage: React.FC = () => {
 
       <Grid item
             xs={12}
-            md={10}>
+            md={9}>
         <Box className={styles.right}>
           <ProductsList/>
         </Box>
@@ -164,4 +164,3 @@ export const ProductsPage: React.FC = () => {
     </Grid>
   );
 };
-
