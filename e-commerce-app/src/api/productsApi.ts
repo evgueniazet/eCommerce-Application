@@ -10,7 +10,7 @@ export const productsApi = createApi({
     baseUrl: `${process.env.REACT_APP_CTP_API_URL}/${process.env.REACT_APP_CTP_PROJECT_KEY}/products`,
   }),
   endpoints: (build) => ({
-    getAllProducts: build.mutation<IGetAllProductsResponse, IGetAllProductsRequest>({
+    getAllProducts: build.query<IGetAllProductsResponse, IGetAllProductsRequest>({
       query(queryObject) {
         return {
           url: '',
@@ -29,4 +29,4 @@ export const productsApi = createApi({
   }),
 });
 
-export const { useGetAllProductsMutation } = productsApi;
+export const { useGetAllProductsQuery } = productsApi;

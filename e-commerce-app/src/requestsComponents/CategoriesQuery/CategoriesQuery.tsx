@@ -1,30 +1,22 @@
 import React, { JSX, useEffect } from 'react';
-import { useGetAllProductsQuery } from '../../api/productsApi';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
-import { ProductsPage } from '../../pages/ProductsPage/ProductsPage';
-import { setProducts } from '../../store/slices/productsSlice';
+import { Outlet } from 'react-router-dom';
+import { useGetAllCategoriesQuery } from '../../api/categoriesApi';
+import { setCategories } from '../../store/slices/categoriesSlice';
 
-const ProductsQuery = (): JSX.Element => {
-
+const CategoriesQuery = (): JSX.Element => {
   const accessToken = useAppSelector(getAccessToken);
   const dispatch = useAppDispatch();
 
-  const {
-    isLoading,
-    isSuccess,
-    isError,
-    data
-  } = useGetAllProductsQuery({
-    token: accessToken as string,
-  });
+  const { isLoading, isError, isSuccess, data } = useGetAllCategoriesQuery(accessToken as string);
 
   useEffect(() => {
     if (!isSuccess) return;
-    if (data && 'result' in data) {
+    if (data && 'results' in data) {
       console.log(data);
-      dispatch(setProducts(data));
+      dispatch(setCategories(data));
     }
   }, [isSuccess, data]);
 
@@ -32,6 +24,12 @@ const ProductsQuery = (): JSX.Element => {
     return <LoadingProgress/>;
   }
 
-  return <ProductsPage/>;
+  return (
+    <>
+      <Outlet/>
+    </>
+  );
+
+
 };
-export default ProductsQuery;
+export default CategoriesQuery;

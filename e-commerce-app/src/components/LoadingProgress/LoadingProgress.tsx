@@ -11,7 +11,7 @@ const LoadingProgress = (): JSX.Element => {
   };
   return (
     <Backdrop open={open} onClick={handleClose}>
-      <CircularProgress color="success"/>
+      <CircularProgress color="success" />
     </Backdrop>
   );
 };

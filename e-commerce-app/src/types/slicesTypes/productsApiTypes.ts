@@ -25,7 +25,7 @@ export interface IMasterDataProductApiResponse {
 export interface IProductApiResponse {
   id: string;
   key: string;
-  masterData: object;
+  masterData: IMasterDataProductApiResponse;
   productType: ICategoryTypeResponse;
   taxCategory: ICategoryTypeResponse;
 }

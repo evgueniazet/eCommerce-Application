@@ -7,10 +7,10 @@ export interface IBaseGetAllQueryResponse<T> {
 }
 
 export interface ICategoryTypeResponse {
-  id: string
-  typeId: string
+  id: string;
+  typeId: string;
 }
 
 export interface IMetaDescriptionProductResponse {
-  en: string
+  en: string;
 }
