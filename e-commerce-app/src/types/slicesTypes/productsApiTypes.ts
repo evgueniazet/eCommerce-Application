@@ -1,19 +1,18 @@
 import {
   IBaseGetAllQueryResponse,
   ICategoryTypeResponse,
-  IMetaDescriptionProductResponse
+  IMetaDescriptionProductResponse,
 } from './baseApiResponsesTypes';
 
 export interface IProductApiDescriptionResponse {
-  categories: ICategoryTypeResponse[],
-  categoryOrderHints: object,
-  masterVariant: object,
-  metaDescription: IMetaDescriptionProductResponse,
-  name: IMetaDescriptionProductResponse,
-  searchKeywords: object,
-  slug: IMetaDescriptionProductResponse,
-  variants: [],
-
+  categories: ICategoryTypeResponse[];
+  categoryOrderHints: object;
+  masterVariant: object;
+  metaDescription: IMetaDescriptionProductResponse;
+  name: IMetaDescriptionProductResponse;
+  searchKeywords: object;
+  slug: IMetaDescriptionProductResponse;
+  variants: [];
 }
 
 export interface IMasterDataProductApiResponse {
@@ -36,9 +35,9 @@ export interface IGetAllProductsResponse extends IBaseGetAllQueryResponse<IProdu
 }
 
 export interface IGetAllProductsRequest {
-  token: string,
+  token: string;
   params?: {
-    limit?: number,
-    offset?: number
-  }
+    limit?: number;
+    offset?: number;
+  };
 }
