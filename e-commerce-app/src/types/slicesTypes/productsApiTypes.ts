@@ -5,36 +5,36 @@ import {
 } from './baseApiResponsesTypes';
 
 export interface IAttributeProductApiResponse {
-  name: string
-  value: string
+  name: string;
+  value: string;
 }
 export interface IImageProductApiResponse {
-  url: string,
+  url: string;
   dimensions: {
-    w: number,
-    h: number
-  }
+    w: number;
+    h: number;
+  };
 }
 export interface IValuePriceProductApiResponse {
-  type: string
-  currencyCode: string
-  centAmount: number
-  fractionDigits: number
-  country: string
-  channel: ICategoryTypeResponse
+  type: string;
+  currencyCode: string;
+  centAmount: number;
+  fractionDigits: number;
+  country: string;
+  channel: ICategoryTypeResponse;
 }
 export interface IPriceProductApiResponse {
-  id: string
-  value: IValuePriceProductApiResponse
+  id: string;
+  value: IValuePriceProductApiResponse;
 }
 export interface IMasterVariantProductApiResponse {
-  assets: []
-  attributes: IAttributeProductApiResponse[]
-  id: number
-  images: IImageProductApiResponse[]
-  key: string
-  prices: IPriceProductApiResponse[]
-  sku: string
+  assets: [];
+  attributes: IAttributeProductApiResponse[];
+  id: number;
+  images: IImageProductApiResponse[];
+  key: string;
+  prices: IPriceProductApiResponse[];
+  sku: string;
 }
 
 export interface IProductApiDescriptionResponse {

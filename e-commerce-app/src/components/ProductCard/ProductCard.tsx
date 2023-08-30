@@ -17,9 +17,22 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
   const imgPath = item.masterData.current.masterVariant.images[0].url;
   const imgDescription = item.masterData.current.name.en;
 
-  const priceCommon = item.masterData.current.masterVariant.prices[0].value.centAmount / (10 * item.masterData.current.masterVariant.prices[0].value.fractionDigits);
+  const currencyCommon = item.masterData.current.masterVariant.prices[0].value.currencyCode;
+  const priceCommon = new Intl.NumberFormat('en-IN', {
+      style: 'currency',
+      currency: currencyCommon
+    }).format(item.masterData.current.masterVariant.prices[0].value.centAmount /
+      (10 * item.masterData.current.masterVariant.prices[0].value.fractionDigits))
+  ;
 
-  const priceSale = item.masterData.current.masterVariant.prices[1].value.centAmount / (10 * item.masterData.current.masterVariant.prices[1].value.fractionDigits);
+
+  const currencySale = item.masterData.current.masterVariant.prices[1].value.currencyCode;
+  const priceSale = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencySale
+  }).format(item.masterData.current.masterVariant.prices[1].value.centAmount /
+    (10 * item.masterData.current.masterVariant.prices[1].value.fractionDigits));
+
 
   return (
     <Card className={styles.card}>
@@ -28,14 +41,17 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
                    image={imgPath}
                    title={imgDescription}/>
       </Box>
-      <CardContent>
-        <Typography component="h2">{item.masterData.current.name.en}</Typography>
-        <Typography component="h3">{priceCommon}</Typography>
-        <Typography component="h3">{priceSale}</Typography>
+      <CardContent className={styles.card__text}>
+        <Typography className={styles.card__title}
+                    component="h2">{item.masterData.current.name.en}</Typography>
+        <Typography className={styles.card__price}
+                    component="h3">{priceCommon}</Typography>
+        <Typography className={styles.card__price}
+                    component="h3">{priceSale}</Typography>
       </CardContent>
       <CardActions>
-        <Button className={styles.card__button}
-                onClick={handlerNavigation}
+        <Button onClick={handlerNavigation}
+                color="success"
                 variant="outlined">
           Read more
         </Button>
