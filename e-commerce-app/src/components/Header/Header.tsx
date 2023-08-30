@@ -83,7 +83,7 @@ export const Header: React.FC = () => {
               <MenuLinks navigation={navigationRoutes} handler={handleCloseNavMenu} />
             </Menu>
           </Box>
-          <Link to={'/'}>
+          <Link to={'/'} style={{ textDecoration: 'none' }}>
             <Typography
               variant="h5"
               noWrap
