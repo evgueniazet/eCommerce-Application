@@ -15,21 +15,18 @@ const CategoriesQuery = (): JSX.Element => {
   useEffect(() => {
     if (!isSuccess) return;
     if (data && 'results' in data) {
-      console.log(data);
       dispatch(setCategories(data));
     }
   }, [isSuccess, data]);
 
   if (isLoading || isError) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
   return (
     <>
-      <Outlet/>
+      <Outlet />
     </>
   );
-
-
 };
 export default CategoriesQuery;

@@ -38,8 +38,8 @@ export const categoriesSlice = createSlice({
       state.limit = action.payload.limit;
       state.categories = action.payload.results;
       state.fetching = false;
-    }
-  }
+    },
+  },
 });
 
 export const CategoriesReducer = categoriesSlice.reducer;

@@ -16,12 +16,12 @@ export const categoriesApi = createApi({
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
-          }
+          },
         };
       },
       providesTags: ['categories'],
-    })
-  })
+    }),
+  }),
 });
 
 export const { useGetAllCategoriesQuery } = categoriesApi;

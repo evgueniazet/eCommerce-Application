@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  Grid,
-  Box,
-  Divider,
-  InputBase,
-  IconButton,
-  Paper,
-} from '@mui/material';
+import { Grid, Box, Divider, InputBase, IconButton, Paper } from '@mui/material';
 import ProductsPageImg from '../../assets/images/ProductsPageImg.png';
 import { ProductsList } from '../../components/ProductsList/ProductsList';
 import SearchIcon from '@mui/icons-material/Search';
@@ -14,11 +7,8 @@ import styles from './ProductsPage.module.scss';
 import ProductsFilterForm from '../../components/ProductsFilterForm/ProductsFilterForm';
 
 export const ProductsPage: React.FC = () => {
-
-
-
   return (
-    <Grid container spacing={2} sx={{ height: '80vh' }}>
+    <Grid container spacing={2}>
       <Grid item xs={12}>
         <Grid container pt={2} alignItems={'center'}>
           <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
@@ -38,13 +28,13 @@ export const ProductsPage: React.FC = () => {
               >
                 <SearchIcon />
               </IconButton>
-              <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+              <Divider sx={{ m: 0.5 }} orientation="vertical" />
             </Paper>
           </Grid>
         </Grid>
       </Grid>
 
-      <Grid item xs={12} md={3}  className={styles.left}>
+      <Grid item xs={12} md={3} className={styles.left}>
         <ProductsFilterForm />
       </Grid>
 

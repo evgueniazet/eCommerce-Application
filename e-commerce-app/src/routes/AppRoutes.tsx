@@ -21,40 +21,28 @@ import TokenGuard from '../requestsComponents/TokenGuard/TokenGuard';
 const router = createHashRouter(
   createRoutesFromElements(
     <>
-      <Route path={'/'}
-             element={<RootPage/>}>
-        <Route index
-               element={<HomePage/>}/>
-        <Route path="/about"
-               element={<AboutPage/>}/>
-        <Route path="/login"
-               element={<LoginPage/>}/>
-        <Route path="/logout"
-               element={<LogoutPage/>}/>
-        <Route element={<TokenGuard/>}>
-          <Route path="/registration"
-                 element={<RegistrationPage/>}/>
-          <Route path="/basket"
-                 element={<BasketPage/>}/>
-          <Route path="/user"
-                 element={<UserPage/>}/>
-          <Route element={<CategoriesQuery/>}
-                 path={'/products'}>
-            <Route index
-                   element={<ProductsQuery/>}/>
-            <Route path=":productId"
-                   element={<ProductPage/>}/>
+      <Route path={'/'} element={<RootPage />}>
+        <Route index element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
+        <Route element={<TokenGuard />}>
+          <Route path="/registration" element={<RegistrationPage />} />
+          <Route path="/basket" element={<BasketPage />} />
+          <Route path="/user" element={<UserPage />} />
+          <Route element={<CategoriesQuery />} path={'/products'}>
+            <Route index element={<ProductsQuery />} />
+            <Route path=":productId" element={<ProductPage />} />
           </Route>
         </Route>
       </Route>
-      <Route path="*"
-             element={<ErrorPage/>}/>
+      <Route path="*" element={<ErrorPage />} />
     </>,
   ),
 );
 
 const AppRoutes = () => {
-  return <RouterProvider router={router}/>;
+  return <RouterProvider router={router} />;
 };
 
 export default AppRoutes;

@@ -16,6 +16,6 @@ export interface ICategoryApiResponse {
   version: number;
 }
 
-export interface IGetAllCategoriesResponse extends IBaseGetAllQueryResponse<ICategoryApiResponse>{
+export interface IGetAllCategoriesResponse extends IBaseGetAllQueryResponse<ICategoryApiResponse> {
   results: ICategoryApiResponse[];
 }

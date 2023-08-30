@@ -1,18 +1,18 @@
 import React, { JSX } from 'react';
-import { Backdrop, CircularProgress } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { Box, CircularProgress, Typography } from '@mui/material';
+
+import styles from './LoadingProgress.module.scss';
 
 const LoadingProgress = (): JSX.Element => {
-  const navigate = useNavigate();
-  const [open, setOpen] = React.useState(false);
-  const handleClose = () => {
-    setOpen(false);
-    navigate('/');
-  };
   return (
-    <Backdrop open={open} onClick={handleClose}>
-      <CircularProgress color="success" />
-    </Backdrop>
+    <Box display="flex"
+         justifyContent="center"
+         alignItems="center"
+         className={styles.box}>
+      <CircularProgress size={200} thickness={10}/>
+      <Typography position="absolute" variant="h4">Loading...</Typography>
+    </Box>
+
   );
 };
 export default LoadingProgress;

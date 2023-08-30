@@ -4,14 +4,13 @@ import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
 import { Outlet } from 'react-router-dom';
 
-
 const TokenGuard = (): JSX.Element => {
   const accessToken = useAppSelector(getAccessToken);
 
   if (!accessToken) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  return <Outlet/>;
+  return <Outlet />;
 };
 export default TokenGuard;
