@@ -8,6 +8,7 @@ export interface IAttributeProductApiResponse {
   name: string;
   value: string;
 }
+
 export interface IImageProductApiResponse {
   url: string;
   dimensions: {
@@ -15,6 +16,7 @@ export interface IImageProductApiResponse {
     h: number;
   };
 }
+
 export interface IValuePriceProductApiResponse {
   type: string;
   currencyCode: string;
@@ -23,10 +25,12 @@ export interface IValuePriceProductApiResponse {
   country: string;
   channel: ICategoryTypeResponse;
 }
+
 export interface IPriceProductApiResponse {
   id: string;
   value: IValuePriceProductApiResponse;
 }
+
 export interface IMasterVariantProductApiResponse {
   assets: [];
   attributes: IAttributeProductApiResponse[];
@@ -73,4 +77,9 @@ export interface IGetAllProductsRequest {
     limit?: number;
     offset?: number;
   };
+}
+
+export interface IGetProductByIdRequest {
+  token: string;
+  productId: string;
 }

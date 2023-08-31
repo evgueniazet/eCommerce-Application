@@ -23,7 +23,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
     currency: currencyCommon,
   }).format(
     item.masterData.current.masterVariant.prices[0].value.centAmount /
-      (10 * item.masterData.current.masterVariant.prices[0].value.fractionDigits),
+      10 ** item.masterData.current.masterVariant.prices[0].value.fractionDigits,
   );
   const currencySale = item.masterData.current.masterVariant.prices[1].value.currencyCode;
   const priceSale = new Intl.NumberFormat('en-IN', {
@@ -31,7 +31,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
     currency: currencySale,
   }).format(
     item.masterData.current.masterVariant.prices[1].value.centAmount /
-      (10 * item.masterData.current.masterVariant.prices[1].value.fractionDigits),
+      10 ** item.masterData.current.masterVariant.prices[1].value.fractionDigits,
   );
 
   return (
