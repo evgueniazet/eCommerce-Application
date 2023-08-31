@@ -16,11 +16,8 @@ import { ProductsPage } from '../pages/ProductsPage/ProductsPage';
 import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
 import { LogoutPage } from '../pages/LogoutPage/LogoutPage';
 import { PrivateRoute } from './PrivateRoute';
-import { useAppSelector } from '../store/hooks';
-import { getLoggedIn } from '../store/slices/userSlice';
 
 const AppRoutes = () => {
-  const isLoggedIn = useAppSelector(getLoggedIn);
 
   const router = createHashRouter(
     createRoutesFromElements(
@@ -35,7 +32,7 @@ const AppRoutes = () => {
           <Route
             path="/user"
             element={
-              <PrivateRoute element={<UserPage />} isLoggedIn={isLoggedIn} fallbackPath="/login" />
+              <PrivateRoute element={<UserPage />} fallbackPath="/login" />
             }
           >
             {/*TODO : add redirect to the user page */}
