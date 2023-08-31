@@ -14,6 +14,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
+import { getTaxes } from '../../store/slices/taxesSlice';
+import { ITaxApiResponse } from '../../types/slicesTypes/taxApiTypes';
 
 const style = {
   bgcolor: 'background.paper',
@@ -29,14 +31,24 @@ const styleArrows = {
 export const ProductPage: FC = () => {
   const { productId } = useParams();
   const authToken = useAppSelector(getAccessToken);
+  const taxesArray = useAppSelector(getTaxes);
+
   const { data, isSuccess, isLoading, isFetching } = useGetProductByIdQuery({
     productId: productId as string,
     token: authToken as string,
   });
 
+  const [tax, setTax] = useState(0);
+
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      taxesArray
+        .filter((item) => item.id === data.taxCategory.id)
+        .flatMap((elem) => elem.rates)
+        .filter((rate: ITaxApiResponse) => rate.country === 'DE')
+        .forEach((rate: ITaxApiResponse) => {
+          setTax(rate.amount);
+        });
     }
   }, [isSuccess]);
 
@@ -59,18 +71,19 @@ export const ProductPage: FC = () => {
   const description = data.masterData.current.metaDescription.en;
 
   const currencyCommon = data.masterData.current.masterVariant.prices[0].value.currencyCode;
+  const priceNumber =
+    data.masterData.current.masterVariant.prices[0].value.centAmount /
+    10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits;
   const priceCommon = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: currencyCommon,
-  }).format(
-    data.masterData.current.masterVariant.prices[0].value.centAmount /
-      10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits,
-  );
+  }).format(priceNumber);
 
-  console.log(
-    data.masterData.current.masterVariant.prices[0].value.centAmount,
-    10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits,
-  );
+  const discountPrice = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyCommon,
+  }).format(priceNumber - priceNumber * tax);
+
   return (
     <Grid container px={5} py={7} spacing={2} alignItems={'center'}>
       <Grid item xs={12} md={6}>
@@ -148,9 +161,24 @@ export const ProductPage: FC = () => {
       <Grid item xs={12} md={6}>
         <Stack spacing={4} className="right">
           <Typography variant="h2">{title}</Typography>
-          <Typography variant="h4" className={styles.price}>
-            {priceCommon}
-          </Typography>
+
+          {tax !== 0 ? (
+            <>
+              <Typography variant="h4" className={styles.price}>
+                Discount price:{discountPrice}
+              </Typography>
+              <Typography variant="h5" className={styles.price_full}>
+                Full price:{priceCommon}
+              </Typography>
+              <Typography variant="h6" className={styles.price}>
+                Tax: {`${tax * 100} %`}
+              </Typography>
+            </>
+          ) : (
+            <Typography variant="h4" className={styles.price}>
+              Price:{priceCommon}
+            </Typography>
+          )}
           <Typography variant="h6" align={'justify'}>
             {description}
           </Typography>

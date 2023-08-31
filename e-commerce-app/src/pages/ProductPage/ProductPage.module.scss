@@ -1,82 +1,89 @@
 .left {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  gap: 15px;
-
-  .images {
+    display: flex;
+    align-items: center;
     flex: 1;
-    min-width: max-content;
+    gap: 15px;
 
-    img {
-      width: 100%;
-      height: 100px;
-      margin-bottom: 15px;
+    .images {
+        flex: 1;
+        min-width: max-content;
 
+        img {
+            width: 100%;
+            height: 100px;
+            margin-bottom: 15px;
+
+        }
     }
-  }
 }
 
 .img {
-  &_small {
-    object-fit: contain;
-    cursor: pointer;
-  }
+    &_small {
+        object-fit: contain;
+        cursor: pointer;
+    }
 
-  &_big {
-    width: 100%;
-    object-fit: contain;
-    max-height: 50vh;
-    cursor: pointer;
-  }
+    &_big {
+        width: 100%;
+        object-fit: contain;
+        max-height: 50vh;
+        cursor: pointer;
+    }
 }
 
 .price {
-  font-weight: 500;
-  color: green;
+    font-weight: 500;
+    color: green;
+
+    &_full {
+        text-decoration: line-through;
+        color: green;
+        text-decoration-color: gray;
+    }
 }
 
 .quantity {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
 
-  button {
-    background-color: greenyellow;
-    cursor: pointer;
-  }
+    button {
+        background-color: greenyellow;
+        cursor: pointer;
+    }
 }
 
 .btn {
-  button {
-    width: 250px;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    font-weight: 700;
-    background-color: green;
-    color: white;
-    border: 1px solid green;
-    border-radius: 10px;
-    cursor: pointer;
+    button {
+        width: 250px;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        font-weight: 700;
+        background-color: green;
+        color: white;
+        border: 1px solid green;
+        border-radius: 10px;
+        cursor: pointer;
 
-    &:hover {
-      color: green;
-      border: 1px solid green;
+        &:hover {
+            color: green;
+            border: 1px solid green;
+        }
     }
-  }
 }
 
 .modal {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border: 2px solid #000;
-  max-height: 70vh;
-  max-width: 70vw;
-  &__img {
-    max-height: 60vh;
-    object-fit: contain;
-  }
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 2px solid #000;
+    max-height: 70vh;
+    max-width: 70vw;
+
+    &__img {
+        max-height: 60vh;
+        object-fit: contain;
+    }
 }
