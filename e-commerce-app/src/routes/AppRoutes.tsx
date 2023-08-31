@@ -27,13 +27,16 @@ const router = createHashRouter(
         <Route path="/about" element={<AboutPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/logout" element={<LogoutPage />} />
+
         <Route element={<TokenGuard />}>
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/basket" element={<BasketPage />} />
-          <Route path="/user" element={<PrivateRoute element={<UserPage />} fallbackPath="/login" />}>
-          {/*TODO : add redirect to the user page */}
-          <Route path={':customerId'} element={<HomePage />}></Route>
-        </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/user" element={<UserPage />}>
+              {/*TODO : add redirect to the user page */}
+              <Route path={':customerId'} element={<HomePage />}></Route>
+            </Route>
+          </Route>
           <Route element={<CategoriesQuery />} path={'/products'}>
             <Route index element={<ProductsQuery />} />
             <Route path=":productId" element={<ProductPage />} />

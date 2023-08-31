@@ -1,11 +1,15 @@
 import { FC } from 'react';
-import { Navigate } from 'react-router-dom';
-import { IPrivateRouteProps } from '../interfaces/IPrivateRouteProps';
 import { getLoggedIn } from '../store/slices/userSlice';
 import { useAppSelector } from '../store/hooks';
+import { Outlet, Navigate } from 'react-router-dom';
 
-export const PrivateRoute: FC<IPrivateRouteProps> = ({ element, fallbackPath }) => {
+export const PrivateRoute: FC = () => {
   const isLoggedIn = useAppSelector(getLoggedIn);
-
-  return isLoggedIn ? element : <Navigate to={fallbackPath} replace />;
+  if (isLoggedIn) {
+    return <Outlet />;
+  } else {
+    return <Navigate to="/" />;
+  }
 };
+
+export default PrivateRoute;
