@@ -37,7 +37,10 @@ const AppRoutes = () => {
             element={
               <PrivateRoute element={<UserPage />} isLoggedIn={isLoggedIn} fallbackPath="/login" />
             }
-          />
+          >
+            {/*TODO : add redirect to the user page */}
+            <Route path={':userId'} element={<HomePage />}></Route>
+          </Route>
           <Route path="/product" element={<ProductPage />} />
           <Route path="/products" element={<ProductsPage />} />
         </Route>
