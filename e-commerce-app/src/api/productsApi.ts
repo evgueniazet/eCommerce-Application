@@ -1,7 +1,9 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   IGetAllProductsRequest,
-  IGetAllProductsResponse, IGetProductByIdRequest, IProductApiResponse,
+  IGetAllProductsResponse,
+  IGetProductByIdRequest,
+  IProductApiResponse,
 } from '../types/slicesTypes/productsApiTypes';
 
 export const productsApi = createApi({
@@ -36,8 +38,8 @@ export const productsApi = createApi({
             'Content-Type': 'application/json',
           },
         };
-      }
-    })
+      },
+    }),
   }),
 });
 

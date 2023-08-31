@@ -51,10 +51,10 @@ export const ProductPage: FC = () => {
   const handleClose = () => setOpen(false);
 
   if (isLoading || isFetching || !data) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  const images = data.masterData.current.masterVariant.images.map(img => img.url);
+  const images = data.masterData.current.masterVariant.images.map((img) => img.url);
   const title = data.masterData.current.name.en;
   const description = data.masterData.current.metaDescription.en;
 
@@ -64,24 +64,18 @@ export const ProductPage: FC = () => {
     currency: currencyCommon,
   }).format(
     data.masterData.current.masterVariant.prices[0].value.centAmount /
-    (10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits),
+      10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits,
   );
 
-  console.log(data.masterData.current.masterVariant.prices[0].value.centAmount, 10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits);
+  console.log(
+    data.masterData.current.masterVariant.prices[0].value.centAmount,
+    10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits,
+  );
   return (
-    <Grid container
-          px={5}
-          py={7}
-          spacing={2}
-          alignItems={'center'}>
-      <Grid item
-            xs={12}
-            md={6}>
-        <Grid container
-              spacing={3}
-              alignItems={'center'}>
-          <Grid item
-                xs={3}>
+    <Grid container px={5} py={7} spacing={2} alignItems={'center'}>
+      <Grid item xs={12} md={6}>
+        <Grid container spacing={3} alignItems={'center'}>
+          <Grid item xs={3}>
             <Stack spacing={2}>
               {images.map((item, idx) => (
                 <img
@@ -96,19 +90,12 @@ export const ProductPage: FC = () => {
             </Stack>
           </Grid>
 
-          <Grid item
-                xs={9}
-                onClick={handleOpen}>
-            <img className={styles.img_big}
-                 src={images[selectedImg]}
-                 alt="img3"/>
+          <Grid item xs={9} onClick={handleOpen}>
+            <img className={styles.img_big} src={images[selectedImg]} alt="img3" />
           </Grid>
 
-          <Modal open={open}
-                 onClose={handleClose}
-                 aria-description="modalImage">
-            <Box className={styles.modal}
-                 sx={style}>
+          <Modal open={open} onClose={handleClose} aria-description="modalImage">
+            <Box className={styles.modal} sx={style}>
               <IconButton
                 aria-label="close"
                 onClick={handleClose}
@@ -119,25 +106,38 @@ export const ProductPage: FC = () => {
                   color: 'green',
                 }}
               >
-                <CloseIcon/>
+                <CloseIcon />
               </IconButton>
               <Box id="modalImage">
-                <img className={styles.modal__img}
-                     src={images[selectedImg]}
-                     alt="img3"
-                     width="100%"/>
+                <img
+                  className={styles.modal__img}
+                  src={images[selectedImg]}
+                  alt="img3"
+                  width="100%"
+                />
               </Box>
-              <Box className="slider"
-                   sx={styleArrows}>
-                <IconButton onClick={() => selectedImg === 0 ? setSelectedImg(0) : setSelectedImg(prevState => prevState - 1)}
-                            disabled={selectedImg === 0}>
-                  <ArrowBackIos/>
+              <Box className="slider" sx={styleArrows}>
+                <IconButton
+                  onClick={() =>
+                    selectedImg === 0
+                      ? setSelectedImg(0)
+                      : setSelectedImg((prevState) => prevState - 1)
+                  }
+                  disabled={selectedImg === 0}
+                >
+                  <ArrowBackIos />
                   Prev
                 </IconButton>
-                <IconButton onClick={() => selectedImg === images.length - 1 ? setSelectedImg(prevState => prevState) : setSelectedImg(prevState => prevState + 1)}
-                            disabled={selectedImg === images.length - 1}>
+                <IconButton
+                  onClick={() =>
+                    selectedImg === images.length - 1
+                      ? setSelectedImg((prevState) => prevState)
+                      : setSelectedImg((prevState) => prevState + 1)
+                  }
+                  disabled={selectedImg === images.length - 1}
+                >
                   Next
-                  <ArrowForwardIos/>
+                  <ArrowForwardIos />
                 </IconButton>
               </Box>
             </Box>
@@ -145,14 +145,10 @@ export const ProductPage: FC = () => {
         </Grid>
       </Grid>
 
-      <Grid item
-            xs={12}
-            md={6}>
-        <Stack spacing={4}
-               className="right">
+      <Grid item xs={12} md={6}>
+        <Stack spacing={4} className="right">
           <Typography variant="h2">{title}</Typography>
-          <Typography variant="h4"
-                      className={styles.price}>
+          <Typography variant="h4" className={styles.price}>
             {priceCommon}
           </Typography>
           <Typography variant="h6" align={'justify'}>
@@ -167,7 +163,7 @@ export const ProductPage: FC = () => {
                 setCount(Math.max(count - 1, 0));
               }}
             >
-              <RemoveIcon fontSize="small"/>
+              <RemoveIcon fontSize="small" />
             </Button>
 
             <Typography variant="h6">{count}</Typography>
@@ -179,20 +175,20 @@ export const ProductPage: FC = () => {
                 setCount(count + 1);
               }}
             >
-              <AddIcon fontSize="small"/>
+              <AddIcon fontSize="small" />
             </Button>
           </ButtonGroup>
 
           <Box className={styles.btn}>
             <Button>
-              <AddShoppingCartIcon/>
+              <AddShoppingCartIcon />
               ADD TO CART
             </Button>
           </Box>
 
           <Box className={styles.btn}>
             <Button>
-              <FavoriteBorderIcon/>
+              <FavoriteBorderIcon />
               ADD TO WISHLIST
             </Button>
           </Box>
