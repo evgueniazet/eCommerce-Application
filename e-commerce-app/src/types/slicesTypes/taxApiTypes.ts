@@ -7,7 +7,7 @@ export interface ITaxApiResponse {
   id: string
   includedInPrice: boolean
   name: string
-  subRates: []
+  rates: []
 }
 
 export interface IGetAllTaxesResponse extends IBaseGetAllQueryResponse<ITaxApiResponse> {
