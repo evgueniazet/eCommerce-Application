@@ -17,35 +17,29 @@ import { ErrorPage } from '../pages/ErrorPage/ErrorPage';
 import { LogoutPage } from '../pages/LogoutPage/LogoutPage';
 import { PrivateRoute } from './PrivateRoute';
 
-const AppRoutes = () => {
-
-  const router = createHashRouter(
-    createRoutesFromElements(
-      <>
-        <Route path={'/'} element={<RootPage />}>
-          <Route index element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/basket" element={<BasketPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/logout" element={<LogoutPage />} />
-          <Route path="/registration" element={<RegistrationPage />} />
-          <Route
-            path="/user"
-            element={
-              <PrivateRoute element={<UserPage />} fallbackPath="/login" />
-            }
-          >
-            {/*TODO : add redirect to the user page */}
-            <Route path={':userId'} element={<HomePage />}></Route>
-          </Route>
-          <Route path="/product" element={<ProductPage />} />
-          <Route path="/products" element={<ProductsPage />} />
+const router = createHashRouter(
+  createRoutesFromElements(
+    <>
+      <Route path={'/'} element={<RootPage />}>
+        <Route index element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route path="/basket" element={<BasketPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/logout" element={<LogoutPage />} />
+        <Route path="/registration" element={<RegistrationPage />} />
+        <Route path="/user" element={<PrivateRoute element={<UserPage />} fallbackPath="/login" />}>
+          {/*TODO : add redirect to the user page */}
+          <Route path={':customerId'} element={<HomePage />}></Route>
         </Route>
-        <Route path="*" element={<ErrorPage />} />
-      </>,
-    ),
-  );
+        <Route path="/product" element={<ProductPage />} />
+        <Route path="/products" element={<ProductsPage />} />
+      </Route>
+      <Route path="*" element={<ErrorPage />} />
+    </>,
+  ),
+);
 
+const AppRoutes = () => {
   return <RouterProvider router={router} />;
 };
 
