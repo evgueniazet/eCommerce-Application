@@ -12,8 +12,18 @@ const CategoriesQuery = (): JSX.Element => {
   const accessToken = useAppSelector(getAccessToken);
   const dispatch = useAppDispatch();
 
-  const { isLoading: isLoadingCategories, isError: isErrorCategories, isSuccess: isSuccessCategories, data: dataCategories } = useGetAllCategoriesQuery(accessToken as string);
-  const {isLoading: isLoadingTaxes, isError: isErrorTaxes, isSuccess: isSuccessTaxes, data: dataTaxes} = useGetAllTaxesQuery(accessToken as string);
+  const {
+    isLoading: isLoadingCategories,
+    isError: isErrorCategories,
+    isSuccess: isSuccessCategories,
+    data: dataCategories,
+  } = useGetAllCategoriesQuery(accessToken as string);
+  const {
+    isLoading: isLoadingTaxes,
+    isError: isErrorTaxes,
+    isSuccess: isSuccessTaxes,
+    data: dataTaxes,
+  } = useGetAllTaxesQuery(accessToken as string);
 
   useEffect(() => {
     if (!isSuccessCategories) return;
@@ -28,7 +38,6 @@ const CategoriesQuery = (): JSX.Element => {
       dispatch(setTaxes(dataTaxes));
     }
   }, [isSuccessTaxes, dataTaxes]);
-
 
   if (isLoadingCategories || isErrorCategories || isLoadingTaxes || isErrorTaxes) {
     return <LoadingProgress />;
