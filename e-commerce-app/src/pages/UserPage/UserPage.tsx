@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import UserImage from '../../assets/images/UserPageImg.png';
+import { UserForm1 } from './UserForm1';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -53,64 +54,68 @@ export const UserPage: React.FC = () => {
           backgroundPosition: 'top',
         }}
       ></Grid>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box className="wrapper" sx={{ width: '100%', mt: '20%' }}>
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
+      <Grid item lg={5} sm={7}>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box className="wrapper" sx={{ mt: '20%' }}>
+            <Stepper activeStep={activeStep} alternativeLabel>
+              {steps.map((label, index) => {
+                const stepProps: { completed?: boolean } = {};
 
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          {activeStep === steps.length ? (
-            <Box>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All pages completed - you&apos;re updated
-              </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleReset}>Reset</Button>
+                if (isStepSkipped(index)) {
+                  stepProps.completed = false;
+                }
+                return (
+                  <Step key={label} {...stepProps}>
+                    <StepLabel>{label}</StepLabel>
+                  </Step>
+                );
+              })}
+            </Stepper>
+            {activeStep === steps.length ? (
+              <Box>
+                <Typography sx={{ mt: 2, mb: 1 }}>
+                  All pages completed - you&apos;re updated
+                </Typography>
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  <Box sx={{ flex: '1 1 auto' }} />
+                  <Button onClick={handleReset}>Reset</Button>
+                </Box>
               </Box>
-            </Box>
-          ) : (
-            <Box>
-              <Typography sx={{ mt: 2, mb: 1 }}>Page {activeStep + 1}</Typography>
-              <Box
-                sx={{
-                  marginTop: 8,
-                  component: 'form',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              ></Box>
-              <Box>Nargiza</Box>
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mr: 1 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? 'Done' : 'Next'}
-                </Button>
+            ) : (
+              <Box>
+                <Typography sx={{ mt: 2, mb: 1, textAlign: 'center' }}>
+                  Profile Page {activeStep + 1}
+                </Typography>
+                <Box
+                  sx={{
+                    marginTop: 8,
+                    component: 'form',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                  }}
+                ></Box>
+                <UserForm1 />
+                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
+                  <Button
+                    color="inherit"
+                    disabled={activeStep === 0}
+                    onClick={handleBack}
+                    sx={{ mt: 2 }}
+                  >
+                    Back
+                  </Button>
+                  <Box sx={{ flex: '1 1 auto' }} />
+                  <Button onClick={handleNext}>
+                    {activeStep === steps.length - 1 ? 'Done' : 'Next'}
+                  </Button>
+                </Box>
               </Box>
-            </Box>
-          )}
-        </Box>
-      </Container>
+            )}
+          </Box>
+        </Container>
+      </Grid>
     </Grid>
   );
 };
