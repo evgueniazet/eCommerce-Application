@@ -28,13 +28,10 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccess, data]);
 
   if (isLoading || isError) {
-    return <LoadingProgress />;
+    return <LoadingProgress/>;
   }
 
-  if (isSuccess) {
-    return <ProductsPage />;
-  }
+  return <ProductsPage/>;
 
-  return <LoadingProgress />;
 };
 export default ProductsQuery;

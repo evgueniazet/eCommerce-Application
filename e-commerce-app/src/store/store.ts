@@ -6,6 +6,7 @@ import { productsApi } from '../api/productsApi';
 import { categoriesApi } from '../api/categoriesApi';
 import { CategoriesReducer } from './slices/categoriesSlice';
 import { ProductsReducer } from './slices/productsSlice';
+import { productProjectionApi } from '../api/productProjectionApi';
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     [myCustomerApi.reducerPath]: myCustomerApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [productProjectionApi.reducerPath]: productProjectionApi.reducer,
     user: UserReducer,
     categories: CategoriesReducer,
     products: ProductsReducer,
@@ -23,6 +25,7 @@ export const store = configureStore({
       myCustomerApi.middleware,
       productsApi.middleware,
       categoriesApi.middleware,
+      productProjectionApi.middleware,
     ]),
 });
 

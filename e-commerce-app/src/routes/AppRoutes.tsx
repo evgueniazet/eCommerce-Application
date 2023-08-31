@@ -33,7 +33,7 @@ const router = createHashRouter(
           <Route path="/basket" element={<BasketPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/user" element={<UserPage />}>
-              {/*TODO : add redirect to the user page */}
+              {/* TODO : add redirect to the user page */}
               <Route path={':customerId'} element={<HomePage />}></Route>
             </Route>
           </Route>

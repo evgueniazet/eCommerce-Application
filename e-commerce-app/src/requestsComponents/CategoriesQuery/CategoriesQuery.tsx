@@ -23,10 +23,6 @@ const CategoriesQuery = (): JSX.Element => {
     return <LoadingProgress />;
   }
 
-  return (
-    <>
-      <Outlet />
-    </>
-  );
+  return <Outlet />;
 };
 export default CategoriesQuery;
