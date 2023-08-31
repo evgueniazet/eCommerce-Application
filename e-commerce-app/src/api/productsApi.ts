@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import {
   IGetAllProductsRequest,
-  IGetAllProductsResponse,
+  IGetAllProductsResponse, IGetProductByIdRequest, IProductApiResponse,
 } from '../types/slicesTypes/productsApiTypes';
 
 export const productsApi = createApi({
@@ -26,7 +26,19 @@ export const productsApi = createApi({
         };
       },
     }),
+    getProductById: build.query<IProductApiResponse, IGetProductByIdRequest>({
+      query(queryObject) {
+        return {
+          url: `/${queryObject.productId}`,
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${queryObject.token}`,
+            'Content-Type': 'application/json',
+          },
+        };
+      }
+    })
   }),
 });
 
-export const { useGetAllProductsQuery } = productsApi;
+export const { useGetAllProductsQuery, useGetProductByIdQuery } = productsApi;
