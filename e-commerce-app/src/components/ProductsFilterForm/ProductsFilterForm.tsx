@@ -12,10 +12,8 @@ import Checkbox from '@mui/material/Checkbox';
 import Slider from '@mui/material/Slider';
 import { useAppSelector } from '../../store/hooks';
 import { getAllCategories } from '../../store/slices/categoriesSlice';
-import { useDispatch } from 'react-redux';
 
 const ProductsFilterForm = (): JSX.Element => {
-  const dispatch = useDispatch();
   const categories = useAppSelector(getAllCategories);
 
   const [value, setValue] = React.useState<number>(30);

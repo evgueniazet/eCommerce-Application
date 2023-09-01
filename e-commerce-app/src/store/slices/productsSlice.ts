@@ -34,7 +34,7 @@ export const productsSlice = createSlice({
       state.limit = 0;
       state.offset = 0;
       state.count = 0;
-    }
+    },
   },
 });
 

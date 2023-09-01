@@ -7,6 +7,7 @@ import { categoriesApi } from '../api/categoriesApi';
 import { CategoriesReducer } from './slices/categoriesSlice';
 import { ProductsReducer } from './slices/productsSlice';
 import { productProjectionApi } from '../api/productProjectionApi';
+import { QueryParamsReducer } from './slices/queryParamsSlice';
 
 export const store = configureStore({
   reducer: {
@@ -18,6 +19,7 @@ export const store = configureStore({
     user: UserReducer,
     categories: CategoriesReducer,
     products: ProductsReducer,
+    queryParams: QueryParamsReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([

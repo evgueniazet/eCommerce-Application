@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { IGetAllProductsRequest } from '../types/slicesTypes/productsApiTypes';
+import { ISearchProductsResponse } from '../types/slicesTypes/productProjectionsApiTypes';
 
 export const productProjectionApi = createApi({
   reducerPath: 'productProjectionApi',
@@ -6,7 +8,7 @@ export const productProjectionApi = createApi({
     baseUrl: `${process.env.REACT_APP_CTP_API_URL}/${process.env.REACT_APP_CTP_PROJECT_KEY}/product-projections`,
   }),
   endpoints: (build) => ({
-    searchProducts: build.mutation({
+    searchProducts: build.mutation<ISearchProductsResponse, IGetAllProductsRequest>({
       query(queryObject) {
         return {
           url: '/search',
@@ -19,9 +21,9 @@ export const productProjectionApi = createApi({
             Authorization: `Bearer ${queryObject.token}`,
           },
         };
-      }
-    })
-  })
+      },
+    }),
+  }),
 });
 
 export const { useSearchProductsMutation } = productProjectionApi;

@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react';
+import React from 'react';
 import { Grid, Box, Divider, InputBase, IconButton, Paper } from '@mui/material';
 import ProductsPageImg from '../../assets/images/ProductsPageImg.png';
 import { ProductsList } from '../../components/ProductsList/ProductsList';
@@ -6,15 +6,21 @@ import SearchIcon from '@mui/icons-material/Search';
 import styles from './ProductsPage.module.scss';
 import ProductsFilterForm from '../../components/ProductsFilterForm/ProductsFilterForm';
 import { useDispatch } from 'react-redux';
-import { resetProducts } from '../../store/slices/productsSlice';
-import { useSearchProductsMutation } from '../../api/productProjectionApi';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { ISearchProductForm } from '../../types/searchProductsTypes/searchFormTypes';
+import { getQueryText, setQueryText } from '../../store/slices/queryParamsSlice';
+import { useAppSelector } from '../../store/hooks';
 
 export const ProductsPage: React.FC = () => {
   const dispatch = useDispatch();
-  const [searchProducts, {isSuccess, data}] = useSearchProductsMutation();
-  const submitHandler = (e: FormEvent) => {
-    e.preventDefault();
-    console.log(e.target);
+  const searchQueryText = useAppSelector(getQueryText);
+  const {register, handleSubmit} = useForm<ISearchProductForm>({
+    defaultValues: {
+      query: searchQueryText,
+    }
+  });
+  const submitHandler: SubmitHandler<ISearchProductForm> = (data) => {
+    dispatch(setQueryText(data.query || ''));
   };
   return (
     <Grid container spacing={2}>
@@ -24,10 +30,12 @@ export const ProductsPage: React.FC = () => {
             <img className={styles.top__img} src={ProductsPageImg} alt="img1" width="100%" />
           </Grid>
           <Grid item sm={12} md={10} m={'auto'}>
-            <Paper component="form" className={styles.top__form} onSubmit={submitHandler}>
+            <Paper component="form" className={styles.top__form} onSubmit={handleSubmit(submitHandler)}>
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search plant"
+                {...register('query', {
+                })}
                 inputProps={{ 'aria-label': 'search google maps' }}
               />
               <IconButton

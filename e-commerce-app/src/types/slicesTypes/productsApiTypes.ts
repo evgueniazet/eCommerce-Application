@@ -3,6 +3,7 @@ import {
   ICategoryTypeResponse,
   IMetaDescriptionProductResponse,
 } from './baseApiResponsesTypes';
+import { IBaseQueryParams } from './baseApiRequestsTypes';
 
 export interface IAttributeProductApiResponse {
   name: string;
@@ -73,10 +74,8 @@ export interface IGetAllProductsResponse extends IBaseGetAllQueryResponse<IProdu
 
 export interface IGetAllProductsRequest {
   token: string;
-  params?: {
-    limit?: number;
-    offset?: number;
-  };
+  params?: IBaseQueryParams;
+
 }
 
 export interface IGetProductByIdRequest {
