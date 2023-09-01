@@ -8,6 +8,9 @@ import { CategoriesReducer } from './slices/categoriesSlice';
 import { ProductsReducer } from './slices/productsSlice';
 import { productProjectionApi } from '../api/productProjectionApi';
 import { QueryParamsReducer } from './slices/queryParamsSlice';
+import { taxApi } from '../api/taxApi';
+import { TaxesReducer } from './slices/taxesSlice';
+
 
 export const store = configureStore({
   reducer: {
@@ -15,11 +18,13 @@ export const store = configureStore({
     [myCustomerApi.reducerPath]: myCustomerApi.reducer,
     [productsApi.reducerPath]: productsApi.reducer,
     [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [taxApi.reducerPath]: taxApi.reducer,
     [productProjectionApi.reducerPath]: productProjectionApi.reducer,
     user: UserReducer,
     categories: CategoriesReducer,
     products: ProductsReducer,
     queryParams: QueryParamsReducer,
+    taxes: TaxesReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([
@@ -28,6 +33,7 @@ export const store = configureStore({
       productsApi.middleware,
       categoriesApi.middleware,
       productProjectionApi.middleware,
+      taxApi.middleware,
     ]),
 });
 
