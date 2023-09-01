@@ -14,10 +14,10 @@ import { useAppSelector } from '../../store/hooks';
 export const ProductsPage: React.FC = () => {
   const dispatch = useDispatch();
   const searchQueryText = useAppSelector(getQueryText);
-  const {register, handleSubmit} = useForm<ISearchProductForm>({
+  const { register, handleSubmit } = useForm<ISearchProductForm>({
     defaultValues: {
       query: searchQueryText,
-    }
+    },
   });
   const submitHandler: SubmitHandler<ISearchProductForm> = (data) => {
     dispatch(setQueryText(data.query || ''));
@@ -30,12 +30,15 @@ export const ProductsPage: React.FC = () => {
             <img className={styles.top__img} src={ProductsPageImg} alt="img1" width="100%" />
           </Grid>
           <Grid item sm={12} md={10} m={'auto'}>
-            <Paper component="form" className={styles.top__form} onSubmit={handleSubmit(submitHandler)}>
+            <Paper
+              component="form"
+              className={styles.top__form}
+              onSubmit={handleSubmit(submitHandler)}
+            >
               <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder="Search plant"
-                {...register('query', {
-                })}
+                {...register('query', {})}
                 inputProps={{ 'aria-label': 'search google maps' }}
               />
               <IconButton

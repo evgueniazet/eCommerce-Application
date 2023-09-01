@@ -75,7 +75,6 @@ export interface IGetAllProductsResponse extends IBaseGetAllQueryResponse<IProdu
 export interface IGetAllProductsRequest {
   token: string;
   params?: IBaseQueryParams;
-
 }
 
 export interface IGetProductByIdRequest {

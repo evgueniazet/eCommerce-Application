@@ -23,7 +23,7 @@ const ProductsQuery = (): JSX.Element => {
 
   useEffect(() => {
     if (searchQueryOffset) {
-      setParams(prevState => ({
+      setParams((prevState) => ({
         ...prevState,
         offset: searchQueryOffset,
       }));
@@ -32,16 +32,16 @@ const ProductsQuery = (): JSX.Element => {
 
   useEffect(() => {
     if (searchQueryText) {
-      setParams(prevState => ({
+      setParams((prevState) => ({
         ...prevState,
         ['text.en']: searchQueryText,
         fuzzy: searchQueryText.length > 2,
-        fuzzyLevel: searchQueryText.length <= 2 ? 0 : 1.
+        fuzzyLevel: searchQueryText.length <= 2 ? 0 : 1,
       }));
     } else {
-      setParams(prevState => {
+      setParams((prevState) => {
         const newObj = {
-          ...prevState
+          ...prevState,
         };
         delete newObj['text.en'];
         delete newObj.fuzzyLevel;
@@ -51,18 +51,24 @@ const ProductsQuery = (): JSX.Element => {
     }
   }, [searchQueryText]);
 
-  const [getAllProducts, {
-    isLoading: isLoadingProducts,
-    isSuccess: isSuccessProducts,
-    isError: isErrorProducts,
-    data: dataProducts
-  }] = useGetAllProductsMutation();
-  const [searchProducts, {
-    isLoading: isLoadingSearch,
-    isSuccess: isSuccessSearch,
-    isError: isErrorSearch,
-    data: dataSearch
-  }] = useSearchProductsMutation();
+  const [
+    getAllProducts,
+    {
+      isLoading: isLoadingProducts,
+      isSuccess: isSuccessProducts,
+      isError: isErrorProducts,
+      data: dataProducts,
+    },
+  ] = useGetAllProductsMutation();
+  const [
+    searchProducts,
+    {
+      isLoading: isLoadingSearch,
+      isSuccess: isSuccessSearch,
+      isError: isErrorSearch,
+      data: dataSearch,
+    },
+  ] = useSearchProductsMutation();
 
   useEffect(() => {
     if (params['text.en']?.length && params['text.en']?.length > 0) {
@@ -100,9 +106,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccessProducts, dataProducts, isSuccessSearch, dataSearch]);
 
   if (isLoadingProducts || isErrorProducts || isLoadingSearch || isErrorSearch) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  return <ProductsPage/>;
+  return <ProductsPage />;
 };
 export default ProductsQuery;
