@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Box, Typography } from '@mui/material';
+import { Box, Typography, Button } from '@mui/material';
 import { AddressPanel } from '../../components/Panel/Panel';
 import { BoardList } from '../../components/AddressList/AddressList';
 
@@ -102,6 +102,24 @@ export const UserForm2: FC = () => {
           onChangeAddr={onChangeAddr}
         />
         <AddressPanel mode="add" onAddAddress={onAddAddress} />
+        <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
+          >
+            Update
+          </Button>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ backgroundColor: 'beige', color: 'black' }}
+          >
+            Cancel
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

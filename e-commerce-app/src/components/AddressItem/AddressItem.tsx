@@ -3,6 +3,8 @@ import { Typography, Box, Paper, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import type { Board } from '../../pages/UserPage/UserForm2';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 interface addressItemProps {
   todo: Board;
@@ -40,6 +42,29 @@ export const AddressItem: FC<addressItemProps> = ({ todo, onDeleteAddr, onCheckA
       </Typography>
     </Box>
     <Box display="flex" justifyContent="flex-end">
+      <FormControlLabel
+        sx={{ mr: '25px' }}
+        value="end"
+        control={<Checkbox />}
+        label={
+          <Box component="div" fontSize={10}>
+            default shipping address
+          </Box>
+        }
+        labelPlacement="end"
+      />
+      <FormControlLabel
+        sx={{ mr: '25px' }}
+        value="end"
+        control={<Checkbox />}
+        label={
+          <Box component="div" fontSize={10}>
+            default billing address
+          </Box>
+        }
+        labelPlacement="end"
+      />
+
       <IconButton onClick={() => onEdit(todo.id)} color="primary" aria-label="edit">
         <EditIcon />
       </IconButton>
