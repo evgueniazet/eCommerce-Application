@@ -27,10 +27,18 @@ export const productsSlice = createSlice({
       state.products = action.payload.results;
       state.fetching = false;
     },
+    resetProducts: (state) => {
+      state.fetching = false;
+      state.products = [];
+      state.total = 0;
+      state.limit = 0;
+      state.offset = 0;
+      state.count = 0;
+    },
   },
 });
 
 export const getProducts = (state: RootStateType) => state.products.products;
 export const isFetchingProducts = (state: RootStateType) => state.products.fetching;
 export const ProductsReducer = productsSlice.reducer;
-export const { startLoadingProducts, setProducts } = productsSlice.actions;
+export const { startLoadingProducts, setProducts, resetProducts } = productsSlice.actions;
