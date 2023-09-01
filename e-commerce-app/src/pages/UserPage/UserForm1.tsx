@@ -26,6 +26,12 @@ export const UserForm1: FC = () => {
           <EditIcon />
         </Button>
       </Grid>
+      <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
+        <TextField fullWidth label="Email" type="text" autoComplete="off" />
+        <Button>
+          <EditIcon />
+        </Button>
+      </Grid>
       <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
         <Button
           type="submit"

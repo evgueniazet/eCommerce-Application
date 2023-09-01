@@ -10,7 +10,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import UserImage from '../../assets/images/UserPageImg.png';
-import { UserForm1 } from './UserForm1';
+// import { UserForm1 } from './UserForm1';
+import { UserForm2 } from './UserForm2';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -96,7 +97,7 @@ export const UserPage: React.FC = () => {
                     alignItems: 'center',
                   }}
                 ></Box>
-                <UserForm1 />
+                <UserForm2 />
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                   <Button
                     color="inherit"
