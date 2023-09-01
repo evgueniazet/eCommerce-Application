@@ -18,7 +18,6 @@ export const productsApi = createApi({
           url: '',
           method: 'GET',
           params: {
-            limit: 12,
             ...queryObject.params,
           },
           headers: {

@@ -5,7 +5,7 @@ import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
 import { ProductsPage } from '../../pages/ProductsPage/ProductsPage';
 import { setProducts, startLoadingProducts } from '../../store/slices/productsSlice';
-import { getQueryLimit, getQueryOffset, getQueryText } from '../../store/slices/queryParamsSlice';
+import { getQuerySort, getQueryText } from '../../store/slices/queryParamsSlice';
 import { IBaseQueryParams } from '../../types/slicesTypes/baseApiRequestsTypes';
 import { useSearchProductsMutation } from '../../api/productProjectionApi';
 import { makeProductSliceObjectFromSearchApiRequest } from '../../utils/makeProductSliceObjectFromSearchApiRequest';
@@ -13,22 +13,25 @@ import { makeProductSliceObjectFromSearchApiRequest } from '../../utils/makeProd
 const ProductsQuery = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector(getAccessToken);
+  const searchQuerySort = useAppSelector(getQuerySort);
   const searchQueryText = useAppSelector(getQueryText);
-  const searchQueryLimit = useAppSelector(getQueryLimit);
-  const searchQueryOffset = useAppSelector(getQueryOffset);
 
-  const [params, setParams] = useState<IBaseQueryParams>({
-    limit: searchQueryLimit || 12,
-  });
+  const [params, setParams] = useState<IBaseQueryParams>({});
 
   useEffect(() => {
-    if (searchQueryOffset) {
-      setParams((prevState) => ({
+    if (searchQuerySort) {
+      setParams(prevState => ({
         ...prevState,
-        offset: searchQueryOffset,
+        sort: searchQuerySort,
       }));
+    } else {
+      setParams(prevState => {
+        const newState = prevState;
+        delete newState.sort;
+        return newState;
+      });
     }
-  }, [searchQueryOffset]);
+  }, [searchQuerySort]);
 
   useEffect(() => {
     if (searchQueryText) {
@@ -71,7 +74,7 @@ const ProductsQuery = (): JSX.Element => {
   ] = useSearchProductsMutation();
 
   useEffect(() => {
-    if (params['text.en']?.length && params['text.en']?.length > 0) {
+    if (params['text.en']?.length && params['text.en']?.length > 0 || params.sort) {
       searchProducts({
         token: accessToken as string,
         params,
@@ -82,7 +85,7 @@ const ProductsQuery = (): JSX.Element => {
         params,
       });
     }
-  }, [params['text.en']]);
+  }, [params['text.en'], params.sort]);
 
   useEffect(() => {
     if (isLoadingProducts || isLoadingSearch) {
@@ -91,8 +94,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isLoadingProducts, isLoadingSearch]);
 
   useEffect(() => {
-    if (isSuccessSearch && params['text.en']) {
+    if (isSuccessSearch && params['text.en'] || searchQuerySort) {
       if (dataSearch && 'results' in dataSearch) {
+
         const pushingObject = makeProductSliceObjectFromSearchApiRequest(dataSearch);
         dispatch(setProducts(pushingObject));
       }
@@ -106,9 +110,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccessProducts, dataProducts, isSuccessSearch, dataSearch]);
 
   if (isLoadingProducts || isErrorProducts || isLoadingSearch || isErrorSearch) {
-    return <LoadingProgress />;
+    return <LoadingProgress/>;
   }
 
-  return <ProductsPage />;
+  return <ProductsPage/>;
 };
 export default ProductsQuery;
