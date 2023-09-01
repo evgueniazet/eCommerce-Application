@@ -42,11 +42,11 @@ export const UserPage: React.FC = () => {
   };
 
   return (
-    <Grid container sx={{ height: '80vh' }}>
+    <Grid container sx={{ height: '100vh' }}>
       <Grid
         item
-        lg={7}
-        sm={5}
+        lg={4}
+        sm={4}
         sx={{
           backgroundImage: `url(${UserImage})`,
           backgroundRepeat: 'no-repeat',
@@ -54,7 +54,7 @@ export const UserPage: React.FC = () => {
           backgroundPosition: 'top',
         }}
       ></Grid>
-      <Grid item lg={5} sm={7}>
+      <Grid item lg={8} sm={8}>
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <Box className="wrapper" sx={{ mt: '20%' }}>

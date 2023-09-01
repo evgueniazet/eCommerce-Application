@@ -3,25 +3,30 @@ import Grid from '@mui/material/Grid';
 import { FC } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import EditIcon from '@mui/icons-material/Edit';
 
 export const UserForm1: FC = () => {
   return (
-    <Grid
-      container
-      sx={{
-        position: 'relative',
-      }}
-    >
-      <Grid item xs={12} mt={2}>
+    <Grid container>
+      <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
         <TextField fullWidth label="First Name" autoComplete="off" />
+        <Button>
+          <EditIcon />
+        </Button>
       </Grid>
-      <Grid item xs={12} mt={2}>
+      <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
         <TextField fullWidth label="Last Name" autoComplete="off" />
+        <Button>
+          <EditIcon />
+        </Button>
       </Grid>
-      <Grid item xs={12} mt={2}>
+      <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
         <TextField fullWidth type="date" label="Date of birth" autoComplete="off" />
+        <Button>
+          <EditIcon />
+        </Button>
       </Grid>
-      <Box sx={{ display: 'flex' }}>
+      <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
         <Button
           type="submit"
           fullWidth
