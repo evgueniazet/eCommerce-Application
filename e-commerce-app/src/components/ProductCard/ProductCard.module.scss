@@ -14,9 +14,6 @@
         transition: box-shadow .3s ease-in-out;
     }
 
-    &__tax {
-        box-shadow: 0px 0px 10px 5px #5ef16380 !important;
-    }
 
     &__text {
         height: 100%;
@@ -38,7 +35,15 @@
         font-weight: 700;
         text-align: center;
 
-        &_sale {
+        &__marked {
+            color: rgb(221, 65, 65);
+            padding-top: 1rem;
+            width: 50%;
+            font-weight: 700;
+            text-align: center;
+        }
+
+        &__sale {
             text-decoration: line-through;
             text-decoration-color: gray;
             padding-top: 1rem;

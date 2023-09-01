@@ -62,7 +62,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
   }).format(numberUSD - numberUSD * tax);
 
   return (
-    <Card className={`${styles.card} ${tax !== 0 ? styles.card__tax : ''}`}>
+    <Card className={styles.card}>
       <Box width={'100%'}>
         <CardMedia sx={{ height: 200, width: '100%' }} image={imgPath} title={imgDescription} />
       </Box>
@@ -73,10 +73,10 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
 
         {tax !== 0 ? (
           <>
-            <Typography className={styles.card__price} component="h3">
+            <Typography className={styles.card__price__marked} component="h3">
               {salePriceEUR}
             </Typography>
-            <Typography className={styles.card__price_sale} component="h3">
+            <Typography className={styles.card__price__sale} component="h3">
               {priceEUR}
             </Typography>
           </>
@@ -88,10 +88,10 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
 
         {tax !== 0 ? (
           <>
-            <Typography className={styles.card__price} component="h3">
+            <Typography className={styles.card__price__marked} component="h3">
               {salePriceUSD}
             </Typography>
-            <Typography className={styles.card__price_sale} component="h3">
+            <Typography className={styles.card__price__sale} component="h3">
               {priceUSD}
             </Typography>
           </>
