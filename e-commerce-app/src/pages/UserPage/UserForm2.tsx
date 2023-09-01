@@ -6,17 +6,21 @@ import { BoardList } from '../../components/AddressList/AddressList';
 export type Board = {
   id: number;
   name: string;
-  description: string;
+  street: string;
+  city: string;
+  country: string;
+  postcode: string;
   checked: boolean;
 };
 
 const DEFAULT_TODO_LIST = [
-  { id: 1, name: 'Address 1', description: 'description 1', checked: false },
-  { id: 2, name: 'Address 2', description: 'description 2', checked: false },
   {
-    id: 3,
-    name: 'Address 3',
-    description: 'description 3',
+    id: 1,
+    name: 'Address 1',
+    street: 'street 1',
+    city: 'city 1',
+    country: 'country 1',
+    postcode: 'code 1',
     checked: false,
   },
 ];
@@ -33,10 +37,24 @@ export const UserForm2: FC = () => {
     setTodoList(todoList.filter((todo) => todo.id !== id));
   };
 
-  const onAddAddress = ({ name, description }: Omit<Board, 'id' | 'checked'>) => {
+  const onAddAddress = ({
+    name,
+    street,
+    city,
+    country,
+    postcode,
+  }: Omit<Board, 'id' | 'checked'>) => {
     setTodoList([
       ...todoList,
-      { id: todoList[todoList.length - 1].id + 1, description, name, checked: false },
+      {
+        id: todoList[todoList.length - 1].id + 1,
+        name,
+        street,
+        city,
+        country,
+        postcode,
+        checked: false,
+      },
     ]);
   };
 
@@ -51,11 +69,17 @@ export const UserForm2: FC = () => {
     );
   };
 
-  const onChangeAddr = ({ name, description }: Omit<Board, 'id' | 'checked'>) => {
+  const onChangeAddr = ({
+    name,
+    street,
+    city,
+    country,
+    postcode,
+  }: Omit<Board, 'id' | 'checked'>) => {
     setTodoList(
       todoList.map((todo) => {
         if (todo.id === editTodoId) {
-          return { ...todo, name, description };
+          return { ...todo, name, street, city, country, postcode };
         }
         return todo;
       }),
@@ -66,8 +90,9 @@ export const UserForm2: FC = () => {
   return (
     <Box marginTop={5} height="100%" display="flex" justifyContent="center" alignContent="center">
       <Box display="flex" flexDirection="column" width="500px">
-        <Typography variant="h6">Shipping Addresses: {todoList.length}</Typography>
-        <AddressPanel mode="add" onAddAddress={onAddAddress} />
+        <Typography textAlign="center" variant="h5">
+          My Addresses: {todoList.length}
+        </Typography>
         <BoardList
           editTodoId={editTodoId}
           todoList={todoList}
@@ -76,6 +101,7 @@ export const UserForm2: FC = () => {
           onEdit={onEdit}
           onChangeAddr={onChangeAddr}
         />
+        <AddressPanel mode="add" onAddAddress={onAddAddress} />
       </Box>
     </Box>
   );

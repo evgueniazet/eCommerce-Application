@@ -15,11 +15,11 @@ export const AddressItem: FC<addressItemProps> = ({ todo, onDeleteAddr, onCheckA
   <Paper
     elevation={1}
     sx={{
-      marginBottom: '10px',
+      marginBottom: '5px',
       width: '100%',
-      padding: '10px 15px',
+      padding: '5px 10px',
       borderRadius: 1,
-      gap: 2,
+      gap: 1,
       opacity: todo.checked ? 0.5 : 1,
     }}
   >
@@ -27,14 +27,16 @@ export const AddressItem: FC<addressItemProps> = ({ todo, onDeleteAddr, onCheckA
       <Typography
         onClick={() => onCheckAddr(todo.id)}
         sx={{ cursor: 'pointer', textDecorationLine: todo.checked ? 'line-through' : 'none' }}
-        variant="h4"
-        component="h4"
+        variant="h6"
+        component="h6"
         gutterBottom
       >
         {todo.name}
       </Typography>
+    </Box>
+    <Box display="flex" textAlign="left">
       <Typography variant="subtitle1" component="div" gutterBottom>
-        {todo.description}
+        {todo.street}, {todo.city}, {todo.country}, {todo.postcode}
       </Typography>
     </Box>
     <Box display="flex" justifyContent="flex-end">

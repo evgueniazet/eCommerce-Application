@@ -1,9 +1,5 @@
-// import type {addressBoard, AddressItem } from '../AddressItem/AddressItem';
-// import { AddressPanel } from '../Panel/Panel';
-
 import { FC } from 'react';
 import { Box } from '@mui/material';
-
 import { AddressItem } from '../AddressItem/AddressItem';
 import type { Board } from '../../pages/UserPage/UserForm2';
 import { AddressPanel } from '../Panel/Panel';
@@ -14,7 +10,7 @@ interface TodoListProps {
   onDeleteAddr: (id: Board['id']) => void;
   onCheckAddr: (id: Board['id']) => void;
   onEdit: (id: Board['id']) => void;
-  onChangeAddr: ({ name, description }: Omit<Board, 'id' | 'checked'>) => void;
+  onChangeAddr: ({ name, street, city, country, postcode }: Omit<Board, 'id' | 'checked'>) => void;
 }
 
 export const BoardList: FC<TodoListProps> = ({
