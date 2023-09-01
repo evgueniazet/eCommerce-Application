@@ -1,8 +1,11 @@
-import { FC } from 'react';
+import { FC, useEffect, useState } from 'react';
 import styles from './ProductCard.module.scss';
 import { Box, Typography, Button, CardMedia, CardContent, CardActions, Card } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IProductApiResponse } from '../../types/slicesTypes/productsApiTypes';
+import { getTaxes } from '../../store/slices/taxesSlice';
+import { useAppSelector } from '../../store/hooks';
+import { ITaxApiResponse } from '../../types/slicesTypes/taxApiTypes';
 
 interface ICardProps {
   item: IProductApiResponse;
@@ -14,28 +17,52 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
     navigate(`/products/${item.id}`);
   };
 
+  const taxesArray = useAppSelector(getTaxes);
+
+  const [tax, setTax] = useState(0);
+
+  useEffect(() => {
+    taxesArray
+      .filter((i) => i.id === item.taxCategory.id && i.key === 'sale')
+      .flatMap((elem) => elem.rates)
+      .filter((rate: ITaxApiResponse) => rate.country === 'DE')
+      .forEach((rate: ITaxApiResponse) => {
+        setTax(rate.amount);
+      });
+  }, [item]);
+
+
   const imgPath = item.masterData.current.masterVariant.images[0].url;
   const imgDescription = item.masterData.current.name.en;
 
-  const currencyCommon = item.masterData.current.masterVariant.prices[0].value.currencyCode;
-  const priceCommon = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: currencyCommon,
-  }).format(
+  const currencyEUR = item.masterData.current.masterVariant.prices[0].value.currencyCode;
+  const numberEUR =
     item.masterData.current.masterVariant.prices[0].value.centAmount /
-      10 ** item.masterData.current.masterVariant.prices[0].value.fractionDigits,
-  );
-  const currencySale = item.masterData.current.masterVariant.prices[1].value.currencyCode;
-  const priceSale = new Intl.NumberFormat('en-IN', {
+    10 ** item.masterData.current.masterVariant.prices[0].value.fractionDigits;
+  const priceEUR = new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: currencySale,
-  }).format(
+    currency: currencyEUR,
+  }).format(numberEUR);
+  const salePriceEUR = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyEUR,
+  }).format(numberEUR - numberEUR * tax);
+
+  const currencyUSD = item.masterData.current.masterVariant.prices[1].value.currencyCode;
+  const numberUSD =
     item.masterData.current.masterVariant.prices[1].value.centAmount /
-      10 ** item.masterData.current.masterVariant.prices[1].value.fractionDigits,
-  );
+    10 ** item.masterData.current.masterVariant.prices[1].value.fractionDigits;
+  const priceUSD = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyUSD,
+  }).format(numberUSD);
+  const salePriceUSD = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyUSD,
+  }).format(numberUSD - numberUSD * tax);
 
   return (
-    <Card className={styles.card}>
+    <Card className={`${styles.card} ${tax !== 0 ? styles.card__tax : ''}`}>
       <Box width={'100%'}>
         <CardMedia sx={{ height: 200, width: '100%' }} image={imgPath} title={imgDescription} />
       </Box>
@@ -43,12 +70,36 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
         <Typography className={styles.card__title} component="h2">
           {item.masterData.current.name.en}
         </Typography>
-        <Typography className={styles.card__price} component="h3">
-          {priceCommon}
-        </Typography>
-        <Typography className={styles.card__price} component="h3">
-          {priceSale}
-        </Typography>
+
+        {tax !== 0 ? (
+          <>
+            <Typography className={styles.card__price} component="h3">
+              {salePriceEUR}
+            </Typography>
+            <Typography className={styles.card__price_sale} component="h3">
+              {priceEUR}
+            </Typography>
+          </>
+        ) : (
+          <Typography className={styles.card__price} component="h3">
+            {priceEUR}
+          </Typography>
+        )}
+
+        {tax !== 0 ? (
+          <>
+            <Typography className={styles.card__price} component="h3">
+              {salePriceUSD}
+            </Typography>
+            <Typography className={styles.card__price_sale} component="h3">
+              {priceUSD}
+            </Typography>
+          </>
+        ) : (
+          <Typography className={styles.card__price} component="h3">
+            {priceUSD}
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
         <Button onClick={handlerNavigation} color="success" variant="outlined">

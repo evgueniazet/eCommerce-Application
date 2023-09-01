@@ -43,7 +43,7 @@ export const ProductPage: FC = () => {
   useEffect(() => {
     if (isSuccess) {
       taxesArray
-        .filter((item) => item.id === data.taxCategory.id)
+        .filter((item) => item.id === data.taxCategory.id && item.key === 'sale')
         .flatMap((elem) => elem.rates)
         .filter((rate: ITaxApiResponse) => rate.country === 'DE')
         .forEach((rate: ITaxApiResponse) => {
