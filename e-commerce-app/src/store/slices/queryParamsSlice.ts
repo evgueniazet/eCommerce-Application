@@ -25,8 +25,8 @@ export const queryParamsSlice = createSlice({
     },
     setEmptySort: (state) => {
       state.sort = '';
-    }
-  }
+    },
+  },
 });
 
 export const getQueryOffset = (state: RootStateType) => state.queryParams.offset;
@@ -34,4 +34,5 @@ export const getQuerySort = (state: RootStateType) => state.queryParams.sort;
 export const getQueryText = (state: RootStateType) => state.queryParams.text;
 export const getQueryLimit = (state: RootStateType) => state.queryParams.limit;
 export const QueryParamsReducer = queryParamsSlice.reducer;
-export const { setQueryOffset, setQuerySort, setQueryText, setEmptySort } = queryParamsSlice.actions;
+export const { setQueryOffset, setQuerySort, setQueryText, setEmptySort } =
+  queryParamsSlice.actions;

@@ -1,9 +1,12 @@
 import React, { JSX, useState } from 'react';
 import {
-  Box, Button,
+  Box,
+  Button,
   FormControl,
   FormControlLabel,
-  FormGroup, InputLabel, MenuItem,
+  FormGroup,
+  InputLabel,
+  MenuItem,
   Select,
   Stack,
   Typography,
@@ -31,8 +34,8 @@ const ProductsFilterForm = (): JSX.Element => {
 
   const { register, handleSubmit } = useForm<ISortByForm>({
     defaultValues: {
-      sort: sortRate
-    }
+      sort: sortRate,
+    },
   });
 
   const submitFormHandler: SubmitHandler<ISortByForm> = (data) => {
@@ -41,24 +44,20 @@ const ProductsFilterForm = (): JSX.Element => {
     } else {
       dispatch(setEmptySort());
     }
-
   };
 
   return (
-    <Box component={'form'}
-         onSubmit={handleSubmit(submitFormHandler)}>
+    <Box component={'form'} onSubmit={handleSubmit(submitFormHandler)}>
       <Stack spacing={3}>
         <Box>
-          <Typography variant="h5"
-                      mt="40px">
+          <Typography variant="h5" mt="40px">
             Product Categories
           </Typography>
           <FormGroup>
             {categories.map((category) => (
               <FormControlLabel
                 key={category.id}
-                control={<Checkbox value={category.id}
-                                   name={category.name.en}/>}
+                control={<Checkbox value={category.id} name={category.name.en} />}
                 label={category.name.en}
               />
             ))}
@@ -68,9 +67,7 @@ const ProductsFilterForm = (): JSX.Element => {
         <Box>
           <Typography variant="h5">Filter by price</Typography>
           <Box sx={{ width: 200 }}>
-            <Stack spacing={2}
-                   direction="row"
-                   alignItems="center">
+            <Stack spacing={2} direction="row" alignItems="center">
               <p>0</p>
               <Slider
                 aria-label="priceRange"
@@ -94,9 +91,9 @@ const ProductsFilterForm = (): JSX.Element => {
             value={sortRate}
             {...register('sort', {
               onChange: (e) => setSortRate(e.target.value),
-            })}>
-            <MenuItem value=""
-                      selected>
+            })}
+          >
+            <MenuItem value="" selected>
               <em>None</em>
             </MenuItem>
             <MenuItem value="price asc">Price (Low first)</MenuItem>
@@ -105,9 +102,7 @@ const ProductsFilterForm = (): JSX.Element => {
             <MenuItem value="name.en desc">Name (Z first)</MenuItem>
           </Select>
         </FormControl>
-        <Button type={'submit'}
-                color="success"
-                variant="contained">
+        <Button type={'submit'} color="success" variant="contained">
           Sort
         </Button>
       </Stack>

@@ -4,6 +4,6 @@ export interface ISortByForm {
 
 export type SortFormType = '' | SortFormPrice | SortFormName;
 
-export type SortFormPrice = 'price asc' | 'price desc'
+export type SortFormPrice = 'price asc' | 'price desc';
 
-export type SortFormName = 'name.en asc' | 'name.en desc'
+export type SortFormName = 'name.en asc' | 'name.en desc';

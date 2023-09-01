@@ -20,12 +20,12 @@ const ProductsQuery = (): JSX.Element => {
 
   useEffect(() => {
     if (searchQuerySort) {
-      setParams(prevState => ({
+      setParams((prevState) => ({
         ...prevState,
         sort: searchQuerySort,
       }));
     } else {
-      setParams(prevState => {
+      setParams((prevState) => {
         const newState = prevState;
         delete newState.sort;
         return newState;
@@ -74,7 +74,7 @@ const ProductsQuery = (): JSX.Element => {
   ] = useSearchProductsMutation();
 
   useEffect(() => {
-    if (params['text.en']?.length && params['text.en']?.length > 0 || params.sort) {
+    if ((params['text.en']?.length && params['text.en']?.length > 0) || params.sort) {
       searchProducts({
         token: accessToken as string,
         params,
@@ -94,9 +94,8 @@ const ProductsQuery = (): JSX.Element => {
   }, [isLoadingProducts, isLoadingSearch]);
 
   useEffect(() => {
-    if (isSuccessSearch && params['text.en'] || searchQuerySort) {
+    if ((isSuccessSearch && params['text.en']) || searchQuerySort) {
       if (dataSearch && 'results' in dataSearch) {
-
         const pushingObject = makeProductSliceObjectFromSearchApiRequest(dataSearch);
         dispatch(setProducts(pushingObject));
       }
@@ -110,9 +109,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccessProducts, dataProducts, isSuccessSearch, dataSearch]);
 
   if (isLoadingProducts || isErrorProducts || isLoadingSearch || isErrorSearch) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  return <ProductsPage/>;
+  return <ProductsPage />;
 };
 export default ProductsQuery;
