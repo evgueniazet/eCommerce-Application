@@ -9,9 +9,9 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-// import { UserForm1 } from './UserForm1';
+import { UserForm1 } from './UserForm1';
 // import { UserForm2 } from './UserForm2';
-import { UserForm3 } from './UserForm3';
+// import { UserForm3 } from './UserForm3';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -85,7 +85,7 @@ export const UserPage: React.FC = () => {
                   alignItems: 'center',
                 }}
               ></Box>
-              <UserForm3 />
+              <UserForm1 />
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color="inherit"

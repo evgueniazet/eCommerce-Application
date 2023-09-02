@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 export const UserForm1: FC = () => {
   return (
-    <Grid container>
+    <Box sx={{ width: 450, margin: '0 auto' }}>
       <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
         <TextField fullWidth label="First Name" autoComplete="off" />
         <Button>
@@ -50,6 +50,6 @@ export const UserForm1: FC = () => {
           Cancel
         </Button>
       </Box>
-    </Grid>
+    </Box>
   );
 };
