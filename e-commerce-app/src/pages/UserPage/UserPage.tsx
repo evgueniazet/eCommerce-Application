@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import { UserForm1 } from './UserForm1';
-// import { UserForm2 } from './UserForm2';
-// import { UserForm3 } from './UserForm3';
+import { UserForm2 } from './UserForm2';
+import { UserForm3 } from './UserForm3';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -41,6 +41,8 @@ export const UserPage: React.FC = () => {
   const handleReset = () => {
     setActiveStep(0);
   };
+
+  console.log('activeStep', activeStep + 1);
 
   return (
     <Grid container sx={{ height: '100vh' }}>
@@ -85,7 +87,9 @@ export const UserPage: React.FC = () => {
                   alignItems: 'center',
                 }}
               ></Box>
-              <UserForm1 />
+              {activeStep + 1 === 1 && <UserForm1 />}
+              {activeStep + 1 === 2 && <UserForm2 />}
+              {activeStep + 1 === 3 && <UserForm3 />}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color="inherit"
@@ -98,6 +102,24 @@ export const UserPage: React.FC = () => {
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleNext}>
                   {activeStep === steps.length - 1 ? 'Done' : 'Next'}
+                </Button>
+              </Box>
+              <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
+                >
+                  Update
+                </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ backgroundColor: 'beige', color: 'black' }}
+                >
+                  Cancel
                 </Button>
               </Box>
             </Box>

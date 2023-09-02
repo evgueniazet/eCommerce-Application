@@ -102,24 +102,6 @@ export const UserForm2: FC = () => {
           onChangeAddr={onChangeAddr}
         />
         <AddressPanel mode="add" onAddAddress={onAddAddress} />
-        <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
-          >
-            Update
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ backgroundColor: 'beige', color: 'black' }}
-          >
-            Cancel
-          </Button>
-        </Box>
       </Box>
     </Box>
   );

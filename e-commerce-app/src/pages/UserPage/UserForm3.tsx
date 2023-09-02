@@ -3,7 +3,6 @@ import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PageImg from '../../assets/images/UserPageImg.png';
-import Button from '@mui/material/Button';
 
 export const UserForm3: FC = () => {
   return (
@@ -20,24 +19,6 @@ export const UserForm3: FC = () => {
           <TextField fullWidth label="Confirm new password" type="password" autoComplete="off" />
         </Grid>
       </Grid>
-      <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
-        >
-          Update
-        </Button>
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ backgroundColor: 'beige', color: 'black' }}
-        >
-          Cancel
-        </Button>
-      </Box>
     </Box>
   );
 };
