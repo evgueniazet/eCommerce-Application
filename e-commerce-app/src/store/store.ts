@@ -10,7 +10,7 @@ import { productProjectionApi } from '../api/productProjectionApi';
 import { QueryParamsReducer } from './slices/queryParamsSlice';
 import { taxApi } from '../api/taxApi';
 import { TaxesReducer } from './slices/taxesSlice';
-
+import { MyCustomerReducer } from './slices/myCustomerSlice';
 
 export const store = configureStore({
   reducer: {
@@ -25,6 +25,7 @@ export const store = configureStore({
     products: ProductsReducer,
     queryParams: QueryParamsReducer,
     taxes: TaxesReducer,
+    myCustomer: MyCustomerReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({}).concat([

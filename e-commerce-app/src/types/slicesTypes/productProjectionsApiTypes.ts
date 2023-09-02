@@ -8,6 +8,6 @@ export interface ISearchApiResponse extends IProductApiDescriptionResponse {
   taxCategory: ICategoryTypeResponse;
 }
 
-export interface ISearchProductsResponse extends IBaseGetAllQueryResponse<ISearchApiResponse>{
+export interface ISearchProductsResponse extends IBaseGetAllQueryResponse<ISearchApiResponse> {
   results: ISearchApiResponse[];
 }

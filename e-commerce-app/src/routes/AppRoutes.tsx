@@ -18,6 +18,8 @@ import { PrivateRoute } from './PrivateRoute';
 import ProductsQuery from '../requestsComponents/ProductsQuery/ProductsQuery';
 import CategoriesQuery from '../requestsComponents/CategoriesQuery/CategoriesQuery';
 import TokenGuard from '../requestsComponents/TokenGuard/TokenGuard';
+import UserQuery from '../requestsComponents/UserQuery/UserQuery';
+import UserRedirect from '../components/UserRedirect/UserRedirect';
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -32,12 +34,12 @@ const router = createHashRouter(
           <Route path="/registration" element={<RegistrationPage />} />
           <Route path="/basket" element={<BasketPage />} />
           <Route element={<PrivateRoute />}>
-            <Route path="/user" element={<UserPage />}>
-              {/* TODO : add redirect to the user page */}
-              <Route path={':customerId'} element={<HomePage />}></Route>
+            <Route path="/user" element={<UserQuery />}>
+              <Route index element={<UserRedirect/>}/>
+              <Route path={':customerId'} element={<UserPage />} />
             </Route>
           </Route>
-          <Route element={<CategoriesQuery />} path={'/products'}>
+          <Route path={'/products'} element={<CategoriesQuery />}>
             <Route index element={<ProductsQuery />} />
             <Route path=":productId" element={<ProductPage />} />
           </Route>

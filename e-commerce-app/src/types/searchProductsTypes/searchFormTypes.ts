@@ -1,3 +1,3 @@
 export interface ISearchProductForm {
-  query: string
+  query: string;
 }

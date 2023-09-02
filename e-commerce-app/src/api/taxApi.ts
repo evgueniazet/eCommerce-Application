@@ -16,9 +16,9 @@ export const taxApi = createApi({
             Authorization: `Bearer ${token}`,
           },
         };
-      }
-    })
-  })
+      },
+    }),
+  }),
 });
 
 export const { useGetAllTaxesQuery } = taxApi;
