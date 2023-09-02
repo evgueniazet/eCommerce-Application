@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { TextField, Paper, Button, Box, Grid } from '@mui/material';
-import type { Board } from '../../pages/UserPage/UserForm2';
+import type { Board } from '../../pages/UserPage/UserAdresses';
 
 const DEFAULT_TODO = { name: '', street: '', city: '', country: '', postcode: '' };
 

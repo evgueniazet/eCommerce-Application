@@ -4,7 +4,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import PageImg from '../../assets/images/UserPageImg.png';
 
-export const UserForm3: FC = () => {
+export const UserPassword: FC = () => {
   return (
     <Box sx={{ width: 350, margin: '0 auto' }}>
       <Grid item xs={12} textAlign={'center'}>

@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Typography, Box, Paper, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import type { Board } from '../../pages/UserPage/UserForm2';
+import type { Board } from '../../pages/UserPage/UserAdresses';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 

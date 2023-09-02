@@ -25,7 +25,7 @@ const DEFAULT_TODO_LIST = [
   },
 ];
 
-export const UserForm2: FC = () => {
+export const UserAdresses: FC = () => {
   const [editTodoId, setEditTodoId] = useState<number | null>(null);
   const [todoList, setTodoList] = useState(DEFAULT_TODO_LIST);
 
