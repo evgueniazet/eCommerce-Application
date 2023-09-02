@@ -14,7 +14,6 @@ export const productProjectionApi = createApi({
           url: '/search',
           method: 'GET',
           params: {
-            limit: 12,
             ...queryObject.params,
           },
           headers: {
