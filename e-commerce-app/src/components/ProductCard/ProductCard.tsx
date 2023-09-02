@@ -31,7 +31,6 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
       });
   }, [item]);
 
-
   const imgPath = item.masterData.current.masterVariant.images[0].url;
   const imgDescription = item.masterData.current.name.en;
 

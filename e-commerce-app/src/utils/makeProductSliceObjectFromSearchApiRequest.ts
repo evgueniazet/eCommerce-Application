@@ -1,9 +1,12 @@
-import { ISearchApiResponse, ISearchProductsResponse } from '../types/slicesTypes/productProjectionsApiTypes';
+import {
+  ISearchApiResponse,
+  ISearchProductsResponse,
+} from '../types/slicesTypes/productProjectionsApiTypes';
 import {
   IGetAllProductsResponse,
   IMasterDataProductApiResponse,
   IProductApiDescriptionResponse,
-  IProductApiResponse
+  IProductApiResponse,
 } from '../types/slicesTypes/productsApiTypes';
 
 const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductApiResponse => {
@@ -15,7 +18,7 @@ const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductA
     name: el.name,
     searchKeywords: el.searchKeywords,
     slug: el.slug,
-    variants: el.variants
+    variants: el.variants,
   };
   const masterData: IMasterDataProductApiResponse = {
     current: current,
@@ -28,13 +31,15 @@ const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductA
     key: el.key,
     masterData: masterData,
     productType: el.productType,
-    taxCategory: el.taxCategory
+    taxCategory: el.taxCategory,
   };
   return newProduct;
 };
 
-export const makeProductSliceObjectFromSearchApiRequest = (dataSearch: ISearchProductsResponse): IGetAllProductsResponse => {
-  const productsArray = dataSearch.results.map(el => makeFromSearchApiProductApiResponses(el));
+export const makeProductSliceObjectFromSearchApiRequest = (
+  dataSearch: ISearchProductsResponse,
+): IGetAllProductsResponse => {
+  const productsArray = dataSearch.results.map((el) => makeFromSearchApiProductApiResponses(el));
   const pushingObject: IGetAllProductsResponse = {
     limit: dataSearch.limit,
     offset: dataSearch.offset,

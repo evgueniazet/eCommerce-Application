@@ -8,19 +8,19 @@ export interface IMyCustomerLoginRequest {
 }
 
 export interface IMyCustomerBaseResponse {
-  id: string;
+  addresses: IMyCustomerApiAddressRequest[];
+  authenticationMode: 'Password' | string;
+  billingAddressIds: string[];
+  dateOfBirth: string;
   email: string;
   firstName: string;
+  id: string;
+  isEmailVerified: boolean;
   lastName: string;
-  dateOfBirth: string;
   password: string;
-  addresses: IMyCustomerApiAddressRequest[];
-  billingAddressIds: string[];
   shippingAddressIds: string[];
   defaultBillingAddressId?: string;
   defaultShippingAddressId?: string;
-  isEmailVerified: boolean;
-  authenticationMode: 'Password' | string;
 }
 
 export interface IMyCustomerApiSignupRequest {

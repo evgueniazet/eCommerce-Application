@@ -10,7 +10,6 @@ export const userLogoutRoutes = {
 
 export const navigationRoutes = {
   home: '/',
-  product: '/product',
   products: '/products',
   user: '/user',
 };

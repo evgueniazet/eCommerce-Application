@@ -26,10 +26,9 @@ export const taxesSlice = createSlice({
       state.limit = action.payload.limit;
       state.taxes = action.payload.results;
       state.fetching = false;
-    }
-  }
+    },
+  },
 });
-
 
 export const getTaxes = (state: RootStateType) => state.taxes.taxes;
 export const TaxesReducer = taxesSlice.reducer;
