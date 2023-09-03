@@ -5,16 +5,24 @@ import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
 import { ProductsPage } from '../../pages/ProductsPage/ProductsPage';
 import { setProducts, startLoadingProducts } from '../../store/slices/productsSlice';
-import { getQuerySort, getQueryText } from '../../store/slices/queryParamsSlice';
+import {
+  getQueryCategories,
+  getQueryCentAmount,
+  getQuerySort,
+  getQueryText
+} from '../../store/slices/queryParamsSlice';
 import { IBaseQueryParams } from '../../types/slicesTypes/baseApiRequestsTypes';
 import { useSearchProductsMutation } from '../../api/productProjectionApi';
 import { makeProductSliceObjectFromSearchApiRequest } from '../../utils/makeProductSliceObjectFromSearchApiRequest';
+import { makeGetQueryProductsString } from '../../utils/makeGetQueryProductsString';
 
 const ProductsQuery = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector(getAccessToken);
   const searchQuerySort = useAppSelector(getQuerySort);
   const searchQueryText = useAppSelector(getQueryText);
+  const searchQueryCentAmount = useAppSelector(getQueryCentAmount);
+  const searchQueryCategories = useAppSelector(getQueryCategories);
 
   const [params, setParams] = useState<IBaseQueryParams>({});
 
@@ -39,7 +47,7 @@ const ProductsQuery = (): JSX.Element => {
         ...prevState,
         ['text.en']: searchQueryText,
         fuzzy: searchQueryText.length > 2,
-        fuzzyLevel: searchQueryText.length <= 2 ? 0 : 1,
+        fuzzyLevel: searchQueryText.length <= 2 ? 0 : searchQueryText.length > 4 ? 2 : 1,
       }));
     } else {
       setParams((prevState) => {
@@ -53,6 +61,31 @@ const ProductsQuery = (): JSX.Element => {
       });
     }
   }, [searchQueryText]);
+
+  useEffect(() => {
+    const filterArr: string[] = [];
+
+    if (!(searchQueryCentAmount[0] === 0 && searchQueryCentAmount[1] === 100)) {
+      filterArr.push(`variants.price.centAmount:range+(${searchQueryCentAmount[0] * 100}+to+${searchQueryCentAmount[1] * 100})`);
+    }
+    if (searchQueryCategories) {
+      filterArr.push(`categories.id:"${searchQueryCategories}"`);
+    }
+
+    if (filterArr.length === 0) {
+      setParams(prevState => {
+        const newState = {
+          ...prevState
+        };
+        delete newState.filter;
+        return newState;
+      });
+    }
+    setParams((prevState) => ({
+      ...prevState,
+      filter: filterArr,
+    }));
+  }, [searchQueryCentAmount, searchQueryCategories]);
 
   const [
     getAllProducts,
@@ -74,10 +107,13 @@ const ProductsQuery = (): JSX.Element => {
   ] = useSearchProductsMutation();
 
   useEffect(() => {
-    if ((params['text.en']?.length && params['text.en']?.length > 0) || params.sort) {
+    if ((params['text.en']?.length && params['text.en']?.length > 0) || params.sort || (params.filter && params.filter.length > 0)) {
+      const resultPath = makeGetQueryProductsString(params);
       searchProducts({
         token: accessToken as string,
-        params,
+        params: {
+          resultPath,
+        },
       });
     } else {
       getAllProducts({
@@ -85,7 +121,7 @@ const ProductsQuery = (): JSX.Element => {
         params,
       });
     }
-  }, [params['text.en'], params.sort]);
+  }, [params]);
 
   useEffect(() => {
     if (isLoadingProducts || isLoadingSearch) {
@@ -94,7 +130,7 @@ const ProductsQuery = (): JSX.Element => {
   }, [isLoadingProducts, isLoadingSearch]);
 
   useEffect(() => {
-    if ((isSuccessSearch && params['text.en']) || searchQuerySort) {
+    if ((isSuccessSearch && params['text.en']) || searchQuerySort || params.filter && params.filter.length > 0) {
       if (dataSearch && 'results' in dataSearch) {
         const pushingObject = makeProductSliceObjectFromSearchApiRequest(dataSearch);
         dispatch(setProducts(pushingObject));
@@ -109,9 +145,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccessProducts, dataProducts, isSuccessSearch, dataSearch]);
 
   if (isLoadingProducts || isErrorProducts || isLoadingSearch || isErrorSearch) {
-    return <LoadingProgress />;
+    return <LoadingProgress/>;
   }
 
-  return <ProductsPage />;
+  return <ProductsPage/>;
 };
 export default ProductsQuery;
