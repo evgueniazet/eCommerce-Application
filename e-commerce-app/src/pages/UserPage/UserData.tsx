@@ -1,29 +1,43 @@
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import EditIcon from '@mui/icons-material/Edit';
-import { useAppSelector } from '../../store/hooks';
-import {
-  getMyCustomerFirstName,
-  getMyCustomerLastName,
-  getMyCustomerDateOfBirth,
-  getMyCustomerEmail,
-} from '../../store/slices/myCustomerSlice';
 import styles from './UserPage.module.scss';
+import { IUserProps } from '../../interfaces/IUserProps';
 
-export const UserData: FC = () => {
-  const firstName = useAppSelector(getMyCustomerFirstName);
-  const lastName = useAppSelector(getMyCustomerLastName);
-  const birthDate = useAppSelector(getMyCustomerDateOfBirth);
-  const email = useAppSelector(getMyCustomerEmail);
+export const UserData: FC<IUserProps> = ({
+  register,
+  validationHandler,
+  errors,
+  userData,
+  setValue,
+}) => {
+  const [firstName, lastName, birthDate, email] = userData;
 
-  const [changingFirstName, setChangingFirstName] = useState(firstName);
-  const [changingLastName, setChangingLastName] = useState(lastName);
-  const [changingBirthDate, setChangingBirthDate] = useState(birthDate);
-  const [changingEmail, setChangingEmail] = useState(email);
   const [isEditableArray, setIsEditableArray] = useState([false, false, false, false]);
+
+  const [inputValues, setInputValues] = useState({
+    firstName: userData[0],
+    lastName: userData[1],
+    birthDate: userData[2],
+    email: userData[3],
+  });
+
+  const handleInputChange = (field: string, value: string) => {
+    setInputValues((prevInputValues) => ({
+      ...prevInputValues,
+      [field]: value,
+    }));
+  };
+
+  useEffect(() => {
+    setValue('firstName', inputValues.firstName);
+    setValue('lastName', inputValues.lastName);
+    setValue('birthDate', inputValues.birthDate);
+    setValue('email', inputValues.email);
+  }, [inputValues, setValue]);
 
   const handleEditClick = (index: number) => {
     const newIsEditableArray = [...isEditableArray];
@@ -38,14 +52,20 @@ export const UserData: FC = () => {
           fullWidth
           label="First Name"
           autoComplete="off"
-          value={changingFirstName}
-          onChange={(e) => {
-            if (isEditableArray[0]) {
-              setChangingFirstName(e.target.value);
-            }
-          }}
+          value={inputValues.firstName}
+          error={!!errors.firstName}
+          helperText={errors.firstName?.message}
+          {...register('firstName', {
+            required: 'First Name is required',
+            onChange: (e) => {
+              const newValue = e.target.value;
+              handleInputChange('firstName', newValue);
+              if (isEditableArray[0] && newValue !== inputValues.firstName) {
+                validationHandler('firstName', newValue);
+              }
+            },
+          })}
           InputProps={{
-            readOnly: !isEditableArray[0],
             className: !isEditableArray[0] ? styles.non__editable : '',
           }}
           disabled={!isEditableArray[0]}
@@ -59,12 +79,19 @@ export const UserData: FC = () => {
           fullWidth
           label="Last Name"
           autoComplete="off"
-          value={changingLastName}
-          onChange={(e) => {
-            if (isEditableArray[1]) {
-              setChangingLastName(e.target.value);
-            }
-          }}
+          value={inputValues.lastName}
+          error={!!errors.lastName}
+          helperText={errors.lastName?.message}
+          {...register('lastName', {
+            required: 'Last Name is required',
+            onChange: (e) => {
+              const newValue = e.target.value;
+              handleInputChange('lastName', newValue);
+              if (isEditableArray[1] && newValue !== inputValues.lastName) {
+                validationHandler('lastName', newValue);
+              }
+            },
+          })}
           InputProps={{
             readOnly: !isEditableArray[1],
             className: !isEditableArray[1] ? styles.non__editable : '',
@@ -81,12 +108,19 @@ export const UserData: FC = () => {
           type="date"
           label="Date of birth"
           autoComplete="off"
-          value={changingBirthDate}
-          onChange={(e) => {
-            if (isEditableArray[2]) {
-              setChangingBirthDate(e.target.value);
-            }
-          }}
+          value={inputValues.birthDate}
+          error={!!errors.birthDate}
+          helperText={errors.birthDate?.message}
+          {...register('birthDate', {
+            required: 'Birth Date is required',
+            onChange: (e) => {
+              const newValue = e.target.value;
+              handleInputChange('birthDate', newValue);
+              if (isEditableArray[2] && newValue !== inputValues.birthDate) {
+                validationHandler('birthDate', newValue);
+              }
+            },
+          })}
           InputProps={{
             readOnly: !isEditableArray[2],
             className: !isEditableArray[2] ? styles.non__editable : '',
@@ -103,12 +137,19 @@ export const UserData: FC = () => {
           label="Email"
           type="text"
           autoComplete="off"
-          value={changingEmail}
-          onChange={(e) => {
-            if (isEditableArray[3]) {
-              setChangingEmail(e.target.value);
-            }
-          }}
+          value={inputValues.email}
+          error={!!errors.email}
+          helperText={errors.email?.message}
+          {...register('email', {
+            required: 'Email is required',
+            onChange: (e) => {
+              const newValue = e.target.value;
+              handleInputChange('email', newValue);
+              if (isEditableArray[3] && newValue !== inputValues.email) {
+                validationHandler('email', newValue);
+              }
+            },
+          })}
           InputProps={{
             readOnly: !isEditableArray[3],
             className: !isEditableArray[3] ? styles.non__editable : '',

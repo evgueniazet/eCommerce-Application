@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './UserPage.module.scss';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -9,15 +8,44 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
+import Alert from '@mui/material/Alert';
 import { UserData } from './UserData';
 import { UserAdresses } from './UserAdresses';
 import { UserPassword } from './UserPassword';
+import { useValidate } from '../../hooks/useValidate';
+import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
+import { fieldNameType, globalErrors } from '../../types';
+import { IValues } from '../../interfaces/IValues';
+import { useAppSelector } from '../../store/hooks';
+import {
+  getMyCustomerFirstName,
+  getMyCustomerLastName,
+  getMyCustomerDateOfBirth,
+  getMyCustomerEmail,
+} from '../../store/slices/myCustomerSlice';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
 export const UserPage: React.FC = () => {
+  const firstName = useAppSelector(getMyCustomerFirstName);
+  const lastName = useAppSelector(getMyCustomerLastName);
+  const birthDate = useAppSelector(getMyCustomerDateOfBirth);
+  const email = useAppSelector(getMyCustomerEmail);
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+  const { errors: validationErrors, validateField } = useValidate();
+
+  const {
+    register,
+    handleSubmit,
+    formState,
+    getValues,
+    setValue,
+    setError,
+    clearErrors,
+    reset: resetForm,
+  } = useForm<IRegistrationFormData>();
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -42,13 +70,76 @@ export const UserPage: React.FC = () => {
     setActiveStep(0);
   };
 
-  console.log('activeStep', activeStep + 1);
+  const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
+    (acc, item) => {
+      if (validationErrors[item as keyof IRegistrationFormData]) {
+        acc[item as keyof IRegistrationFormData] = {
+          message: validationErrors[item as keyof IRegistrationFormData],
+        };
+      }
+
+      if (
+        formState.errors[item as keyof FieldErrors<IRegistrationFormData>] &&
+        !validationErrors[item as keyof IRegistrationFormData]
+      ) {
+        acc[item as keyof IRegistrationFormData] = {
+          message:
+            formState.errors[item as keyof FieldErrors<IRegistrationFormData>]?.message ?? null,
+        };
+      }
+
+      return acc;
+    },
+    {},
+  );
+
+  const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
+    if (!value) {
+      const updatedErrors = {
+        ...validationErrors,
+        [fieldName]: '',
+      };
+
+      clearErrors(fieldName);
+      Object.assign(validationErrors, updatedErrors);
+      return;
+    }
+
+    const errString = validateField(fieldName, value, values);
+
+    if (errString.length) {
+      setError(fieldName, {
+        type: 'required',
+        message: errString,
+      });
+    } else {
+      clearErrors(fieldName);
+    }
+  };
+
+  const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
+    if (!Object.keys(globalErrors).length) {
+      console.log('data', data);
+    }
+  };
+
+  const buttonSubmitClick = () => {
+    console.log('button submit click');
+  };
+
+  const userData = [firstName, lastName, birthDate, email];
 
   return (
     <Grid container sx={{ height: '100vh' }}>
       <Container component="main" maxWidth="md">
         <CssBaseline />
-        <Box className="wrapper" sx={{ mt: '20%' }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          className="wrapper"
+          sx={{ mt: '20%' }}
+        >
           <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map((label, index) => {
               const stepProps: { completed?: boolean } = {};
@@ -87,7 +178,29 @@ export const UserPage: React.FC = () => {
                   alignItems: 'center',
                 }}
               ></Box>
-              {activeStep + 1 === 1 && <UserData />}
+              {!!Object.keys(formState.errors).length && (
+                <Box
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                  }}
+                >
+                  <Alert style={{ width: '300px' }} severity={'error'}>
+                    All fields are required!
+                  </Alert>
+                </Box>
+              )}
+              {activeStep + 1 === 1 && (
+                <UserData
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  userData={userData}
+                  setValue={setValue}
+                />
+              )}
               {activeStep + 1 === 2 && <UserAdresses />}
               {activeStep + 1 === 3 && <UserPassword />}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
@@ -107,6 +220,7 @@ export const UserPage: React.FC = () => {
               <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
                 <Button
                   type="submit"
+                  onClick={buttonSubmitClick}
                   fullWidth
                   variant="contained"
                   sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}

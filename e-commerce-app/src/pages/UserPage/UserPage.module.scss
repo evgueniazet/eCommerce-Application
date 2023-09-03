@@ -1,11 +1,6 @@
 .non__editable {
 
-    background-color: #f3f3f3;
-    cursor: not-allowed !important;
-
-    &:focus {
-        outline: none !important;
-    }
+    background-color: #f3eded;
 
     &__icon {
         stroke: gray;
