@@ -1,8 +1,9 @@
 import { FC } from 'react';
 import { Box } from '@mui/material';
 import { AddressItem } from '../AddressItem/AddressItem';
-import type { Board } from '../../pages/UserPage/UserForm2';
+import type { Board } from '../../pages/UserPage/UserAddresses';
 import { AddressPanel } from '../Panel/Panel';
+import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 
 interface TodoListProps {
   editTodoId: Board['id'] | null;
@@ -11,6 +12,7 @@ interface TodoListProps {
   onCheckAddr: (id: Board['id']) => void;
   onEdit: (id: Board['id']) => void;
   onChangeAddr: ({ name, street, city, country, postcode }: Omit<Board, 'id' | 'checked'>) => void;
+  address: IMyCustomerApiAddressRequest | undefined;
 }
 
 export const BoardList: FC<TodoListProps> = ({
@@ -20,6 +22,7 @@ export const BoardList: FC<TodoListProps> = ({
   onDeleteAddr,
   onCheckAddr,
   onEdit,
+  address,
 }) => (
   <Box>
     {todoList.map((todo) => {
@@ -32,6 +35,7 @@ export const BoardList: FC<TodoListProps> = ({
           onDeleteAddr={onDeleteAddr}
           onCheckAddr={onCheckAddr}
           onEdit={onEdit}
+          address={address}
         />
       );
     })}

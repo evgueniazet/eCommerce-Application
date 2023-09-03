@@ -26,6 +26,7 @@ const defaultErrorsObj: IRegistrationFormData = {
   postalCodeBilling: null,
   streetAddressBilling: null,
   streetAddressShipping: null,
+  currentPassword: null,
 };
 
 export const useValidate = () => {

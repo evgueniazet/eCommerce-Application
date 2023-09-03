@@ -2,18 +2,24 @@ import { FC } from 'react';
 import { Typography, Box, Paper, IconButton } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
-import type { Board } from '../../pages/UserPage/UserForm2';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import type { Board } from '../../pages/UserPage/UserAddresses';
+import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 
 interface addressItemProps {
   todo: Board;
   onDeleteAddr: (id: Board['id']) => void;
   onCheckAddr: (id: Board['id']) => void;
   onEdit: (id: Board['id']) => void;
+  address: IMyCustomerApiAddressRequest | undefined;
 }
 
-export const AddressItem: FC<addressItemProps> = ({ todo, onDeleteAddr, onCheckAddr, onEdit }) => (
+export const AddressItem: FC<addressItemProps> = ({
+  todo,
+  onDeleteAddr,
+  onCheckAddr,
+  onEdit,
+  address,
+}) => (
   <Paper
     elevation={1}
     sx={{
@@ -37,34 +43,13 @@ export const AddressItem: FC<addressItemProps> = ({ todo, onDeleteAddr, onCheckA
       </Typography>
     </Box>
     <Box display="flex" textAlign="left">
-      <Typography variant="subtitle1" component="div" gutterBottom>
-        {todo.street}, {todo.city}, {todo.country}, {todo.postcode}
-      </Typography>
+      {address && (
+        <Typography variant="subtitle1" component="div" gutterBottom>
+          {address.streetName}, {address.city}, {address.country}, {address.postalCode}
+        </Typography>
+      )}
     </Box>
     <Box display="flex" justifyContent="flex-end">
-      <FormControlLabel
-        sx={{ mr: '25px' }}
-        value="end"
-        control={<Checkbox />}
-        label={
-          <Box component="div" fontSize={10}>
-            default shipping address
-          </Box>
-        }
-        labelPlacement="end"
-      />
-      <FormControlLabel
-        sx={{ mr: '25px' }}
-        value="end"
-        control={<Checkbox />}
-        label={
-          <Box component="div" fontSize={10}>
-            default billing address
-          </Box>
-        }
-        labelPlacement="end"
-      />
-
       <IconButton onClick={() => onEdit(todo.id)} color="primary" aria-label="edit">
         <EditIcon />
       </IconButton>

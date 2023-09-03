@@ -2,6 +2,8 @@ import { FC, useState } from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { AddressPanel } from '../../components/Panel/Panel';
 import { BoardList } from '../../components/AddressList/AddressList';
+import { IUserProps } from '../../interfaces/IUserProps';
+import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 
 export type Board = {
   id: number;
@@ -25,7 +27,45 @@ const DEFAULT_TODO_LIST = [
   },
 ];
 
-export const UserForm2: FC = () => {
+export const UserAddresses: FC<IUserProps> = ({
+  register,
+  validationHandler,
+  errors,
+  userAddresses,
+  setValue,
+}) => {
+  if (!userAddresses) {
+    return null;
+  }
+
+  let shippingAddress;
+  let billingAddress;
+
+  if (
+    userAddresses[0] !== undefined &&
+    userAddresses[1] !== undefined &&
+    Array.isArray(userAddresses[0]) &&
+    Array.isArray(userAddresses[1])
+  ) {
+    shippingAddress = (userAddresses[0] as IMyCustomerApiAddressRequest[]).find((item) => {
+      return (
+        typeof item === 'object' &&
+        item !== null &&
+        'id' in item &&
+        item.id === (userAddresses[1] as string[])[0]
+      );
+    });
+
+    billingAddress = (userAddresses[0] as IMyCustomerApiAddressRequest[]).find((item) => {
+      return (
+        typeof item === 'object' &&
+        item !== null &&
+        'id' in item &&
+        item.id === (userAddresses[2] as string[])[0]
+      );
+    });
+  }
+
   const [editTodoId, setEditTodoId] = useState<number | null>(null);
   const [todoList, setTodoList] = useState(DEFAULT_TODO_LIST);
 
@@ -91,7 +131,7 @@ export const UserForm2: FC = () => {
     <Box marginTop={5} height="100%" display="flex" justifyContent="center" alignContent="center">
       <Box display="flex" flexDirection="column" width="500px">
         <Typography textAlign="center" variant="h5">
-          My Addresses: {todoList.length}
+          Shipping adresses: {todoList.length}
         </Typography>
         <BoardList
           editTodoId={editTodoId}
@@ -100,26 +140,24 @@ export const UserForm2: FC = () => {
           onCheckAddr={onCheckAddr}
           onEdit={onEdit}
           onChangeAddr={onChangeAddr}
+          address={shippingAddress}
         />
         <AddressPanel mode="add" onAddAddress={onAddAddress} />
-        <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
-          >
-            Update
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ backgroundColor: 'beige', color: 'black' }}
-          >
-            Cancel
-          </Button>
-        </Box>
+      </Box>
+      <Box display="flex" flexDirection="column" width="500px">
+        <Typography textAlign="center" variant="h5">
+          Billing adresses: {todoList.length}
+        </Typography>
+        <BoardList
+          editTodoId={editTodoId}
+          todoList={todoList}
+          onDeleteAddr={onDeleteAddr}
+          onCheckAddr={onCheckAddr}
+          onEdit={onEdit}
+          onChangeAddr={onChangeAddr}
+          address={billingAddress}
+        />
+        <AddressPanel mode="add" onAddAddress={onAddAddress} />
       </Box>
     </Box>
   );

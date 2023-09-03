@@ -13,7 +13,6 @@ const UserQuery = (): JSX.Element => {
   const [getMyCustomerDetails, { data, isSuccess, isLoading }] = useGetMyCustomerDetailsMutation();
 
   useEffect(() => {
-    console.log('Get details ---> ', accessToken);
     dispatch(clearMyCustomerData());
     if (accessToken) {
       getMyCustomerDetails(accessToken);
@@ -23,7 +22,6 @@ const UserQuery = (): JSX.Element => {
   useEffect(() => {
     if (!isSuccess) return;
     if (data) {
-      console.log(data);
       dispatch(setMyCustomerData(data));
     }
   }, [isSuccess, data]);

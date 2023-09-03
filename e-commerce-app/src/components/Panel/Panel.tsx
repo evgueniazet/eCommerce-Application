@@ -1,7 +1,9 @@
 import { FC, useState } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { TextField, Paper, Button, Box, Grid } from '@mui/material';
-import type { Board } from '../../pages/UserPage/UserForm2';
+import type { Board } from '../../pages/UserPage/UserAddresses';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
 
 const DEFAULT_TODO = { name: '', street: '', city: '', country: '', postcode: '' };
 
@@ -88,6 +90,17 @@ export const AddressPanel: FC<PanelProps> = (props) => {
         </Grid>
       </Grid>
       <Box textAlign="right" marginTop={2}>
+      <FormControlLabel
+        sx={{ mr: '25px' }}
+        value="end"
+        control={<Checkbox />}
+        label={
+          <Box component="div" fontSize={10}>
+            use asdefault address
+          </Box>
+        }
+        labelPlacement="end"
+      />
         <Button startIcon={<AddIcon />} variant="outlined" onClick={onClick}>
           {isEdit ? 'EDIT' : 'ADD'}
         </Button>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import './UserPage.module.scss';
 import CssBaseline from '@mui/material/CssBaseline';
 import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
@@ -9,15 +8,57 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
-import { UserForm1 } from './UserForm1';
-// import { UserForm2 } from './UserForm2';
-// import { UserForm3 } from './UserForm3';
+import Alert from '@mui/material/Alert';
+import { UserData } from './UserData';
+import { UserAddresses } from './UserAddresses';
+import { UserPassword } from './UserPassword';
+import { useValidate } from '../../hooks/useValidate';
+import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
+import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
+import { fieldNameType, globalErrors } from '../../types';
+import { IValues } from '../../interfaces/IValues';
+import { useAppSelector } from '../../store/hooks';
+import {
+  getMyCustomerFirstName,
+  getMyCustomerLastName,
+  getMyCustomerDateOfBirth,
+  getMyCustomerEmail,
+  getMyCustomerAddresses,
+  getMyCustomerShippingAddressIds,
+  getMyCustomerBillingAddressIds,
+  getMyCustomerDefaultShippingAddressId,
+  getMyCustomerDefaultBillingAddressId,
+  getMyCustomerPassword,
+} from '../../store/slices/myCustomerSlice';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
 export const UserPage: React.FC = () => {
+  const firstName = useAppSelector(getMyCustomerFirstName);
+  const lastName = useAppSelector(getMyCustomerLastName);
+  const birthDate = useAppSelector(getMyCustomerDateOfBirth);
+  const email = useAppSelector(getMyCustomerEmail);
+  const addresses = useAppSelector(getMyCustomerAddresses);
+  const shippingAddressId = useAppSelector(getMyCustomerShippingAddressIds);
+  const billingAddressId = useAppSelector(getMyCustomerBillingAddressIds);
+  const shippingDefaultAddressId = useAppSelector(getMyCustomerDefaultShippingAddressId);
+  const billingDefaultAddressId = useAppSelector(getMyCustomerDefaultBillingAddressId);
+  const password = useAppSelector(getMyCustomerPassword);
+
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
+  const { errors: validationErrors, validateField } = useValidate();
+
+  const {
+    register,
+    handleSubmit,
+    formState,
+    getValues,
+    setValue,
+    setError,
+    clearErrors,
+    reset: resetForm,
+  } = useForm<IRegistrationFormData>();
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -42,11 +83,86 @@ export const UserPage: React.FC = () => {
     setActiveStep(0);
   };
 
+  const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
+    (acc, item) => {
+      if (validationErrors[item as keyof IRegistrationFormData]) {
+        acc[item as keyof IRegistrationFormData] = {
+          message: validationErrors[item as keyof IRegistrationFormData],
+        };
+      }
+
+      if (
+        formState.errors[item as keyof FieldErrors<IRegistrationFormData>] &&
+        !validationErrors[item as keyof IRegistrationFormData]
+      ) {
+        acc[item as keyof IRegistrationFormData] = {
+          message:
+            formState.errors[item as keyof FieldErrors<IRegistrationFormData>]?.message ?? null,
+        };
+      }
+
+      return acc;
+    },
+    {},
+  );
+
+  console.log('globalErrors', globalErrors);
+
+  const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
+    if (!value) {
+      const updatedErrors = {
+        ...validationErrors,
+        [fieldName]: '',
+      };
+
+      clearErrors(fieldName);
+      Object.assign(validationErrors, updatedErrors);
+      return;
+    }
+
+    const errString = validateField(fieldName, value, values);
+
+    if (errString.length) {
+      setError(fieldName, {
+        type: 'required',
+        message: errString,
+      });
+    } else {
+      clearErrors(fieldName);
+    }
+  };
+
+  const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
+    if (!Object.keys(globalErrors).length) {
+      console.log('data', data);
+    }
+  };
+
+  const buttonSubmitClick = () => {
+    console.log('button submit click');
+  };
+
+  const userData = [firstName, lastName, birthDate, email];
+
+  const userAddresses = [
+    addresses,
+    shippingAddressId,
+    billingAddressId,
+    shippingDefaultAddressId,
+    billingDefaultAddressId,
+  ];
+
   return (
     <Grid container sx={{ height: '100vh' }}>
       <Container component="main" maxWidth="md">
         <CssBaseline />
-        <Box className="wrapper" sx={{ mt: '20%' }}>
+        <Box
+          component="form"
+          noValidate
+          onSubmit={handleSubmit(onSubmit)}
+          className="wrapper"
+          sx={{ mt: '20%' }}
+        >
           <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map((label, index) => {
               const stepProps: { completed?: boolean } = {};
@@ -85,7 +201,50 @@ export const UserPage: React.FC = () => {
                   alignItems: 'center',
                 }}
               ></Box>
-              <UserForm1 />
+              {!!Object.keys(formState.errors).length && (
+                <Box
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: '100%',
+                  }}
+                >
+                  <Alert style={{ width: '500px' }} severity={'error'}>
+                  Please review and ensure all fields are correctly filled!
+                  </Alert>
+                </Box>
+              )}
+              {activeStep + 1 === 1 && (
+                <UserData
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  userData={userData}
+                  setValue={setValue}
+                  getValues={getValues}
+                />
+              )}
+              {activeStep + 1 === 2 && (
+                <UserAddresses
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  userAddresses={userAddresses}
+                  setValue={setValue}
+                  getValues={getValues}
+                />
+              )}
+              {activeStep + 1 === 3 && (
+                <UserPassword
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  password={password}
+                  setValue={setValue}
+                  getValues={getValues}
+                />
+              )}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color="inherit"
@@ -98,6 +257,25 @@ export const UserPage: React.FC = () => {
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleNext}>
                   {activeStep === steps.length - 1 ? 'Done' : 'Next'}
+                </Button>
+              </Box>
+              <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
+                <Button
+                  type="submit"
+                  onClick={buttonSubmitClick}
+                  fullWidth
+                  variant="contained"
+                  sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
+                >
+                  Update
+                </Button>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ backgroundColor: 'beige', color: 'black' }}
+                >
+                  Cancel
                 </Button>
               </Box>
             </Box>
