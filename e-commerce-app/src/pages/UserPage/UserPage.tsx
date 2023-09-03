@@ -28,10 +28,10 @@ import {
   getMyCustomerBillingAddressIds,
   getMyCustomerDefaultShippingAddressId,
   getMyCustomerDefaultBillingAddressId,
+  getMyCustomerPassword,
 } from '../../store/slices/myCustomerSlice';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
-
 
 export const UserPage: React.FC = () => {
   const firstName = useAppSelector(getMyCustomerFirstName);
@@ -43,12 +43,7 @@ export const UserPage: React.FC = () => {
   const billingAddressId = useAppSelector(getMyCustomerBillingAddressIds);
   const shippingDefaultAddressId = useAppSelector(getMyCustomerDefaultShippingAddressId);
   const billingDefaultAddressId = useAppSelector(getMyCustomerDefaultBillingAddressId);
-
-//   console.log('adresses', addresses);
-//   console.log('shippingAddressId', shippingAddressId);
-//   console.log('billingAddressId', billingAddressId);
-//   console.log('shippingDefaultAddressId', shippingDefaultAddressId);
-//   console.log('billingDefaultAddressId', billingDefaultAddressId);
+  const password = useAppSelector(getMyCustomerPassword);
 
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
@@ -155,7 +150,6 @@ export const UserPage: React.FC = () => {
     billingDefaultAddressId,
   ];
 
-
   return (
     <Grid container sx={{ height: '100vh' }}>
       <Container component="main" maxWidth="md">
@@ -226,6 +220,7 @@ export const UserPage: React.FC = () => {
                   errors={globalErrors}
                   userData={userData}
                   setValue={setValue}
+                  getValues={getValues}
                 />
               )}
               {activeStep + 1 === 2 && (
@@ -235,9 +230,18 @@ export const UserPage: React.FC = () => {
                   errors={globalErrors}
                   userAddresses={userAddresses}
                   setValue={setValue}
+                  getValues={getValues}
                 />
               )}
-              {activeStep + 1 === 3 && <UserPassword />}
+              {activeStep + 1 === 3 && (
+                <UserPassword
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  password={password}
+                  setValue={setValue}
+                />
+              )}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
                   color="inherit"

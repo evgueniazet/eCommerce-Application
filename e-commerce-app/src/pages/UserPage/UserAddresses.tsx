@@ -4,7 +4,6 @@ import { AddressPanel } from '../../components/Panel/Panel';
 import { BoardList } from '../../components/AddressList/AddressList';
 import { IUserProps } from '../../interfaces/IUserProps';
 import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
-// import { UserAddressesProps } from '../../interfaces/IUserProps';
 
 export type Board = {
   id: number;
@@ -38,8 +37,6 @@ export const UserAddresses: FC<IUserProps> = ({
   if (!userAddresses) {
     return null;
   }
-
-  console.log('userAddresses', userAddresses);
 
   let shippingAddress;
   let billingAddress;

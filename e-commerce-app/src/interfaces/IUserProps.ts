@@ -15,4 +15,6 @@ export interface IUserProps {
   userData?: string[];
   userAddresses?: (IMyCustomerApiAddressRequest[] | string[] | string | undefined)[];
   setValue: UseFormSetValue<IRegistrationFormData>;
+  password?: string;
+  getValues?: (fieldName: string) => string | undefined;
 }
