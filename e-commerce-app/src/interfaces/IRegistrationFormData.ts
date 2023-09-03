@@ -13,4 +13,5 @@ export interface IRegistrationFormData {
   cityBilling: string | null;
   postalCodeShipping: string | null;
   postalCodeBilling: string | null;
+  currentPassword: string | null;
 }

@@ -13,6 +13,7 @@ export const UserPassword: FC<IUserProps> = ({
   password,
   getValues,
 }) => {
+  console.log('password', password);
 
   const values = {
     password: getValues?.('password') ?? '',
@@ -20,8 +21,6 @@ export const UserPassword: FC<IUserProps> = ({
     countryShipping: getValues?.('countryShipping') ?? '',
     countryBilling: getValues?.('countryBilling') ?? '',
   };
-
-  console.log('values', values);
 
   return (
     <Box sx={{ width: 350, margin: '0 auto' }}>
@@ -34,14 +33,14 @@ export const UserPassword: FC<IUserProps> = ({
           label="Current password"
           type="password"
           autoComplete="off"
-          //   error={!!errors.password}
-          //   helperText={errors.password?.message}
-          //   {...register('password', {
-          //     required: 'Current Password is required',
-          //     validate: (value) => {
-          //       return value === password || 'Current Password does not match';
-          //     },
-          //   })}
+          error={!!errors.currentPassword}
+          helperText={errors.currentPassword?.message}
+          {...register('currentPassword', {
+            required: 'Current Password is required',
+            validate: (value) => {
+              return value === password || 'Current Password does not match';
+            },
+          })}
         />
         <Grid item xs={12} mt={5}>
           <TextField
@@ -52,7 +51,6 @@ export const UserPassword: FC<IUserProps> = ({
             error={!!errors.password}
             helperText={errors.password?.message}
             {...register('password', {
-              required: 'Password is required',
               onChange: (e) => validationHandler('password', e.target.value, values),
             })}
           />
@@ -66,7 +64,6 @@ export const UserPassword: FC<IUserProps> = ({
             error={!!errors.confirmPassword}
             helperText={errors.confirmPassword?.message}
             {...register('confirmPassword', {
-              required: 'Conform password is required',
               onChange: (e) => validationHandler('confirmPassword', e.target.value, values),
             })}
           />

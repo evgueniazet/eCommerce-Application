@@ -64,13 +64,6 @@ export const UserPage: React.FC = () => {
     return skipped.has(step);
   };
 
-  const values = {
-    password: getValues?.('password') ?? '',
-    confirmPassword: getValues?.('confirmPassword') ?? '',
-    countryShipping: getValues?.('countryShipping') ?? '',
-    countryBilling: getValues?.('countryBilling') ?? '',
-  };
-
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -112,6 +105,8 @@ export const UserPage: React.FC = () => {
     },
     {},
   );
+
+  console.log('globalErrors', globalErrors);
 
   const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
     if (!value) {
@@ -215,8 +210,8 @@ export const UserPage: React.FC = () => {
                     height: '100%',
                   }}
                 >
-                  <Alert style={{ width: '300px' }} severity={'error'}>
-                    All fields are required!
+                  <Alert style={{ width: '500px' }} severity={'error'}>
+                  Please review and ensure all fields are correctly filled!
                   </Alert>
                 </Box>
               )}

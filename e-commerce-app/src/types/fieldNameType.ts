@@ -2,6 +2,7 @@ export type fieldNameType =
   | 'email'
   | 'password'
   | 'confirmPassword'
+  | 'currentPassword'
   | 'lastName'
   | 'firstName'
   | 'birthDate'
