@@ -8,6 +8,8 @@ const initialState: IQueryParamsFromSlice = {
   offset: 0,
   sort: '',
   text: '',
+  centAmount: [0, 100],
+  categories: '',
 };
 
 export const queryParamsSlice = createSlice({
@@ -25,14 +27,30 @@ export const queryParamsSlice = createSlice({
     },
     setEmptySort: (state) => {
       state.sort = '';
+      state.categories = '';
+      state.centAmount = [0, 100];
+    },
+    setQueryCentAmount: (state, action: PayloadAction<number[]>) => {
+      state.centAmount = [...action.payload];
+    },
+    setQueryCategories: (state, action: PayloadAction<string>) => {
+      state.categories = action.payload;
     },
   },
 });
 
 export const getQueryOffset = (state: RootStateType) => state.queryParams.offset;
+export const getQueryLimit = (state: RootStateType) => state.queryParams.limit;
 export const getQuerySort = (state: RootStateType) => state.queryParams.sort;
 export const getQueryText = (state: RootStateType) => state.queryParams.text;
-export const getQueryLimit = (state: RootStateType) => state.queryParams.limit;
+export const getQueryCentAmount = (state: RootStateType) => state.queryParams.centAmount;
+export const getQueryCategories = (state: RootStateType) => state.queryParams.categories;
 export const QueryParamsReducer = queryParamsSlice.reducer;
-export const { setQueryOffset, setQuerySort, setQueryText, setEmptySort } =
-  queryParamsSlice.actions;
+export const {
+  setQueryOffset,
+  setQuerySort,
+  setQueryText,
+  setEmptySort,
+  setQueryCentAmount,
+  setQueryCategories,
+} = queryParamsSlice.actions;

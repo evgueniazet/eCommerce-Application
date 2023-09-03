@@ -10,12 +10,13 @@ export const productProjectionApi = createApi({
   endpoints: (build) => ({
     searchProducts: build.mutation<ISearchProductsResponse, IGetAllProductsRequest>({
       query(queryObject) {
+        let path = '';
+        if (queryObject.params && queryObject.params.resultPath) {
+          path = queryObject.params.resultPath;
+        }
         return {
-          url: '/search',
+          url: '/search' + path,
           method: 'GET',
-          params: {
-            ...queryObject.params,
-          },
           headers: {
             Authorization: `Bearer ${queryObject.token}`,
           },
@@ -24,5 +25,5 @@ export const productProjectionApi = createApi({
     }),
   }),
 });
-
+// ,'variants.price.centAmount:range+(1200+to+*)'].join('&filter=')
 export const { useSearchProductsMutation } = productProjectionApi;

@@ -8,4 +8,6 @@ export interface IBaseQueryParams {
   fuzzy?: boolean;
   fuzzyLevel?: 0 | 1 | 2;
   sort?: SortFormType | string;
+  resultPath?: string;
+  filter?: string[];
 }

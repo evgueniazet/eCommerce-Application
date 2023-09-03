@@ -5,4 +5,6 @@ export interface IQueryParamsFromSlice {
   offset: number;
   text: string;
   sort: SortFormType;
+  centAmount: number[];
+  categories: string;
 }

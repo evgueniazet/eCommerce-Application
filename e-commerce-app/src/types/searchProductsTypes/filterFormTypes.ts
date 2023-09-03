@@ -1,5 +1,6 @@
 export interface ISortByForm {
   sort: SortFormType;
+  categories: string;
 }
 
 export type SortFormType = '' | SortFormPrice | SortFormName;

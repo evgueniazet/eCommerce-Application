@@ -16,7 +16,9 @@ export const categoriesSlice = createSlice({
   initialState,
   name: 'categoriesSlice',
   reducers: {
-    startLoading: (state) => {
+    startLoadingCategories: (state) => {
+      state.count = 0;
+      state.categories.length = 0;
       state.fetching = true;
     },
     setLimit: (state, action: PayloadAction<number>) => {
@@ -45,5 +47,4 @@ export const categoriesSlice = createSlice({
 export const CategoriesReducer = categoriesSlice.reducer;
 export const isFetchingCategories = (state: RootStateType) => state.categories.fetching;
 export const getAllCategories = (state: RootStateType) => state.categories.categories;
-
-export const { startLoading, setCategories } = categoriesSlice.actions;
+export const { startLoadingCategories, setCategories } = categoriesSlice.actions;
