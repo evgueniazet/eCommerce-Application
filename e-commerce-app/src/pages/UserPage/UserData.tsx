@@ -14,15 +14,13 @@ export const UserData: FC<IUserProps> = ({
   userData,
   setValue,
 }) => {
-  const [firstName, lastName, birthDate, email] = userData;
-
   const [isEditableArray, setIsEditableArray] = useState([false, false, false, false]);
 
   const [inputValues, setInputValues] = useState({
-    firstName: userData[0],
-    lastName: userData[1],
-    birthDate: userData[2],
-    email: userData[3],
+    firstName: userData?.[0] || '',
+    lastName: userData?.[1] || '',
+    birthDate: userData?.[2] || '',
+    email: userData?.[3] || '',
   });
 
   const handleInputChange = (field: string, value: string) => {

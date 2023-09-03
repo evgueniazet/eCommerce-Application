@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import { Grid } from '@mui/material';
 import Alert from '@mui/material/Alert';
 import { UserData } from './UserData';
-import { UserAdresses } from './UserAdresses';
+import { UserAddresses } from './UserAddresses';
 import { UserPassword } from './UserPassword';
 import { useValidate } from '../../hooks/useValidate';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
@@ -23,15 +23,33 @@ import {
   getMyCustomerLastName,
   getMyCustomerDateOfBirth,
   getMyCustomerEmail,
+  getMyCustomerAddresses,
+  getMyCustomerShippingAddressIds,
+  getMyCustomerBillingAddressIds,
+  getMyCustomerDefaultShippingAddressId,
+  getMyCustomerDefaultBillingAddressId,
 } from '../../store/slices/myCustomerSlice';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
+
 
 export const UserPage: React.FC = () => {
   const firstName = useAppSelector(getMyCustomerFirstName);
   const lastName = useAppSelector(getMyCustomerLastName);
   const birthDate = useAppSelector(getMyCustomerDateOfBirth);
   const email = useAppSelector(getMyCustomerEmail);
+  const addresses = useAppSelector(getMyCustomerAddresses);
+  const shippingAddressId = useAppSelector(getMyCustomerShippingAddressIds);
+  const billingAddressId = useAppSelector(getMyCustomerBillingAddressIds);
+  const shippingDefaultAddressId = useAppSelector(getMyCustomerDefaultShippingAddressId);
+  const billingDefaultAddressId = useAppSelector(getMyCustomerDefaultBillingAddressId);
+
+//   console.log('adresses', addresses);
+//   console.log('shippingAddressId', shippingAddressId);
+//   console.log('billingAddressId', billingAddressId);
+//   console.log('shippingDefaultAddressId', shippingDefaultAddressId);
+//   console.log('billingDefaultAddressId', billingDefaultAddressId);
+
   const [activeStep, setActiveStep] = useState(0);
   const [skipped, setSkipped] = useState(new Set<number>());
   const { errors: validationErrors, validateField } = useValidate();
@@ -129,6 +147,15 @@ export const UserPage: React.FC = () => {
 
   const userData = [firstName, lastName, birthDate, email];
 
+  const userAddresses = [
+    addresses,
+    shippingAddressId,
+    billingAddressId,
+    shippingDefaultAddressId,
+    billingDefaultAddressId,
+  ];
+
+
   return (
     <Grid container sx={{ height: '100vh' }}>
       <Container component="main" maxWidth="md">
@@ -201,7 +228,15 @@ export const UserPage: React.FC = () => {
                   setValue={setValue}
                 />
               )}
-              {activeStep + 1 === 2 && <UserAdresses />}
+              {activeStep + 1 === 2 && (
+                <UserAddresses
+                  register={register}
+                  validationHandler={validationHandler}
+                  errors={globalErrors}
+                  userAddresses={userAddresses}
+                  setValue={setValue}
+                />
+              )}
               {activeStep + 1 === 3 && <UserPassword />}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
                 <Button
