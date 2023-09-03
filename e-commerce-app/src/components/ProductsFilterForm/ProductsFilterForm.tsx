@@ -19,9 +19,11 @@ import {
   getQueryCategories,
   getQueryCentAmount,
   getQuerySort,
-  setEmptySort, setQueryCategories,
+  setEmptySort,
+  setQueryCategories,
   setQueryCentAmount,
-  setQuerySort, setQueryText
+  setQuerySort,
+  setQueryText,
 } from '../../store/slices/queryParamsSlice';
 
 const minDistance = 10;
@@ -36,11 +38,7 @@ const ProductsFilterForm = (): JSX.Element => {
   const [sortRate, setSortRate] = useState<SortFormType>(searchQuerySort);
   const [sortCategories, setSortCategories] = useState(searchQueryCategories);
 
-  const handleChange2 = (
-    event: Event,
-    newValue: number | number[],
-    activeThumb: number,
-  ) => {
+  const handleChange2 = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
       return;
     }
@@ -88,12 +86,10 @@ const ProductsFilterForm = (): JSX.Element => {
   };
 
   return (
-    <Box component={'form'}
-         onSubmit={handleSubmit(submitFormHandler)}>
+    <Box component={'form'} onSubmit={handleSubmit(submitFormHandler)}>
       <Stack spacing={3}>
         <FormControl fullWidth>
-          <Typography variant="h5"
-                      mt="40px">
+          <Typography variant="h5" mt="40px">
             Product Categories
           </Typography>
           <InputLabel id="queryCategories">Categories</InputLabel>
@@ -107,13 +103,13 @@ const ProductsFilterForm = (): JSX.Element => {
               onChange: (e) => setSortCategories(e.target.value),
             })}
           >
-            <MenuItem value=""
-                      selected>
+            <MenuItem value="" selected>
               <em>None</em>
             </MenuItem>
             {categories.map((category) => (
-              <MenuItem value={category.id}
-                        key={category.id}>{category.name.en}</MenuItem>
+              <MenuItem value={category.id} key={category.id}>
+                {category.name.en}
+              </MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -121,16 +117,9 @@ const ProductsFilterForm = (): JSX.Element => {
         <Box>
           <Typography variant="h5">Filter by price</Typography>
           <Box sx={{ width: 200 }}>
-            <Stack spacing={2}
-                   direction="row"
-                   alignItems="center">
+            <Stack spacing={2} direction="row" alignItems="center">
               <p>{priceSort[0]}</p>
-              <Slider
-                value={priceSort}
-                onChange={handleChange2}
-                min={0}
-                max={100}
-              />
+              <Slider value={priceSort} onChange={handleChange2} min={0} max={100} />
               <p>{priceSort[1]}</p>
             </Stack>
           </Box>
@@ -148,8 +137,7 @@ const ProductsFilterForm = (): JSX.Element => {
               onChange: (e) => setSortRate(e.target.value),
             })}
           >
-            <MenuItem value=""
-                      selected>
+            <MenuItem value="" selected>
               <em>None</em>
             </MenuItem>
             <MenuItem value="price asc">Price (Low first)</MenuItem>
@@ -158,15 +146,10 @@ const ProductsFilterForm = (): JSX.Element => {
             <MenuItem value="name.en desc">Name (Z first)</MenuItem>
           </Select>
         </FormControl>
-        <Button type={'submit'}
-                color="success"
-                variant="contained">
+        <Button type={'submit'} color="success" variant="contained">
           Sort
         </Button>
-        <Button type={'button'}
-                color="info"
-                variant="outlined"
-                onClick={clearSortHandler}>
+        <Button type={'button'} color="info" variant="outlined" onClick={clearSortHandler}>
           Clear Sort
         </Button>
       </Stack>

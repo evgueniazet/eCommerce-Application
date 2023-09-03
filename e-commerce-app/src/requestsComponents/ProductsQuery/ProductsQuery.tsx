@@ -9,7 +9,7 @@ import {
   getQueryCategories,
   getQueryCentAmount,
   getQuerySort,
-  getQueryText
+  getQueryText,
 } from '../../store/slices/queryParamsSlice';
 import { IBaseQueryParams } from '../../types/slicesTypes/baseApiRequestsTypes';
 import { useSearchProductsMutation } from '../../api/productProjectionApi';
@@ -66,16 +66,20 @@ const ProductsQuery = (): JSX.Element => {
     const filterArr: string[] = [];
 
     if (!(searchQueryCentAmount[0] === 0 && searchQueryCentAmount[1] === 100)) {
-      filterArr.push(`variants.price.centAmount:range+(${searchQueryCentAmount[0] * 100}+to+${searchQueryCentAmount[1] * 100})`);
+      filterArr.push(
+        `variants.price.centAmount:range+(${searchQueryCentAmount[0] * 100}+to+${
+          searchQueryCentAmount[1] * 100
+        })`,
+      );
     }
     if (searchQueryCategories) {
       filterArr.push(`categories.id:"${searchQueryCategories}"`);
     }
 
     if (filterArr.length === 0) {
-      setParams(prevState => {
+      setParams((prevState) => {
         const newState = {
-          ...prevState
+          ...prevState,
         };
         delete newState.filter;
         return newState;
@@ -107,7 +111,11 @@ const ProductsQuery = (): JSX.Element => {
   ] = useSearchProductsMutation();
 
   useEffect(() => {
-    if ((params['text.en']?.length && params['text.en']?.length > 0) || params.sort || (params.filter && params.filter.length > 0)) {
+    if (
+      (params['text.en']?.length && params['text.en']?.length > 0) ||
+      params.sort ||
+      (params.filter && params.filter.length > 0)
+    ) {
       const resultPath = makeGetQueryProductsString(params);
       searchProducts({
         token: accessToken as string,
@@ -130,7 +138,11 @@ const ProductsQuery = (): JSX.Element => {
   }, [isLoadingProducts, isLoadingSearch]);
 
   useEffect(() => {
-    if ((isSuccessSearch && params['text.en']) || searchQuerySort || params.filter && params.filter.length > 0) {
+    if (
+      (isSuccessSearch && params['text.en']) ||
+      searchQuerySort ||
+      (params.filter && params.filter.length > 0)
+    ) {
       if (dataSearch && 'results' in dataSearch) {
         const pushingObject = makeProductSliceObjectFromSearchApiRequest(dataSearch);
         dispatch(setProducts(pushingObject));
@@ -145,9 +157,9 @@ const ProductsQuery = (): JSX.Element => {
   }, [isSuccessProducts, dataProducts, isSuccessSearch, dataSearch]);
 
   if (isLoadingProducts || isErrorProducts || isLoadingSearch || isErrorSearch) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  return <ProductsPage/>;
+  return <ProductsPage />;
 };
 export default ProductsQuery;

@@ -35,7 +35,7 @@ export const queryParamsSlice = createSlice({
     },
     setQueryCategories: (state, action: PayloadAction<string>) => {
       state.categories = action.payload;
-    }
+    },
   },
 });
 
@@ -46,5 +46,11 @@ export const getQueryText = (state: RootStateType) => state.queryParams.text;
 export const getQueryCentAmount = (state: RootStateType) => state.queryParams.centAmount;
 export const getQueryCategories = (state: RootStateType) => state.queryParams.categories;
 export const QueryParamsReducer = queryParamsSlice.reducer;
-export const { setQueryOffset, setQuerySort, setQueryText, setEmptySort, setQueryCentAmount, setQueryCategories } =
-  queryParamsSlice.actions;
+export const {
+  setQueryOffset,
+  setQuerySort,
+  setQueryText,
+  setEmptySort,
+  setQueryCentAmount,
+  setQueryCategories,
+} = queryParamsSlice.actions;
