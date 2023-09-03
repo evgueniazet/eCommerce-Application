@@ -13,14 +13,15 @@ export const UserPassword: FC<IUserProps> = ({
   password,
   getValues,
 }) => {
-  console.log('password', password);
 
-//   const values = {
-//     password: getValues('password') ?? '',
-//     confirmPassword: getValues('confirmPassword') ?? '',
-//     countryShipping: getValues('countryShipping') ?? '',
-//     countryBilling: getValues('countryBilling') ?? '',
-//   };
+  const values = {
+    password: getValues?.('password') ?? '',
+    confirmPassword: getValues?.('confirmPassword') ?? '',
+    countryShipping: getValues?.('countryShipping') ?? '',
+    countryBilling: getValues?.('countryBilling') ?? '',
+  };
+
+  console.log('values', values);
 
   return (
     <Box sx={{ width: 350, margin: '0 auto' }}>
@@ -52,7 +53,7 @@ export const UserPassword: FC<IUserProps> = ({
             helperText={errors.password?.message}
             {...register('password', {
               required: 'Password is required',
-              //   onChange: (e) => validationHandler('password', e.target.value, values),
+              onChange: (e) => validationHandler('password', e.target.value, values),
             })}
           />
         </Grid>
@@ -66,7 +67,7 @@ export const UserPassword: FC<IUserProps> = ({
             helperText={errors.confirmPassword?.message}
             {...register('confirmPassword', {
               required: 'Conform password is required',
-              //   onChange: (e) => validationHandler('confirmPassword', e.target.value, values),
+              onChange: (e) => validationHandler('confirmPassword', e.target.value, values),
             })}
           />
         </Grid>

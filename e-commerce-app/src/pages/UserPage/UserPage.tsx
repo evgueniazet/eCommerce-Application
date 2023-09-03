@@ -64,6 +64,13 @@ export const UserPage: React.FC = () => {
     return skipped.has(step);
   };
 
+  const values = {
+    password: getValues?.('password') ?? '',
+    confirmPassword: getValues?.('confirmPassword') ?? '',
+    countryShipping: getValues?.('countryShipping') ?? '',
+    countryBilling: getValues?.('countryBilling') ?? '',
+  };
+
   const handleNext = () => {
     let newSkipped = skipped;
     if (isStepSkipped(activeStep)) {
@@ -240,6 +247,7 @@ export const UserPage: React.FC = () => {
                   errors={globalErrors}
                   password={password}
                   setValue={setValue}
+                  getValues={getValues}
                 />
               )}
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
