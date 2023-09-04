@@ -28,15 +28,14 @@ import {
   getMyCustomerBillingAddressIds,
   getMyCustomerDefaultShippingAddressId,
   getMyCustomerDefaultBillingAddressId,
-  getMyCustomerPassword, getMyCustomerVersion,
+  getMyCustomerPassword,
+  getMyCustomerVersion,
 } from '../../store/slices/myCustomerSlice';
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
 import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
-import {
-  makeUpdateMyCustomerPersonalQueryActions
-} from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -117,7 +116,6 @@ export const UserPage: React.FC = () => {
     {},
   );
 
-
   const validationHandler = (fieldName: fieldNameType, value: string, values?: IValues): void => {
     if (!value) {
       const updatedErrors = {
@@ -163,7 +161,10 @@ export const UserPage: React.FC = () => {
       birthDate: data.birthDate || undefined,
     };
 
-    const actionsArray = makeUpdateMyCustomerPersonalQueryActions(initialPersonalData, currentPersonalData);
+    const actionsArray = makeUpdateMyCustomerPersonalQueryActions(
+      initialPersonalData,
+      currentPersonalData,
+    );
 
     const updateData: IUpdateMyCustomer = {
       version: myCustomerVersion,
@@ -192,11 +193,9 @@ export const UserPage: React.FC = () => {
   ];
 
   return (
-    <Grid container
-          sx={{ height: '100vh' }}>
-      <Container component="main"
-                 maxWidth="md">
-        <CssBaseline/>
+    <Grid container sx={{ height: '100vh' }}>
+      <Container component="main" maxWidth="md">
+        <CssBaseline />
         <Box
           component="form"
           noValidate
@@ -204,8 +203,7 @@ export const UserPage: React.FC = () => {
           className="wrapper"
           sx={{ mt: '20%' }}
         >
-          <Stepper activeStep={activeStep}
-                   alternativeLabel>
+          <Stepper activeStep={activeStep} alternativeLabel>
             {steps.map((label, index) => {
               const stepProps: { completed?: boolean } = {};
 
@@ -225,7 +223,7 @@ export const UserPage: React.FC = () => {
                 All pages completed - you&apos;re updated
               </Typography>
               <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Box sx={{ flex: '1 1 auto' }}/>
+                <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleReset}>Reset</Button>
               </Box>
             </Box>
@@ -252,8 +250,7 @@ export const UserPage: React.FC = () => {
                     height: '100%',
                   }}
                 >
-                  <Alert style={{ width: '500px' }}
-                         severity={'error'}>
+                  <Alert style={{ width: '500px' }} severity={'error'}>
                     Please review and ensure all fields are correctly filled!
                   </Alert>
                 </Box>
@@ -297,7 +294,7 @@ export const UserPage: React.FC = () => {
                 >
                   Back
                 </Button>
-                <Box sx={{ flex: '1 1 auto' }}/>
+                <Box sx={{ flex: '1 1 auto' }} />
                 <Button onClick={handleNext}>
                   {activeStep === steps.length - 1 ? 'Done' : 'Next'}
                 </Button>

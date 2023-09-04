@@ -11,6 +11,7 @@ export const myCustomerApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: `${process.env.REACT_APP_CTP_API_URL}/${process.env.REACT_APP_CTP_PROJECT_KEY}/me`,
   }),
+  tagTypes: ['myCustomerDetails'],
   endpoints: (build) => ({
     authenticateMyCustomer: build.mutation<IMyCustomerBaseResponse, IMyCustomerLoginRequest>({
       query(customerData: IMyCustomerLoginRequest) {
@@ -52,6 +53,19 @@ export const myCustomerApi = createApi({
         };
       },
     }),
+    getMyCustomerDetailedInfo: build.query<IMyCustomerBaseResponse, string>({
+      query(token: string) {
+        return {
+          url: '/',
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        };
+      },
+      providesTags: ['myCustomerDetails'],
+    }),
     updateMyCustomer: build.mutation<IMyCustomerBaseResponse, IUpdateMyCustomerRequest>({
       query(queryObj) {
         return {
@@ -64,6 +78,7 @@ export const myCustomerApi = createApi({
           body: queryObj.data,
         };
       },
+      invalidatesTags: ['myCustomerDetails'],
     }),
   }),
 });
@@ -73,4 +88,5 @@ export const {
   useSignUpMyCustomerMutation,
   useGetMyCustomerDetailsMutation,
   useUpdateMyCustomerMutation,
+  useGetMyCustomerDetailedInfoQuery,
 } = myCustomerApi;
