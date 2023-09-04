@@ -96,7 +96,7 @@ export const AddressPanel: FC<PanelProps> = (props) => {
         control={<Checkbox />}
         label={
           <Box component="div" fontSize={10}>
-            use asdefault address
+            use as default address
           </Box>
         }
         labelPlacement="end"

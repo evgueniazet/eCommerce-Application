@@ -1,4 +1,4 @@
-import { JSX, useEffect } from 'react';
+import { JSX, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { Outlet } from 'react-router-dom';
@@ -9,12 +9,14 @@ import { clearMyCustomerData, setMyCustomerData } from '../../store/slices/myCus
 const UserQuery = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector(getAccessToken);
+  const [waitGuard, setWaitGuard] = useState(false);
 
   const [getMyCustomerDetails, { data, isSuccess, isLoading }] = useGetMyCustomerDetailsMutation();
 
   useEffect(() => {
     dispatch(clearMyCustomerData());
     if (accessToken) {
+      setWaitGuard(true);
       getMyCustomerDetails(accessToken);
     }
   }, []);
@@ -23,10 +25,11 @@ const UserQuery = (): JSX.Element => {
     if (!isSuccess) return;
     if (data) {
       dispatch(setMyCustomerData(data));
+      setWaitGuard(false);
     }
   }, [isSuccess, data]);
 
-  if (isLoading) {
+  if (waitGuard) {
     return <LoadingProgress/>;
   }
   return <Outlet/>;
