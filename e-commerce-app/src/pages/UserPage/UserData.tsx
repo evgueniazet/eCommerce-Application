@@ -8,12 +8,12 @@ import styles from './UserPage.module.scss';
 import { IUserProps } from '../../interfaces/IUserProps';
 
 export const UserData: FC<IUserProps> = ({
-                                           register,
-                                           validationHandler,
-                                           errors,
-                                           userData,
-                                           setValue,
-                                         }) => {
+  register,
+  validationHandler,
+  errors,
+  userData,
+  setValue,
+}) => {
   const [isEditableArray, setIsEditableArray] = useState([false, false, false, false]);
 
   const [inputValues, setInputValues] = useState({

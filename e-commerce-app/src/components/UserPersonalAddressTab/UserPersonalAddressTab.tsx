@@ -11,12 +11,9 @@ interface IUserPersonalAddressTabProps {
 
 const UserPersonalAddressTab: FC<IUserPersonalAddressTabProps> = ({ addresses, value, index }) => {
   return (
-    <Box pt={2}
-      role="tabpanel"
-      hidden={value !== index}
-    >
-      {value === index && addresses.map((address) => (<UserPersonalContactRow address={address}
-                                                                              key={address.id}/>))}
+    <Box pt={2} role="tabpanel" hidden={value !== index}>
+      {value === index &&
+        addresses.map((address) => <UserPersonalContactRow address={address} key={address.id} />)}
     </Box>
   );
 };

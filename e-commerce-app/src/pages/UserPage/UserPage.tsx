@@ -5,7 +5,15 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import {
-  Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Stack, Tab, Tabs, useMediaQuery
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Divider,
+  Grid,
+  Stack,
+  Tab,
+  Tabs,
+  useMediaQuery,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import ContactsIcon from '@mui/icons-material/Contacts';
@@ -37,12 +45,8 @@ import {
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
-import {
-  IMakeUpdateMyCustomerPersonalQueryObject
-} from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
-import {
-  makeUpdateMyCustomerPersonalQueryActions
-} from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
+import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
 import { capitalizeString } from '../../utils/capitalizeString';
 import UserPersonalHeader from '../../components/UserPersonalHeader/UserPersonalHeader';
 import UserPersonalRow from '../../components/UserPersonalRow/UserPersonalRow';
@@ -78,8 +82,8 @@ export const UserPage: React.FC = () => {
     email,
   };
 
-  const billingAddresses = addresses.filter(address => billingAddressId.includes(address.id));
-  const shippingAddresses = addresses.filter(address => shippingAddressId.includes(address.id));
+  const billingAddresses = addresses.filter((address) => billingAddressId.includes(address.id));
+  const shippingAddresses = addresses.filter((address) => shippingAddressId.includes(address.id));
 
   const {
     register,
@@ -214,7 +218,6 @@ export const UserPage: React.FC = () => {
     });
   };
 
-
   const onResetPersonal = () => {
     setValue('firstName', firstName);
     setValue('lastName', lastName);
@@ -239,52 +242,38 @@ export const UserPage: React.FC = () => {
   return (
     <>
       <Box pt={5}>
-        <CssBaseline/>
-        <Grid container
-              spacing={3}>
-          <Grid item
-                md={2}
-                sx={{ display: { xs: 'none', md: 'block' } }}>
-            <img src={PageImg}
-                 alt="Personal page"
-                 width={'100%'}/>
+        <CssBaseline />
+        <Grid container spacing={3}>
+          <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <img src={PageImg} alt="Personal page" width={'100%'} />
           </Grid>
-          <Grid item
-                md={8}
-                xs={12}>
-
+          <Grid item md={8} xs={12}>
             <Stack spacing={5}>
-
-              <Typography component={'span'}
-                          variant="h3"
-                          textAlign={'center'}>
+              <Typography component={'span'} variant="h3" textAlign={'center'}>
                 Hello, {capitalizeString(firstName)}!
               </Typography>
 
-              <Divider/>
+              <Divider />
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Personal information"
-                                      icon={<PersonIcon/>}/>
-                  <UserPersonalRow title="First Name:"
-                                   value={firstName}/>
-                  <UserPersonalRow title="Last Name:"
-                                   value={lastName}/>
-                  <UserPersonalRow title="Date of Birth:"
-                                   value={new Date(birthDate).toDateString()}/>
-                  <UserPersonalRow title="Email:"
-                                   value={email}/>
+                  <UserPersonalHeader title="Personal information" icon={<PersonIcon />} />
+                  <UserPersonalRow title="First Name:" value={firstName} />
+                  <UserPersonalRow title="Last Name:" value={lastName} />
+                  <UserPersonalRow
+                    title="Date of Birth:"
+                    value={new Date(birthDate).toDateString()}
+                  />
+                  <UserPersonalRow title="Email:" value={email} />
                   <Accordion>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon/>}
+                      expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
                       <Typography>Edit Personal Info</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Box component={'form'}
-                           onSubmit={handleSubmit(onSubmitPersonal)}>
+                      <Box component={'form'} onSubmit={handleSubmit(onSubmitPersonal)}>
                         <UserData
                           register={register}
                           validationHandler={validationHandler}
@@ -319,60 +308,58 @@ export const UserPage: React.FC = () => {
                 </Stack>
               </Box>
 
-              <Divider/>
+              <Divider />
 
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Contact information"
-                                      icon={<ContactsIcon/>}/>
+                  <UserPersonalHeader title="Contact information" icon={<ContactsIcon />} />
                   <Box>
-                    <Grid container
-                          pt={1}>
-                      <Grid item
-                            md={2}
-                            sm={4}
-                            px={2}>
+                    <Grid container pt={1}>
+                      <Grid item md={2} sm={4} px={2}>
                         <Box maxWidth={'95%'}>
-                          <Tabs value={activeAddressTab}
-                                onChange={handleAddressTabChange}
-                                orientation={'vertical'}
-                                variant="scrollable"
-                                scrollButtons="auto">
-                            <Tab icon={<HomeIcon/>}
-                                 label="ADDRESSES"/>
-                            <Tab icon={<LocalShippingIcon/>}
-                                 label="SHIPPING ADDRESSES"/>
-                            <Tab icon={<PaymentIcon/>}
-                                 label="BILLING ADDRESSES"/>
+                          <Tabs
+                            value={activeAddressTab}
+                            onChange={handleAddressTabChange}
+                            orientation={'vertical'}
+                            variant="scrollable"
+                            scrollButtons="auto"
+                          >
+                            <Tab icon={<HomeIcon />} label="ADDRESSES" />
+                            <Tab icon={<LocalShippingIcon />} label="SHIPPING ADDRESSES" />
+                            <Tab icon={<PaymentIcon />} label="BILLING ADDRESSES" />
                           </Tabs>
                         </Box>
                       </Grid>
-                      <Grid item
-                            md={10}
-                            sm={12}>
-                        <UserPersonalAddressTab addresses={addresses}
-                                                index={0}
-                                                value={activeAddressTab}/>
-                        <UserPersonalAddressTab addresses={billingAddresses}
-                                                index={1}
-                                                value={activeAddressTab}/>
-                        <UserPersonalAddressTab addresses={shippingAddresses}
-                                                index={2}
-                                                value={activeAddressTab}/>
+                      <Grid item md={10} sm={12}>
+                        <UserPersonalAddressTab
+                          addresses={addresses}
+                          index={0}
+                          value={activeAddressTab}
+                        />
+                        <UserPersonalAddressTab
+                          addresses={billingAddresses}
+                          index={1}
+                          value={activeAddressTab}
+                        />
+                        <UserPersonalAddressTab
+                          addresses={shippingAddresses}
+                          index={2}
+                          value={activeAddressTab}
+                        />
                       </Grid>
                     </Grid>
                   </Box>
 
                   <Accordion>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon/>}
+                      expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
                       <Typography>Add New Address</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <UserPersonalAddAddress/>
+                      <UserPersonalAddAddress />
                       <UserAddresses
                         register={register}
                         validationHandler={validationHandler}
@@ -383,11 +370,9 @@ export const UserPage: React.FC = () => {
                       />
                     </AccordionDetails>
                   </Accordion>
-
                 </Stack>
               </Box>
             </Stack>
-
           </Grid>
         </Grid>
       </Box>
