@@ -19,6 +19,7 @@ export interface IMyCustomerBaseResponse {
   lastName: string;
   password: string;
   shippingAddressIds: string[];
+  version: number;
   defaultBillingAddressId?: string;
   defaultShippingAddressId?: string;
 }

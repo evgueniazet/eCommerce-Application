@@ -30,8 +30,8 @@ const UserQuery = (): JSX.Element => {
   }, [isSuccess, data]);
 
   if (waitGuard) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
-  return <Outlet/>;
+  return <Outlet />;
 };
 export default UserQuery;
