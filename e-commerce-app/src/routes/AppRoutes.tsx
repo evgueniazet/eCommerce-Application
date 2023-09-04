@@ -35,7 +35,7 @@ const router = createHashRouter(
           <Route path="/basket" element={<BasketPage />} />
           <Route element={<PrivateRoute />}>
             <Route path="/user" element={<UserQuery />}>
-              <Route index element={<UserRedirect/>}/>
+              <Route index element={<UserRedirect />} />
               <Route path={':customerId'} element={<UserPage />} />
             </Route>
           </Route>

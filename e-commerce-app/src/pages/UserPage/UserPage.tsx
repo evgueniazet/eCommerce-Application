@@ -1,17 +1,20 @@
 import React, { useState } from 'react';
+import PageImg from '../../assets/images/UserPageImg.png';
 import CssBaseline from '@mui/material/CssBaseline';
-import Container from '@mui/material/Container';
 import Box from '@mui/material/Box';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Grid } from '@mui/material';
-import Alert from '@mui/material/Alert';
+import {
+  Accordion, AccordionDetails, AccordionSummary, Divider, Grid, Stack, Tab, Tabs, useMediaQuery
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import ContactsIcon from '@mui/icons-material/Contacts';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import HomeIcon from '@mui/icons-material/Home';
+import PaymentIcon from '@mui/icons-material/Payment';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UserData } from './UserData';
 import { UserAddresses } from './UserAddresses';
-import { UserPassword } from './UserPassword';
 import { useValidate } from '../../hooks/useValidate';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
@@ -34,8 +37,17 @@ import {
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
-import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
-import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import {
+  IMakeUpdateMyCustomerPersonalQueryObject
+} from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
+import {
+  makeUpdateMyCustomerPersonalQueryActions
+} from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import { capitalizeString } from '../../utils/capitalizeString';
+import UserPersonalHeader from '../../components/UserPersonalHeader/UserPersonalHeader';
+import UserPersonalRow from '../../components/UserPersonalRow/UserPersonalRow';
+import UserPersonalAddressTab from '../../components/UserPersonalAddressTab/UserPersonalAddressTab';
+import UserPersonalAddAddress from '../../components/UserPersonalAddAddress/UserPersonalAddAddress';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
@@ -59,6 +71,16 @@ export const UserPage: React.FC = () => {
   const accessToken = useAppSelector(getAccessToken) as string;
   const [updateMyCustomer] = useUpdateMyCustomerMutation();
 
+  const initialUserBio: IMakeUpdateMyCustomerPersonalQueryObject = {
+    firstName,
+    lastName,
+    birthDate,
+    email,
+  };
+
+  const billingAddresses = addresses.filter(address => billingAddressId.includes(address.id));
+  const shippingAddresses = addresses.filter(address => shippingAddressId.includes(address.id));
+
   const {
     register,
     handleSubmit,
@@ -69,6 +91,22 @@ export const UserPage: React.FC = () => {
     clearErrors,
     reset: resetForm,
   } = useForm<IRegistrationFormData>();
+
+  const [activeAddressTab, setActiveAddressTab] = useState(0);
+  const mediumViewport = useMediaQuery('(min-width:900px)');
+  const handleAddressTabChange = (event: React.SyntheticEvent, newValue: number) => {
+    setActiveAddressTab(newValue);
+  };
+
+  const [openEditBio, setOpenEditBio] = React.useState(false);
+
+  const handleClickOpenEditBio = () => {
+    setOpenEditBio(true);
+  };
+
+  const handleCloseClickCloseEditBio = () => {
+    setOpenEditBio(false);
+  };
 
   const isStepSkipped = (step: number) => {
     return skipped.has(step);
@@ -140,7 +178,7 @@ export const UserPage: React.FC = () => {
     }
   };
 
-  const onSubmit: SubmitHandler<IRegistrationFormData> = (data) => {
+  const onSubmitPersonal: SubmitHandler<IRegistrationFormData> = (data) => {
     if (Object.keys(globalErrors).length) {
       return;
     }
@@ -151,8 +189,6 @@ export const UserPage: React.FC = () => {
       email,
       birthDate,
     };
-
-    console.log('data', data);
 
     const currentPersonalData: Partial<IMakeUpdateMyCustomerPersonalQueryObject> = {
       firstName: data.firstName || undefined,
@@ -178,6 +214,14 @@ export const UserPage: React.FC = () => {
     });
   };
 
+
+  const onResetPersonal = () => {
+    setValue('firstName', firstName);
+    setValue('lastName', lastName);
+    setValue('birthDate', birthDate);
+    setValue('email', email);
+  };
+
   const buttonSubmitClick = () => {
     console.log('button submit click');
   };
@@ -193,135 +237,280 @@ export const UserPage: React.FC = () => {
   ];
 
   return (
-    <Grid container sx={{ height: '100vh' }}>
-      <Container component="main" maxWidth="md">
-        <CssBaseline />
-        <Box
-          component="form"
-          noValidate
-          onSubmit={handleSubmit(onSubmit)}
-          className="wrapper"
-          sx={{ mt: '20%' }}
-        >
-          <Stepper activeStep={activeStep} alternativeLabel>
-            {steps.map((label, index) => {
-              const stepProps: { completed?: boolean } = {};
+    <>
+      <Box pt={5}>
+        <CssBaseline/>
+        <Grid container
+              spacing={3}>
+          <Grid item
+                md={2}
+                sx={{ display: { xs: 'none', md: 'block' } }}>
+            <img src={PageImg}
+                 alt="Personal page"
+                 width={'100%'}/>
+          </Grid>
+          <Grid item
+                md={8}
+                xs={12}>
 
-              if (isStepSkipped(index)) {
-                stepProps.completed = false;
-              }
-              return (
-                <Step key={label} {...stepProps}>
-                  <StepLabel>{label}</StepLabel>
-                </Step>
-              );
-            })}
-          </Stepper>
-          {activeStep === steps.length ? (
-            <Box>
-              <Typography sx={{ mt: 2, mb: 1 }}>
-                All pages completed - you&apos;re updated
+            <Stack spacing={5}>
+
+              <Typography component={'span'}
+                          variant="h3"
+                          textAlign={'center'}>
+                Hello, {capitalizeString(firstName)}!
               </Typography>
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleReset}>Reset</Button>
+
+              <Divider/>
+              <Box>
+                <Stack spacing={0.5}>
+                  <UserPersonalHeader title="Personal information"
+                                      icon={<PersonIcon/>}/>
+                  <UserPersonalRow title="First Name:"
+                                   value={firstName}/>
+                  <UserPersonalRow title="Last Name:"
+                                   value={lastName}/>
+                  <UserPersonalRow title="Date of Birth:"
+                                   value={new Date(birthDate).toDateString()}/>
+                  <UserPersonalRow title="Email:"
+                                   value={email}/>
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon/>}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>Edit Personal Info</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Box component={'form'}
+                           onSubmit={handleSubmit(onSubmitPersonal)}>
+                        <UserData
+                          register={register}
+                          validationHandler={validationHandler}
+                          errors={globalErrors}
+                          userData={userData}
+                          setValue={setValue}
+                          getValues={getValues}
+                        />
+                        <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
+                          <Button
+                            type="submit"
+                            onClick={buttonSubmitClick}
+                            fullWidth
+                            variant="contained"
+                            sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
+                          >
+                            Update
+                          </Button>
+                          <Button
+                            type="reset"
+                            onClick={onResetPersonal}
+                            fullWidth
+                            variant="contained"
+                            sx={{ backgroundColor: 'beige', color: 'black' }}
+                          >
+                            Cancel
+                          </Button>
+                        </Box>
+                      </Box>
+                    </AccordionDetails>
+                  </Accordion>
+                </Stack>
               </Box>
-            </Box>
-          ) : (
-            <Box>
-              <Typography sx={{ mt: 2, mb: 1, textAlign: 'center' }}>
-                Profile Page {activeStep + 1}
-              </Typography>
-              <Box
-                sx={{
-                  marginTop: 8,
-                  component: 'form',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                }}
-              ></Box>
-              {!!Object.keys(formState.errors).length && (
-                <Box
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    height: '100%',
-                  }}
-                >
-                  <Alert style={{ width: '500px' }} severity={'error'}>
-                    Please review and ensure all fields are correctly filled!
-                  </Alert>
-                </Box>
-              )}
-              {activeStep + 1 === 1 && (
-                <UserData
-                  register={register}
-                  validationHandler={validationHandler}
-                  errors={globalErrors}
-                  userData={userData}
-                  setValue={setValue}
-                  getValues={getValues}
-                />
-              )}
-              {activeStep + 1 === 2 && (
-                <UserAddresses
-                  register={register}
-                  validationHandler={validationHandler}
-                  errors={globalErrors}
-                  userAddresses={userAddresses}
-                  setValue={setValue}
-                  getValues={getValues}
-                />
-              )}
-              {activeStep + 1 === 3 && (
-                <UserPassword
-                  register={register}
-                  validationHandler={validationHandler}
-                  errors={globalErrors}
-                  password={password}
-                  setValue={setValue}
-                  getValues={getValues}
-                />
-              )}
-              <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}>
-                <Button
-                  color="inherit"
-                  disabled={activeStep === 0}
-                  onClick={handleBack}
-                  sx={{ mt: 2 }}
-                >
-                  Back
-                </Button>
-                <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleNext}>
-                  {activeStep === steps.length - 1 ? 'Done' : 'Next'}
-                </Button>
+
+              <Divider/>
+
+              <Box>
+                <Stack spacing={0.5}>
+                  <UserPersonalHeader title="Contact information"
+                                      icon={<ContactsIcon/>}/>
+                  <Box>
+                    <Grid container
+                          pt={1}>
+                      <Grid item
+                            md={2}
+                            sm={4}
+                            px={2}>
+                        <Box maxWidth={'95%'}>
+                          <Tabs value={activeAddressTab}
+                                onChange={handleAddressTabChange}
+                                orientation={'vertical'}
+                                variant="scrollable"
+                                scrollButtons="auto">
+                            <Tab icon={<HomeIcon/>}
+                                 label="ADDRESSES"/>
+                            <Tab icon={<LocalShippingIcon/>}
+                                 label="SHIPPING ADDRESSES"/>
+                            <Tab icon={<PaymentIcon/>}
+                                 label="BILLING ADDRESSES"/>
+                          </Tabs>
+                        </Box>
+                      </Grid>
+                      <Grid item
+                            md={10}
+                            sm={12}>
+                        <UserPersonalAddressTab addresses={addresses}
+                                                index={0}
+                                                value={activeAddressTab}/>
+                        <UserPersonalAddressTab addresses={billingAddresses}
+                                                index={1}
+                                                value={activeAddressTab}/>
+                        <UserPersonalAddressTab addresses={shippingAddresses}
+                                                index={2}
+                                                value={activeAddressTab}/>
+                      </Grid>
+                    </Grid>
+                  </Box>
+
+                  <Accordion>
+                    <AccordionSummary
+                      expandIcon={<ExpandMoreIcon/>}
+                      aria-controls="panel1a-content"
+                      id="panel1a-header"
+                    >
+                      <Typography>Add New Address</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <UserPersonalAddAddress/>
+                      <UserAddresses
+                        register={register}
+                        validationHandler={validationHandler}
+                        errors={globalErrors}
+                        userAddresses={userAddresses}
+                        setValue={setValue}
+                        getValues={getValues}
+                      />
+                    </AccordionDetails>
+                  </Accordion>
+
+                </Stack>
               </Box>
-              <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
-                <Button
-                  type="submit"
-                  onClick={buttonSubmitClick}
-                  fullWidth
-                  variant="contained"
-                  sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }}
-                >
-                  Update
-                </Button>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  sx={{ backgroundColor: 'beige', color: 'black' }}
-                >
-                  Cancel
-                </Button>
-              </Box>
-            </Box>
-          )}
-        </Box>
-      </Container>
-    </Grid>
+            </Stack>
+
+          </Grid>
+        </Grid>
+      </Box>
+      {/* <Grid container */}
+      {/*       sx={{ height: '100vh' }}> */}
+      {/*   <Container component="main" */}
+      {/*              maxWidth="md"> */}
+      {/*     <CssBaseline/> */}
+      {/*     <Box */}
+      {/*       component="form" */}
+      {/*       noValidate */}
+      {/*       onSubmitPersonal={handleSubmit(onSubmitPersonal)} */}
+      {/*       className="wrapper" */}
+      {/*       sx={{ mt: '20%' }} */}
+      {/*     > */}
+      {/*       <Stepper activeStep={activeStep} */}
+      {/*                alternativeLabel> */}
+      {/*         {steps.map((label, index) => { */}
+      {/*           const stepProps: { completed?: boolean } = {}; */}
+
+      {/*           if (isStepSkipped(index)) { */}
+      {/*             stepProps.completed = false; */}
+      {/*           } */}
+      {/*           return ( */}
+      {/*             <Step key={label} {...stepProps}> */}
+      {/*               <StepLabel>{label}</StepLabel> */}
+      {/*             </Step> */}
+      {/*           ); */}
+      {/*         })} */}
+      {/*       </Stepper> */}
+      {/*       {activeStep === steps.length ? ( */}
+      {/*         <Box> */}
+      {/*           <Typography sx={{ mt: 2, mb: 1 }}> */}
+      {/*             All pages completed - you&apos;re updated */}
+      {/*           </Typography> */}
+      {/*           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}> */}
+      {/*             <Box sx={{ flex: '1 1 auto' }}/> */}
+      {/*             <Button onClick={handleReset}>Reset</Button> */}
+      {/*           </Box> */}
+      {/*         </Box> */}
+      {/*       ) : ( */}
+      {/*         <Box> */}
+      {/*           <Typography sx={{ mt: 2, mb: 1, textAlign: 'center' }}> */}
+      {/*             Profile Page {activeStep + 1} */}
+      {/*           </Typography> */}
+      {/*           <Box */}
+      {/*             sx={{ */}
+      {/*               marginTop: 8, */}
+      {/*               component: 'form', */}
+      {/*               display: 'flex', */}
+      {/*               flexDirection: 'column', */}
+      {/*               alignItems: 'center', */}
+      {/*             }} */}
+      {/*           ></Box> */}
+      {/*           {!!Object.keys(formState.errors).length && ( */}
+      {/*             <Box */}
+      {/*               style={{ */}
+      {/*                 display: 'flex', */}
+      {/*                 justifyContent: 'center', */}
+      {/*                 alignItems: 'center', */}
+      {/*                 height: '100%', */}
+      {/*               }} */}
+      {/*             > */}
+      {/*               <Alert style={{ width: '500px' }} */}
+      {/*                      severity={'error'}> */}
+      {/*                 Please review and ensure all fields are correctly filled! */}
+      {/*               </Alert> */}
+      {/*             </Box> */}
+      {/*           )} */}
+      {/*           {activeStep + 1 === 1 && ( */}
+
+      {/*           )} */}
+      {/*           {activeStep + 1 === 2 && ( */}
+
+      {/*           )} */}
+      {/*           {activeStep + 1 === 3 && ( */}
+      {/*             <UserPassword */}
+      {/*               register={register} */}
+      {/*               validationHandler={validationHandler} */}
+      {/*               errors={globalErrors} */}
+      {/*               password={password} */}
+      {/*               setValue={setValue} */}
+      {/*               getValues={getValues} */}
+      {/*             /> */}
+      {/*           )} */}
+      {/*           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}> */}
+      {/*             <Button */}
+      {/*               color="inherit" */}
+      {/*               disabled={activeStep === 0} */}
+      {/*               onClick={handleBack} */}
+      {/*               sx={{ mt: 2 }} */}
+      {/*             > */}
+      {/*               Back */}
+      {/*             </Button> */}
+      {/*             <Box sx={{ flex: '1 1 auto' }}/> */}
+      {/*             <Button onClick={handleNext}> */}
+      {/*               {activeStep === steps.length - 1 ? 'Done' : 'Next'} */}
+      {/*             </Button> */}
+      {/*           </Box> */}
+      {/*           <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}> */}
+      {/*             <Button */}
+      {/*               type="submit" */}
+      {/*               onClick={buttonSubmitClick} */}
+      {/*               fullWidth */}
+      {/*               variant="contained" */}
+      {/*               sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }} */}
+      {/*             > */}
+      {/*               Update */}
+      {/*             </Button> */}
+      {/*             <Button */}
+      {/*               type="submit" */}
+      {/*               fullWidth */}
+      {/*               variant="contained" */}
+      {/*               sx={{ backgroundColor: 'beige', color: 'black' }} */}
+      {/*             > */}
+      {/*               Cancel */}
+      {/*             </Button> */}
+      {/*           </Box> */}
+      {/*         </Box> */}
+      {/*       )} */}
+      {/*     </Box> */}
+      {/*   </Container> */}
+      {/* </Grid> */}
+    </>
   );
 };

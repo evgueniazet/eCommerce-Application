@@ -51,9 +51,9 @@ const CategoriesQuery = (): JSX.Element => {
   }, [isSuccessCategories, dataCategories, isSuccessTaxes, dataTaxes]);
 
   if (waitGuard) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
-  return <Outlet/>;
+  return <Outlet />;
 };
 export default CategoriesQuery;

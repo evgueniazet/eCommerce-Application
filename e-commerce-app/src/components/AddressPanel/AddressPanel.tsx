@@ -90,17 +90,17 @@ export const AddressPanel: FC<PanelProps> = (props) => {
         </Grid>
       </Grid>
       <Box textAlign="right" marginTop={2}>
-      <FormControlLabel
-        sx={{ mr: '25px' }}
-        value="end"
-        control={<Checkbox />}
-        label={
-          <Box component="div" fontSize={10}>
-            use as default address
-          </Box>
-        }
-        labelPlacement="end"
-      />
+        <FormControlLabel
+          sx={{ mr: '25px' }}
+          value="end"
+          control={<Checkbox />}
+          label={
+            <Box component="div" fontSize={10}>
+              use as default address
+            </Box>
+          }
+          labelPlacement="end"
+        />
         <Button startIcon={<AddIcon />} variant="outlined" onClick={onClick}>
           {isEdit ? 'EDIT' : 'ADD'}
         </Button>

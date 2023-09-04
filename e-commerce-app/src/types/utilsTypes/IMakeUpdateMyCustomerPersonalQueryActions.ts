@@ -7,4 +7,7 @@ export interface IMakeUpdateMyCustomerPersonalQueryObject {
   email: string;
 }
 
-export type MakeUpdateMyCustomerPersonalQueryActionsType = (initial: IMakeUpdateMyCustomerPersonalQueryObject, current: Partial<IMakeUpdateMyCustomerPersonalQueryObject>) => UpdateMyCustomerActionsType[]
+export type MakeUpdateMyCustomerPersonalQueryActionsType = (
+  initial: IMakeUpdateMyCustomerPersonalQueryObject,
+  current: Partial<IMakeUpdateMyCustomerPersonalQueryObject>,
+) => UpdateMyCustomerActionsType[];
