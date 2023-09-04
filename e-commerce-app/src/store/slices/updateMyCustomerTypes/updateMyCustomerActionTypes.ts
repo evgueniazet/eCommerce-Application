@@ -68,7 +68,7 @@ export interface IUpdateMyCustomerActionSetDateOfBirth {
   dateOfBirth: string;
 }
 
-export type UpdateMyCustomerActionType =
+export type UpdateMyCustomerActionsType =
   | IUpdateMyCustomerActionChangeEmail
   | IUpdateMyCustomerActionSetFirstName
   | IUpdateMyCustomerActionSetLastName

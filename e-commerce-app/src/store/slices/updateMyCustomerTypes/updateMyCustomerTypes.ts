@@ -1,8 +1,8 @@
-import { UpdateMyCustomerActionType } from './updateMyCustomerActionTypes';
+import { UpdateMyCustomerActionsType } from './updateMyCustomerActionTypes';
 
 export interface IUpdateMyCustomer {
   version: number;
-  actions: UpdateMyCustomerActionType[];
+  actions: UpdateMyCustomerActionsType[];
 }
 
 export interface IUpdateMyCustomerRequest {
