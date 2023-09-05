@@ -331,14 +331,6 @@ export const UserPage: React.FC = () => {
                     </AccordionSummary>
                     <AccordionDetails>
                       <UserPersonalAddAddress />
-                      <UserAddresses
-                        register={register}
-                        validationHandler={validationHandler}
-                        errors={globalErrors}
-                        userAddresses={userAddresses}
-                        setValue={setValue}
-                        getValues={getValues}
-                      />
                     </AccordionDetails>
                   </Accordion>
                 </Stack>
@@ -347,119 +339,6 @@ export const UserPage: React.FC = () => {
           </Grid>
         </Grid>
       </Box>
-      {/* <Grid container */}
-      {/*       sx={{ height: '100vh' }}> */}
-      {/*   <Container component="main" */}
-      {/*              maxWidth="md"> */}
-      {/*     <CssBaseline/> */}
-      {/*     <Box */}
-      {/*       component="form" */}
-      {/*       noValidate */}
-      {/*       onSubmitPersonal={handleSubmit(onSubmitPersonal)} */}
-      {/*       className="wrapper" */}
-      {/*       sx={{ mt: '20%' }} */}
-      {/*     > */}
-      {/*       <Stepper activeStep={activeStep} */}
-      {/*                alternativeLabel> */}
-      {/*         {steps.map((label, index) => { */}
-      {/*           const stepProps: { completed?: boolean } = {}; */}
-
-      {/*           if (isStepSkipped(index)) { */}
-      {/*             stepProps.completed = false; */}
-      {/*           } */}
-      {/*           return ( */}
-      {/*             <Step key={label} {...stepProps}> */}
-      {/*               <StepLabel>{label}</StepLabel> */}
-      {/*             </Step> */}
-      {/*           ); */}
-      {/*         })} */}
-      {/*       </Stepper> */}
-      {/*       {activeStep === steps.length ? ( */}
-      {/*         <Box> */}
-      {/*           <Typography sx={{ mt: 2, mb: 1 }}> */}
-      {/*             All pages completed - you&apos;re updated */}
-      {/*           </Typography> */}
-      {/*           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}> */}
-      {/*             <Box sx={{ flex: '1 1 auto' }}/> */}
-      {/*             <Button onClick={handleReset}>Reset</Button> */}
-      {/*           </Box> */}
-      {/*         </Box> */}
-      {/*       ) : ( */}
-      {/*         <Box> */}
-      {/*           <Typography sx={{ mt: 2, mb: 1, textAlign: 'center' }}> */}
-      {/*             Profile Page {activeStep + 1} */}
-      {/*           </Typography> */}
-      {/*           <Box */}
-      {/*             sx={{ */}
-      {/*               marginTop: 8, */}
-      {/*               component: 'form', */}
-      {/*               display: 'flex', */}
-      {/*               flexDirection: 'column', */}
-      {/*               alignItems: 'center', */}
-      {/*             }} */}
-      {/*           ></Box> */}
-      {/*           {!!Object.keys(formState.errors).length && ( */}
-      {/*             <Box */}
-      {/*               style={{ */}
-      {/*                 display: 'flex', */}
-      {/*                 justifyContent: 'center', */}
-      {/*                 alignItems: 'center', */}
-      {/*                 height: '100%', */}
-      {/*               }} */}
-      {/*             > */}
-      {/*               <Alert style={{ width: '500px' }} */}
-      {/*                      severity={'error'}> */}
-      {/*                 Please review and ensure all fields are correctly filled! */}
-      {/*               </Alert> */}
-      {/*             </Box> */}
-      {/*           )} */}
-      {/*           {activeStep + 1 === 1 && ( */}
-
-      {/*           )} */}
-      {/*           {activeStep + 1 === 2 && ( */}
-
-      {/*           )} */}
-      {/*           {activeStep + 1 === 3 && ( */}
-
-      {/*           )} */}
-      {/*           <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2 }}> */}
-      {/*             <Button */}
-      {/*               color="inherit" */}
-      {/*               disabled={activeStep === 0} */}
-      {/*               onClick={handleBack} */}
-      {/*               sx={{ mt: 2 }} */}
-      {/*             > */}
-      {/*               Back */}
-      {/*             </Button> */}
-      {/*             <Box sx={{ flex: '1 1 auto' }}/> */}
-      {/*             <Button onClick={handleNext}> */}
-      {/*               {activeStep === steps.length - 1 ? 'Done' : 'Next'} */}
-      {/*             </Button> */}
-      {/*           </Box> */}
-      {/*           <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}> */}
-      {/*             <Button */}
-      {/*               type="submit" */}
-      {/*               onClick={buttonSubmitClick} */}
-      {/*               fullWidth */}
-      {/*               variant="contained" */}
-      {/*               sx={{ backgroundColor: 'mediumaquamarine', color: 'black' }} */}
-      {/*             > */}
-      {/*               Update */}
-      {/*             </Button> */}
-      {/*             <Button */}
-      {/*               type="submit" */}
-      {/*               fullWidth */}
-      {/*               variant="contained" */}
-      {/*               sx={{ backgroundColor: 'beige', color: 'black' }} */}
-      {/*             > */}
-      {/*               Cancel */}
-      {/*             </Button> */}
-      {/*           </Box> */}
-      {/*         </Box> */}
-      {/*       )} */}
-      {/*     </Box> */}
-      {/*   </Container> */}
-      {/* </Grid> */}
     </>
   );
 };

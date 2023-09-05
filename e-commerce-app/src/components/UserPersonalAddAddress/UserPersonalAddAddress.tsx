@@ -123,7 +123,7 @@ const UserPersonalAddAddress = (): JSX.Element => {
       version: myCustomerVersion,
       actions: [addressObject],
     };
-    updateMyCustomer({ data: updateData, token: accessToken }).then((a) => console.log(a));
+    updateMyCustomer({ data: updateData, token: accessToken });
   };
 
   return (
@@ -134,12 +134,11 @@ const UserPersonalAddAddress = (): JSX.Element => {
             <Controller
               control={control}
               name={'street'}
-              render={({ fieldState, field: {onChange} }) => (
+              render={({ fieldState, field: { onChange } }) => (
                 <TextField
                   fullWidth
                   label="Street"
                   autoComplete="off"
-                  {...fieldState}
                   {...onChange}
                   {...register('street', { required: 'Street is required' })}
                   onChange={(e) => streetInputHandler(e)}
@@ -154,12 +153,11 @@ const UserPersonalAddAddress = (): JSX.Element => {
             <Controller
               name={'city'}
               control={control}
-              render={({ fieldState, field:{onChange} }) => (
+              render={({ fieldState, field: { onChange } }) => (
                 <TextField
                   fullWidth
                   label="City"
                   autoComplete="off"
-                  {...fieldState}
                   {...onChange}
                   {...register('city', { required: 'City is required' })}
                   onChange={(e) => cityInputHandler(e)}
@@ -190,7 +188,7 @@ const UserPersonalAddAddress = (): JSX.Element => {
           </Grid>
           <Grid item xs={12} mt={2}>
             <Controller
-              render={({ fieldState, field: {onChange} }) => (
+              render={({ fieldState, field: { onChange } }) => (
                 <TextField
                   fullWidth
                   {...onChange}

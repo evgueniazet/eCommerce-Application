@@ -6,7 +6,7 @@ import {
 } from '../types/slicesTypes/myCustomerApiSliceTypes';
 import {
   IChangePasswordMyCustomerRequest,
-  IUpdateMyCustomerRequest
+  IUpdateMyCustomerRequest,
 } from '../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
 
 export const myCustomerApi = createApi({
@@ -83,8 +83,11 @@ export const myCustomerApi = createApi({
       },
       invalidatesTags: ['myCustomerDetails'],
     }),
-    changePasswordMyCustomer: build.mutation<IMyCustomerBaseResponse, IChangePasswordMyCustomerRequest>({
-      query(queryObj){
+    changePasswordMyCustomer: build.mutation<
+      IMyCustomerBaseResponse,
+      IChangePasswordMyCustomerRequest
+    >({
+      query(queryObj) {
         return {
           url: '/password',
           method: 'POST',
@@ -96,7 +99,7 @@ export const myCustomerApi = createApi({
         };
       },
       invalidatesTags: ['myCustomerDetails'],
-    })
+    }),
   }),
 });
 

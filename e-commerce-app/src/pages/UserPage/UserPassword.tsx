@@ -8,7 +8,7 @@ import { validateStrictPassword } from '../../validators/validatePassword';
 import { validateConfirmPassword } from '../../validators/validateConfirmPassword';
 import {
   IChangePasswordMyCustomer,
-  IChangePasswordMyCustomerRequest
+  IChangePasswordMyCustomerRequest,
 } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
 import { useAppSelector } from '../../store/hooks';
 import { clearMyCustomerData, getMyCustomerVersion } from '../../store/slices/myCustomerSlice';
@@ -86,13 +86,19 @@ export const UserPassword = () => {
   };
 
   const submitNewPasswordHandler: SubmitHandler<IResetPasswordForm> = (data) => {
-    if ([validateStrictPassword(currentPassword), validateStrictPassword(newPassword), validateConfirmPassword(confirmNewPassword, newPassword)].some(el => el.length > 0)) {
+    if (
+      [
+        validateStrictPassword(currentPassword),
+        validateStrictPassword(newPassword),
+        validateConfirmPassword(confirmNewPassword, newPassword),
+      ].some((el) => el.length > 0)
+    ) {
       return;
     }
     const passwordObject: IChangePasswordMyCustomer = {
       version: myCustomerVersion,
       currentPassword,
-      newPassword
+      newPassword,
     };
     const requestPasswordChangeObject: IChangePasswordMyCustomerRequest = {
       token: accessToken,
@@ -100,13 +106,17 @@ export const UserPassword = () => {
     };
     changeMyCustomerPassword(requestPasswordChangeObject)
       .then(() => {
-        loginUser({ email: myCustomerEmail, password: newPassword }).unwrap().then(result => {
-          if (result) {
-            dispatch(setAuth({ access_token: result.access_token, refresh_token: result.refresh_token }));
-          }
-        });
+        loginUser({ email: myCustomerEmail, password: newPassword })
+          .unwrap()
+          .then((result) => {
+            if (result) {
+              dispatch(
+                setAuth({ access_token: result.access_token, refresh_token: result.refresh_token }),
+              );
+            }
+          });
       })
-      .catch(e => console.log(e));
+      .catch((e) => console.log(e));
   };
 
   const onResetForm = () => {
@@ -117,13 +127,9 @@ export const UserPassword = () => {
   };
 
   return (
-    <Box component={'form'}
-         onSubmit={handleSubmit(submitNewPasswordHandler)}
-         onReset={onResetForm}>
+    <Box component={'form'} onSubmit={handleSubmit(submitNewPasswordHandler)} onReset={onResetForm}>
       <Grid container>
-        <Grid item
-              xs={12}
-              mt={2}>
+        <Grid item xs={12} mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -143,9 +149,7 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item
-              xs={12}
-              mt={5}>
+        <Grid item xs={12} mt={5}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -164,9 +168,7 @@ export const UserPassword = () => {
             control={control}
           />
         </Grid>
-        <Grid item
-              xs={12}
-              mt={2}>
+        <Grid item xs={12} mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -186,8 +188,7 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item
-              xs={12}>
+        <Grid item xs={12}>
           <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
             <Button
               type="submit"

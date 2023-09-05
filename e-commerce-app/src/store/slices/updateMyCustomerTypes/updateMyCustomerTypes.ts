@@ -11,9 +11,9 @@ export interface IUpdateMyCustomerRequest {
 }
 
 export interface IChangePasswordMyCustomer {
-  version: number
-  currentPassword: string
-  newPassword: string
+  version: number;
+  currentPassword: string;
+  newPassword: string;
 }
 
 export interface IChangePasswordMyCustomerRequest {
