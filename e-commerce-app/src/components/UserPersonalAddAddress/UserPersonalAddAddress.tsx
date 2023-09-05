@@ -134,13 +134,13 @@ const UserPersonalAddAddress = (): JSX.Element => {
             <Controller
               control={control}
               name={'street'}
-              render={({ fieldState, field }) => (
+              render={({ fieldState, field: {onChange} }) => (
                 <TextField
                   fullWidth
                   label="Street"
                   autoComplete="off"
                   {...fieldState}
-                  {...field}
+                  {...onChange}
                   {...register('street', { required: 'Street is required' })}
                   onChange={(e) => streetInputHandler(e)}
                   value={street}
@@ -154,13 +154,13 @@ const UserPersonalAddAddress = (): JSX.Element => {
             <Controller
               name={'city'}
               control={control}
-              render={({ fieldState, field }) => (
+              render={({ fieldState, field:{onChange} }) => (
                 <TextField
                   fullWidth
                   label="City"
                   autoComplete="off"
                   {...fieldState}
-                  {...field}
+                  {...onChange}
                   {...register('city', { required: 'City is required' })}
                   onChange={(e) => cityInputHandler(e)}
                   value={city}
@@ -190,17 +190,11 @@ const UserPersonalAddAddress = (): JSX.Element => {
           </Grid>
           <Grid item xs={12} mt={2}>
             <Controller
-              name={'postalCode'}
-              control={control}
-              render={({ fieldState, field }) => (
+              render={({ fieldState, field: {onChange} }) => (
                 <TextField
                   fullWidth
-                  {...register('postalCode', {
-                    required: 'Postal Code is Required',
-                    onChange: (e) => {
-                      postalCodeInputHandler(e);
-                    },
-                  })}
+                  {...onChange}
+                  onChange={(e) => postalCodeInputHandler(e)}
                   label="Postal Code"
                   autoComplete="off"
                   value={postalCode}
@@ -208,6 +202,8 @@ const UserPersonalAddAddress = (): JSX.Element => {
                   helperText={fieldState.error ? fieldState.error.message : null}
                 />
               )}
+              name={'postalCode'}
+              control={control}
             />
           </Grid>
         </Grid>

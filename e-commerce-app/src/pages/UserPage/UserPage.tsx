@@ -45,18 +45,13 @@ import {
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
-import {
-  IMakeUpdateMyCustomerPersonalQueryObject
-} from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
-import {
-  makeUpdateMyCustomerPersonalQueryActions
-} from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
+import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
 import { capitalizeString } from '../../utils/capitalizeString';
 import UserPersonalHeader from '../../components/UserPersonalHeader/UserPersonalHeader';
 import UserPersonalRow from '../../components/UserPersonalRow/UserPersonalRow';
 import UserPersonalAddressTab from '../../components/UserPersonalAddressTab/UserPersonalAddressTab';
 import UserPersonalAddAddress from '../../components/UserPersonalAddAddress/UserPersonalAddAddress';
-import TextField from '@mui/material/TextField';
 import { UserPassword } from './UserPassword';
 
 const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
@@ -244,50 +239,34 @@ export const UserPage: React.FC = () => {
   return (
     <>
       <Box pt={5}>
-        <CssBaseline/>
-        <Grid container
-              spacing={3}>
-          <Grid item
-                md={2}
-                sx={{ display: { xs: 'none', md: 'block' } }}>
-            <img src={PageImg}
-                 alt="Personal page"
-                 width={'100%'}/>
+        <CssBaseline />
+        <Grid container spacing={3}>
+          <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
+            <img src={PageImg} alt="Personal page" width={'100%'} />
           </Grid>
-          <Grid item
-                md={8}
-                xs={12}>
+          <Grid item md={8} xs={12}>
             <Stack spacing={5}>
-              <Typography component={'span'}
-                          variant="h3"
-                          textAlign={'center'}>
+              <Typography component={'span'} variant="h3" textAlign={'center'}>
                 Hello, {capitalizeString(firstName)}!
               </Typography>
 
-              <Divider/>
+              <Divider />
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Personal information"
-                                      icon={<PersonIcon/>}/>
-                  <UserPersonalRow title="First Name:"
-                                   value={firstName}/>
-                  <UserPersonalRow title="Last Name:"
-                                   value={lastName}/>
+                  <UserPersonalHeader title="Personal information" icon={<PersonIcon />} />
+                  <UserPersonalRow title="First Name:" value={firstName} />
+                  <UserPersonalRow title="Last Name:" value={lastName} />
                   <UserPersonalRow
                     title="Date of Birth:"
                     value={new Date(birthDate).toDateString()}
                   />
-                  <UserPersonalRow title="Email:"
-                                   value={email}/>
+                  <UserPersonalRow title="Email:" value={email} />
                   <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon/>}
-                    >
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Edit Personal Info</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Box component={'form'}
-                           onSubmit={handleSubmit(onSubmitPersonal)}>
+                      <Box component={'form'} onSubmit={handleSubmit(onSubmitPersonal)}>
                         <UserData
                           register={register}
                           validationHandler={validationHandler}
@@ -319,25 +298,21 @@ export const UserPage: React.FC = () => {
                     </AccordionDetails>
                   </Accordion>
                   <Accordion>
-                    <AccordionSummary
-                      expandIcon={<ExpandMoreIcon/>}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                       <Typography>Reset Password</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-
-                        <UserPassword/>
-
+                      <UserPassword />
                     </AccordionDetails>
                   </Accordion>
                 </Stack>
               </Box>
 
-              <Divider/>
+              <Divider />
 
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Contact information"
-                                      icon={<ContactsIcon/>}/>
+                  <UserPersonalHeader title="Contact information" icon={<ContactsIcon />} />
                   <Box>
                     <UserPersonalAddressTab
                       addresses={addresses}
@@ -348,14 +323,14 @@ export const UserPage: React.FC = () => {
 
                   <Accordion>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon/>}
+                      expandIcon={<ExpandMoreIcon />}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
                       <Typography>Add New Address</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <UserPersonalAddAddress/>
+                      <UserPersonalAddAddress />
                       <UserAddresses
                         register={register}
                         validationHandler={validationHandler}

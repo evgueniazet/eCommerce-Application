@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -6,6 +6,16 @@ import Box from '@mui/material/Box';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { validateStrictPassword } from '../../validators/validatePassword';
 import { validateConfirmPassword } from '../../validators/validateConfirmPassword';
+import {
+  IChangePasswordMyCustomer,
+  IChangePasswordMyCustomerRequest
+} from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+import { useAppSelector } from '../../store/hooks';
+import { clearMyCustomerData, getMyCustomerVersion } from '../../store/slices/myCustomerSlice';
+import { getAccessToken, getUserEmail, setAuth, setLogOut } from '../../store/slices/userSlice';
+import { useChangePasswordMyCustomerMutation } from '../../api/myCustomerApi';
+import { useDispatch } from 'react-redux';
+import { useLoginUserMutation } from '../../api/authApi';
 
 interface IResetPasswordForm {
   currentPassword: string;
@@ -14,28 +24,37 @@ interface IResetPasswordForm {
 }
 
 export const UserPassword = () => {
+  const dispatch = useDispatch();
+  const myCustomerVersion = useAppSelector(getMyCustomerVersion);
+  const accessToken = useAppSelector(getAccessToken) as string;
+  const [changeMyCustomerPassword] = useChangePasswordMyCustomerMutation();
+  const [loginUser] = useLoginUserMutation();
+  const myCustomerEmail = useAppSelector(getUserEmail) as string;
 
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
 
   const {
-    register,
     handleSubmit,
     setError,
     clearErrors,
     reset,
     control,
-    formState: { errors }
+    formState: { errors },
   } = useForm<IResetPasswordForm>({
     defaultValues: {
       currentPassword: '',
       newPassword: '',
       confirmNewPassword: '',
-    }, mode: 'onChange'
+    },
+    mode: 'onChange',
   });
 
-  const inputPasswordHandler = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, target: 'currentPassword' | 'newPassword' | 'confirmNewPassword') => {
+  const inputPasswordHandler = (
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    target: 'currentPassword' | 'newPassword' | 'confirmNewPassword',
+  ) => {
     const val = e.target.value;
     let errStr = '';
     switch (target) {
@@ -57,18 +76,37 @@ export const UserPassword = () => {
         break;
     }
     if (errStr.length) {
-      console.log(errStr, target);
       setError(target, {
         type: 'required',
         message: errStr,
       });
+    } else {
+      clearErrors(target);
     }
   };
 
-  console.log(errors);
-
   const submitNewPasswordHandler: SubmitHandler<IResetPasswordForm> = (data) => {
-    console.log(data);
+    if ([validateStrictPassword(currentPassword), validateStrictPassword(newPassword), validateConfirmPassword(confirmNewPassword, newPassword)].some(el => el.length > 0)) {
+      return;
+    }
+    const passwordObject: IChangePasswordMyCustomer = {
+      version: myCustomerVersion,
+      currentPassword,
+      newPassword
+    };
+    const requestPasswordChangeObject: IChangePasswordMyCustomerRequest = {
+      token: accessToken,
+      data: passwordObject,
+    };
+    changeMyCustomerPassword(requestPasswordChangeObject)
+      .then(() => {
+        loginUser({ email: myCustomerEmail, password: newPassword }).unwrap().then(result => {
+          if (result) {
+            dispatch(setAuth({ access_token: result.access_token, refresh_token: result.refresh_token }));
+          }
+        });
+      })
+      .catch(e => console.log(e));
   };
 
   const onResetForm = () => {
@@ -86,71 +124,66 @@ export const UserPassword = () => {
         <Grid item
               xs={12}
               mt={2}>
-          <Controller name={'currentPassword'}
-                      control={control}
-                      render={({ fieldState, field }) => (
-                        <TextField
-                          fullWidth
-                          label="Current password"
-                          type="password"
-                          autoComplete="off"
-                          {...fieldState}
-                          {...field}
-                          {...register('currentPassword', {
-                            required: 'Current Password is required',
-                            onChange: (e) => inputPasswordHandler(e, 'currentPassword'),
-                          })}
-                          value={currentPassword}
-                          error={!!fieldState.error}
-                          helperText={fieldState.error?.message || errors.currentPassword?.message}
-                        />
-                      )}/>
-
+          <Controller
+            render={({ fieldState, field: { onChange } }) => (
+              <TextField
+                fullWidth
+                label="Current password"
+                type="password"
+                autoComplete="off"
+                {...onChange}
+                onChange={(e) => inputPasswordHandler(e, 'currentPassword')}
+                value={currentPassword}
+                error={!!fieldState.error}
+                helperText={fieldState.error?.message || errors.currentPassword?.message}
+              />
+            )}
+            name={'currentPassword'}
+            control={control}
+          />
         </Grid>
 
         <Grid item
               xs={12}
               mt={5}>
-          <Controller name={'newPassword'}
-                      control={control}
-                      render={({ fieldState, field }) => (
-                        <TextField
-                          fullWidth
-                          label="New password"
-                          type="password"
-                          autoComplete="off"
-                          {...fieldState}
-                          {...field}
-                          {...register('newPassword', {
-                            required: 'New Password is required',
-                            onChange: (e) => inputPasswordHandler(e, 'newPassword'),
-                          })}
-                          error={!!fieldState.error}
-                          helperText={fieldState.error ? fieldState.error.message : null}
-                        />
-                      )}/>
+          <Controller
+            render={({ fieldState, field: { onChange } }) => (
+              <TextField
+                fullWidth
+                label="New password"
+                type="password"
+                autoComplete="off"
+                {...onChange}
+                onChange={(e) => inputPasswordHandler(e, 'newPassword')}
+                value={newPassword}
+                error={!!fieldState.error}
+                helperText={fieldState.error ? fieldState.error.message : null}
+              />
+            )}
+            name={'newPassword'}
+            control={control}
+          />
         </Grid>
         <Grid item
               xs={12}
               mt={2}>
-          <Controller name={'confirmNewPassword'}
-                      control={control}
-                      render={({ fieldState, field }) => (
-                        <TextField
-                          fullWidth
-                          label="Confirm password"
-                          type="password"
-                          autoComplete="off"
-                          {...fieldState}
-                          {...field}
-                          {...register('confirmNewPassword', {
-                            required: 'Confirm New Password is required',
-                            onChange: (e) => inputPasswordHandler(e, 'confirmNewPassword'),
-                          })}
-                          error={!!fieldState.error}
-                          helperText={fieldState.error ? fieldState.error.message : null}
-                        />
-                      )}/>
+          <Controller
+            render={({ fieldState, field: { onChange } }) => (
+              <TextField
+                fullWidth
+                label="Confirm password"
+                type="password"
+                autoComplete="off"
+                {...onChange}
+                onChange={(e) => inputPasswordHandler(e, 'confirmNewPassword')}
+                value={confirmNewPassword}
+                error={!!fieldState.error}
+                helperText={fieldState.error ? fieldState.error.message : null}
+              />
+            )}
+            name={'confirmNewPassword'}
+            control={control}
+          />
         </Grid>
 
         <Grid item

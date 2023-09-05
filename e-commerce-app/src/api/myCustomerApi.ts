@@ -4,7 +4,10 @@ import {
   IMyCustomerLoginRequest,
   ISignUpMyCustomer,
 } from '../types/slicesTypes/myCustomerApiSliceTypes';
-import { IUpdateMyCustomerRequest } from '../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+import {
+  IChangePasswordMyCustomerRequest,
+  IUpdateMyCustomerRequest
+} from '../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
 
 export const myCustomerApi = createApi({
   reducerPath: 'myCustomerApi',
@@ -80,6 +83,20 @@ export const myCustomerApi = createApi({
       },
       invalidatesTags: ['myCustomerDetails'],
     }),
+    changePasswordMyCustomer: build.mutation<IMyCustomerBaseResponse, IChangePasswordMyCustomerRequest>({
+      query(queryObj){
+        return {
+          url: '/password',
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${queryObj.token}`,
+            'Content-Type': 'application/json',
+          },
+          body: queryObj.data,
+        };
+      },
+      invalidatesTags: ['myCustomerDetails'],
+    })
   }),
 });
 
@@ -89,4 +106,5 @@ export const {
   useGetMyCustomerDetailsMutation,
   useUpdateMyCustomerMutation,
   useGetMyCustomerDetailedInfoQuery,
+  useChangePasswordMyCustomerMutation,
 } = myCustomerApi;
