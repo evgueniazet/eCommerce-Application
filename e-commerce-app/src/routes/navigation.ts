@@ -5,18 +5,18 @@ export const userLoginRoutes = {
 
 export const userLogoutRoutes = {
   logout: '/logout',
+  user: '/user',
 };
 
 export const navigationRoutes = {
   home: '/',
-  ...userLoginRoutes,
-  ...userLogoutRoutes,
+  products: '/products',
+  user: '/user',
 };
 
 export const unusedNavigation = {
   about: '/about',
   basket: '/basket',
-  user: '/user',
   product: '/product',
   products: '/products',
   error: '*',

@@ -2,15 +2,40 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authApi } from '../api/authApi';
 import { UserReducer } from './slices/userSlice';
 import { myCustomerApi } from '../api/myCustomerApi';
+import { productsApi } from '../api/productsApi';
+import { categoriesApi } from '../api/categoriesApi';
+import { CategoriesReducer } from './slices/categoriesSlice';
+import { ProductsReducer } from './slices/productsSlice';
+import { productProjectionApi } from '../api/productProjectionApi';
+import { QueryParamsReducer } from './slices/queryParamsSlice';
+import { taxApi } from '../api/taxApi';
+import { TaxesReducer } from './slices/taxesSlice';
+import { MyCustomerReducer } from './slices/myCustomerSlice';
 
 export const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [myCustomerApi.reducerPath]: myCustomerApi.reducer,
+    [productsApi.reducerPath]: productsApi.reducer,
+    [categoriesApi.reducerPath]: categoriesApi.reducer,
+    [taxApi.reducerPath]: taxApi.reducer,
+    [productProjectionApi.reducerPath]: productProjectionApi.reducer,
     user: UserReducer,
+    categories: CategoriesReducer,
+    products: ProductsReducer,
+    queryParams: QueryParamsReducer,
+    taxes: TaxesReducer,
+    myCustomer: MyCustomerReducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({}).concat([authApi.middleware, myCustomerApi.middleware]),
+    getDefaultMiddleware({}).concat([
+      authApi.middleware,
+      myCustomerApi.middleware,
+      productsApi.middleware,
+      categoriesApi.middleware,
+      productProjectionApi.middleware,
+      taxApi.middleware,
+    ]),
 });
 
 export type RootStateType = ReturnType<typeof store.getState>;

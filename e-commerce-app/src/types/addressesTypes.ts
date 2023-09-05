@@ -8,3 +8,5 @@ export interface IMyCustomerApiAddressRequest {
 export interface IMyCustomerAddressResponse extends IMyCustomerApiAddressRequest {
   id: string;
 }
+
+export type CountriesType = 'US' | 'DE' | 'CA' | 'PL' | string;
