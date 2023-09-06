@@ -1,10 +1,8 @@
 import React from 'react';
-import './AboutPage.module.scss';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -15,35 +13,46 @@ import Divider from '@mui/material/Divider';
 import Ilya from '../../assets/AboutPageImg/Ilya.jpeg';
 import Evguenia from '../../assets/AboutPageImg/Evguenia.jpeg';
 import Nargiza from '../../assets/AboutPageImg/Nargiza.jpg';
+import RSlogo from '../../assets/logo/RSlogo.png';
+import Backgroung from '../../assets/AboutPageImg/fon-trava.jpeg';
 
 export const AboutPage: React.FC = () => {
   return (
-    <Container>
+    <Container
+      component="body"
+      sx={{
+        backgroundImage: `url(${Backgroung})`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'top',
+      }}
+    >
       <Box
         sx={{
+          maxWidth: '440px',
           bgcolor: 'background.paper',
-          pt: 8,
-          pb: 6,
+          pt: 4,
+          pb: 1,
+          margin: 'auto',
+          borderRadius: '3%',
         }}
       >
-        <Container maxWidth="sm">
-          <Typography
-            component="h5"
-            variant="h3"
-            align="center"
-            color="green"
-            fontWeight="500"
-            gutterBottom
-          >
+        <Container>
+          <Typography component="h6" variant="h5" align="center" color="green" fontWeight="600">
             About Us
           </Typography>
-          <Typography variant="h5" align="center" color="text.secondary" paragraph>
+          <Typography variant="h6" align="center" color="text.secondary" paragraph>
             We&apos;re on a mission to complete <br /> eCommerce Application successfully.
           </Typography>
-          <Stack sx={{ pt: 4 }} direction="row" spacing={2} justifyContent="center">
-            <Button variant="contained">Join RS School</Button>
-            <Button variant="outlined">Team&apos;s mentor</Button>
+          <Stack sx={{ pb: 2 }} direction="row" justifyContent="center">
+            <Link href="https://rs.school/" target="_blank">
+              <img src={RSlogo} alt="RSlogo" width={70} />
+            </Link>
           </Stack>
+          <Typography align="center" color="text.secondary" paragraph>
+            The development of the project and its ecosystem is guided by a team of RS Scool
+            students
+          </Typography>
         </Container>
       </Box>
       <Container sx={{ py: 8 }} maxWidth="md">
@@ -111,7 +120,7 @@ export const AboutPage: React.FC = () => {
                 </Typography>
                 <Divider variant="middle" />
                 <Typography color="grey" fontSize={12} mt={1.5}>
-                  Mother-of-three, karaoke lover, quet person.
+                  Mother-of-three, karaoke lover, a quiet person.
                 </Typography>
               </CardContent>
             </Card>
