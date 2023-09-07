@@ -31,7 +31,7 @@ export const AboutPage: React.FC = () => {
         sx={{
           maxWidth: '440px',
           bgcolor: 'background.paper',
-          pt: 4,
+          pt: 2,
           pb: 1,
           margin: 'auto',
           borderRadius: '3%',
