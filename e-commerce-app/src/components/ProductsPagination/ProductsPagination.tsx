@@ -30,14 +30,17 @@ const ProductsPagination = (): JSX.Element => {
   };
 
   return (
-    <Box sx={{display: 'flex', justifyContent: 'center'}}>
-      <Pagination count={maxPages}
-                  variant="outlined"
-                  shape="rounded"
-                  showFirstButton
-                  showLastButton
-                  page={page}
-                  onChange={handleChange}/>
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Pagination
+        count={maxPages}
+        variant="outlined"
+        shape="rounded"
+        showFirstButton
+        showLastButton
+        page={page}
+        onChange={handleChange}
+        color="standard"
+      />
     </Box>
   );
 };

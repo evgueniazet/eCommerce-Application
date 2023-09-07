@@ -8,6 +8,8 @@ import { setProducts, startLoadingProducts } from '../../store/slices/productsSl
 import {
   getQueryCategories,
   getQueryCentAmount,
+  getQueryLimit,
+  getQueryOffset,
   getQuerySort,
   getQueryText,
 } from '../../store/slices/queryParamsSlice';
@@ -23,6 +25,9 @@ const ProductsQuery = (): JSX.Element => {
   const searchQueryText = useAppSelector(getQueryText);
   const searchQueryCentAmount = useAppSelector(getQueryCentAmount);
   const searchQueryCategories = useAppSelector(getQueryCategories);
+  const searchQueryLimit = useAppSelector(getQueryLimit);
+  const searchQueryOffset = useAppSelector(getQueryOffset);
+
 
   const [params, setParams] = useState<IBaseQueryParams>({});
 
@@ -91,6 +96,40 @@ const ProductsQuery = (): JSX.Element => {
       filter: filterArr,
     }));
   }, [searchQueryCentAmount, searchQueryCategories]);
+
+  useEffect(() => {
+    if (searchQueryLimit) {
+      setParams((prevState) => ({
+        ...prevState,
+        limit: searchQueryLimit,
+      }));
+      return;
+    }
+    setParams((prevState) => {
+      const newState = {
+        ...prevState,
+      };
+      delete newState.limit;
+      return newState;
+    });
+  }, [searchQueryLimit]);
+
+  useEffect(() => {
+    if (searchQueryOffset) {
+      setParams((prevState) => ({
+        ...prevState,
+        offset: searchQueryOffset,
+      }));
+      return;
+    }
+    setParams((prevState) => {
+      const newState = {
+        ...prevState,
+      };
+      delete newState.offset;
+      return newState;
+    });
+  }, [searchQueryOffset]);
 
   const [
     getAllProducts,
