@@ -88,10 +88,10 @@ const ProductsFilterForm = (): JSX.Element => {
   return (
     <Box component={'form'} onSubmit={handleSubmit(submitFormHandler)}>
       <Stack spacing={3}>
+        <Typography variant="h5" mt="40px">
+          Catalog
+        </Typography>
         <FormControl fullWidth>
-          <Typography variant="h5" mt="40px">
-            Product Categories
-          </Typography>
           <InputLabel id="queryCategories">Categories</InputLabel>
           <Select
             fullWidth
@@ -114,17 +114,6 @@ const ProductsFilterForm = (): JSX.Element => {
           </Select>
         </FormControl>
 
-        <Box>
-          <Typography variant="h5">Filter by price</Typography>
-          <Box sx={{ width: 200 }}>
-            <Stack spacing={2} direction="row" alignItems="center">
-              <p>{priceSort[0]}</p>
-              <Slider value={priceSort} onChange={handleChange2} min={0} max={100} />
-              <p>{priceSort[1]}</p>
-            </Stack>
-          </Box>
-        </Box>
-
         <FormControl fullWidth>
           <InputLabel id="sortBy">Sort By</InputLabel>
           <Select
@@ -146,6 +135,18 @@ const ProductsFilterForm = (): JSX.Element => {
             <MenuItem value="name.en desc">Name (Z first)</MenuItem>
           </Select>
         </FormControl>
+
+        <Box>
+          <Typography variant="h5">Filter by price</Typography>
+          <Box sx={{ width: 200 }}>
+            <Stack spacing={2} direction="row" alignItems="center">
+              <p>{priceSort[0]}</p>
+              <Slider value={priceSort} onChange={handleChange2} min={0} max={100} />
+              <p>{priceSort[1]}</p>
+            </Stack>
+          </Box>
+        </Box>
+
         <Button type={'submit'} color="success" variant="contained">
           Sort
         </Button>

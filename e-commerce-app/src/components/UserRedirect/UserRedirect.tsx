@@ -8,6 +8,6 @@ const UserRedirect = (): JSX.Element => {
   const myCustomerId = useAppSelector(getMyCustomerId);
 
   if (!myCustomerId) return <LoadingProgress />;
-  return <Navigate to={myCustomerId}/>;
+  return <Navigate to={myCustomerId} />;
 };
 export default UserRedirect;

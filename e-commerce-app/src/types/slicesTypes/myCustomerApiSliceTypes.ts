@@ -1,5 +1,5 @@
 import { IAnonymousCartSignIn } from '../customerCartTypes';
-import { IMyCustomerApiAddressRequest } from '../addressesTypes';
+import { IMyCustomerAddressResponse, IMyCustomerApiAddressRequest } from '../addressesTypes';
 
 export interface IMyCustomerLoginRequest {
   email: string;
@@ -8,7 +8,7 @@ export interface IMyCustomerLoginRequest {
 }
 
 export interface IMyCustomerBaseResponse {
-  addresses: IMyCustomerApiAddressRequest[];
+  addresses: IMyCustomerAddressResponse[];
   authenticationMode: 'Password' | string;
   billingAddressIds: string[];
   dateOfBirth: string;
@@ -19,6 +19,7 @@ export interface IMyCustomerBaseResponse {
   lastName: string;
   password: string;
   shippingAddressIds: string[];
+  version: number;
   defaultBillingAddressId?: string;
   defaultShippingAddressId?: string;
 }

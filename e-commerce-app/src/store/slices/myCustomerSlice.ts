@@ -14,6 +14,7 @@ const initialState: IMyCustomerBaseResponse = {
   lastName: '',
   password: '',
   shippingAddressIds: [],
+  version: 1,
 };
 
 const myCustomerSlice = createSlice({
@@ -32,6 +33,7 @@ const myCustomerSlice = createSlice({
       state.lastName = '';
       state.password = '';
       state.shippingAddressIds.length = 0;
+      state.version = 1;
       if (state.defaultBillingAddressId) {
         delete state.defaultBillingAddressId;
       }
@@ -51,6 +53,7 @@ const myCustomerSlice = createSlice({
       state.lastName = action.payload.lastName;
       state.password = action.payload.password;
       state.shippingAddressIds = action.payload.shippingAddressIds;
+      state.version = action.payload.version;
       if (action.payload.defaultBillingAddressId) {
         state.defaultBillingAddressId = action.payload.defaultBillingAddressId;
       }
@@ -78,6 +81,7 @@ export const getMyCustomerDefaultBillingAddressId = (state: RootStateType) =>
   state.myCustomer.defaultBillingAddressId;
 export const getMyCustomerDefaultShippingAddressId = (state: RootStateType) =>
   state.myCustomer.defaultShippingAddressId;
+export const getMyCustomerVersion = (state: RootStateType) => state.myCustomer.version;
 
 export const MyCustomerReducer = myCustomerSlice.reducer;
 export const { clearMyCustomerData, setMyCustomerData } = myCustomerSlice.actions;

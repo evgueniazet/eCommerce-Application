@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box } from '@mui/material';
 import { AddressItem } from '../AddressItem/AddressItem';
 import type { Board } from '../../pages/UserPage/UserAddresses';
-import { AddressPanel } from '../Panel/Panel';
+import { AddressPanel } from '../AddressPanel/AddressPanel';
 import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 
 interface TodoListProps {
@@ -15,7 +15,7 @@ interface TodoListProps {
   address: IMyCustomerApiAddressRequest | undefined;
 }
 
-export const BoardList: FC<TodoListProps> = ({
+export const AddressList: FC<TodoListProps> = ({
   todoList,
   editTodoId,
   onChangeAddr,
