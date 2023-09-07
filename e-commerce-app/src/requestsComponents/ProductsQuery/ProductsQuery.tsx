@@ -84,6 +84,7 @@ const ProductsQuery = (): JSX.Element => {
         delete newState.filter;
         return newState;
       });
+      return;
     }
     setParams((prevState) => ({
       ...prevState,

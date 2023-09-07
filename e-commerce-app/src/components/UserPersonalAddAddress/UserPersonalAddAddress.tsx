@@ -7,11 +7,11 @@ import countries from '../../data/countries.json';
 import { useValidate } from '../../hooks/useValidate';
 import { validatePostalCode } from '../../validators/validatePostalCode';
 import { validateStrictCity } from '../../validators/validateCity';
-import { IUpdateMyCustomerActionAddAddress } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerActionTypes';
+import { IUpdateMyCustomerActionAddAddress } from '../../types/updateMyCustomerTypes/updateMyCustomerActionTypes';
 import { useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
-import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+import { IUpdateMyCustomer } from '../../types/updateMyCustomerTypes/updateMyCustomerTypes';
 import { getMyCustomerVersion } from '../../store/slices/myCustomerSlice';
 
 interface IAddAddressForm {
