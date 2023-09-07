@@ -66,61 +66,50 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
 
   return (
     <Card className={styles.card}>
-      <Box className={styles.card__pointer}
-           width={'100%'}
-           onClick={handlerNavigation}>
-        <CardMedia sx={{ height: 200, width: '100%' }}
-                   image={imgPath}
-                   title={imgDescription}/>
+      <Box className={styles.card__pointer} width={'100%'} onClick={handlerNavigation}>
+        <CardMedia sx={{ height: 200, width: '100%' }} image={imgPath} title={imgDescription} />
       </Box>
-      <CardContent className={`${styles.card__text} ${styles.card__pointer}`}
-                   onClick={handlerNavigation}
-                   sx={{ cursor: 'pointer' }}>
-        <Typography className={styles.card__title}
-                    component="h2">
+      <CardContent
+        className={`${styles.card__text} ${styles.card__pointer}`}
+        onClick={handlerNavigation}
+        sx={{ cursor: 'pointer' }}
+      >
+        <Typography className={styles.card__title} component="h2">
           {item.masterData.current.name.en}
         </Typography>
 
         {tax !== 0 ? (
           <>
-            <Typography className={styles.card__price__marked}
-                        component="h3">
+            <Typography className={styles.card__price__marked} component="h3">
               {salePriceEUR}
             </Typography>
-            <Typography className={styles.card__price__sale}
-                        component="h3">
+            <Typography className={styles.card__price__sale} component="h3">
               {priceEUR}
             </Typography>
           </>
         ) : (
-          <Typography className={styles.card__price}
-                      component="h3">
+          <Typography className={styles.card__price} component="h3">
             {priceEUR}
           </Typography>
         )}
 
         {tax !== 0 ? (
           <>
-            <Typography className={styles.card__price__marked}
-                        component="h3">
+            <Typography className={styles.card__price__marked} component="h3">
               {salePriceUSD}
             </Typography>
-            <Typography className={styles.card__price__sale}
-                        component="h3">
+            <Typography className={styles.card__price__sale} component="h3">
               {priceUSD}
             </Typography>
           </>
         ) : (
-          <Typography className={styles.card__price}
-                      component="h3">
+          <Typography className={styles.card__price} component="h3">
             {priceUSD}
           </Typography>
         )}
       </CardContent>
       <CardActions>
-        <Button color="success"
-                variant="outlined"
-                onClick={handlerAddToCart}>
+        <Button color="success" variant="outlined" onClick={handlerAddToCart}>
           Add to Cart
         </Button>
       </CardActions>
