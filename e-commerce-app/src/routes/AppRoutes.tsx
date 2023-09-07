@@ -6,7 +6,7 @@ import {
 } from 'react-router-dom';
 import RootPage from '../pages/RootPage/RootPage';
 import { HomePage } from '../pages/HomePage/HomePage';
-import { AboutPage } from '../pages/AbouPage/AboutPage';
+import { AboutPage } from '../pages/AboutPage/AboutPage';
 import { BasketPage } from '../pages/BasketPage/BasketPage';
 import { LoginPage } from '../pages/LoginPage/LoginPage';
 import { RegistrationPage } from '../pages/RegistrationPage/RegistrationPage';
