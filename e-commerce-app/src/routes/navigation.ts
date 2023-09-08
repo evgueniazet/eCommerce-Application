@@ -11,11 +11,11 @@ export const userLogoutRoutes = {
 export const navigationRoutes = {
   home: '/',
   products: '/products',
+  about: '/about',
+  basket: '/basket',
 };
 
 export const unusedNavigation = {
-  about: '/about',
-  basket: '/basket',
   product: '/product',
   products: '/products',
   user: '/user',

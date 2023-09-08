@@ -1,4 +1,4 @@
-import React, { JSX, useState } from 'react';
+import React, { JSX, useId, useState } from 'react';
 import {
   Box,
   Button,
@@ -37,6 +37,9 @@ const ProductsFilterForm = (): JSX.Element => {
   const [priceSort, setPriceSort] = React.useState<number[]>(centAmount);
   const [sortRate, setSortRate] = useState<SortFormType>(searchQuerySort);
   const [sortCategories, setSortCategories] = useState(searchQueryCategories);
+
+  const categoriesId = useId();
+  const sortById = useId();
 
   const handleChange2 = (event: Event, newValue: number | number[], activeThumb: number) => {
     if (!Array.isArray(newValue)) {
@@ -92,11 +95,11 @@ const ProductsFilterForm = (): JSX.Element => {
           Catalog
         </Typography>
         <FormControl fullWidth>
-          <InputLabel id="queryCategories">Categories</InputLabel>
+          <InputLabel id={categoriesId}>Categories</InputLabel>
           <Select
             fullWidth
-            labelId="queryCategories"
-            id="selectCategories"
+            labelId={categoriesId}
+            id={`select-${categoriesId}`}
             label="Categories"
             value={sortCategories}
             {...register('categories', {
@@ -115,11 +118,11 @@ const ProductsFilterForm = (): JSX.Element => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel id="sortBy">Sort By</InputLabel>
+          <InputLabel id={sortById}>Sort By</InputLabel>
           <Select
             fullWidth
-            labelId="sortBy"
-            id="selectSortBy"
+            labelId={sortById}
+            id={`select-${sortById}`}
             label="Sort By"
             value={sortRate}
             {...register('sort', {

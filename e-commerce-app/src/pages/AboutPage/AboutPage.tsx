@@ -19,7 +19,7 @@ import Backgroung from '../../assets/AboutPageImg/fon-trava.jpeg';
 export const AboutPage: React.FC = () => {
   return (
     <Container
-      component="body"
+      component="div"
       sx={{
         backgroundImage: `url(${Backgroung})`,
         backgroundRepeat: 'no-repeat',
@@ -74,7 +74,7 @@ export const AboutPage: React.FC = () => {
                 </Typography>
                 <Divider variant="middle" />
                 <Typography color="grey" fontSize={12} mt={1.5}>
-                  Python developer, meme creator, great sense of humor.
+                  Python enjoyer, meme creator, great sense of humor.
                 </Typography>
               </CardContent>
             </Card>

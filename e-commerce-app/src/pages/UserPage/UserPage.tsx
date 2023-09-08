@@ -11,18 +11,12 @@ import {
   Divider,
   Grid,
   Stack,
-  Tab,
-  Tabs,
   useMediaQuery,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import ContactsIcon from '@mui/icons-material/Contacts';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import HomeIcon from '@mui/icons-material/Home';
-import PaymentIcon from '@mui/icons-material/Payment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UserData } from './UserData';
-import { UserAddresses } from './UserAddresses';
 import { useValidate } from '../../hooks/useValidate';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
@@ -45,8 +39,12 @@ import {
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
 import { IUpdateMyCustomer } from '../../types/updateMyCustomerTypes/updateMyCustomerTypes';
-import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
-import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
+import {
+  IMakeUpdateMyCustomerPersonalQueryObject
+} from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
+import {
+  makeUpdateMyCustomerPersonalQueryActions
+} from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
 import { capitalizeString } from '../../utils/capitalizeString';
 import UserPersonalHeader from '../../components/UserPersonalHeader/UserPersonalHeader';
 import UserPersonalRow from '../../components/UserPersonalRow/UserPersonalRow';
@@ -54,7 +52,6 @@ import UserPersonalAddressTab from '../../components/UserPersonalAddressTab/User
 import UserPersonalAddAddress from '../../components/UserPersonalAddAddress/UserPersonalAddAddress';
 import { UserPassword } from './UserPassword';
 
-const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
 
 export const UserPage: React.FC = () => {
   const firstName = useAppSelector(getMyCustomerFirstName);
@@ -66,7 +63,6 @@ export const UserPage: React.FC = () => {
   const billingAddressId = useAppSelector(getMyCustomerBillingAddressIds);
   const shippingDefaultAddressId = useAppSelector(getMyCustomerDefaultShippingAddressId);
   const billingDefaultAddressId = useAppSelector(getMyCustomerDefaultBillingAddressId);
-  const password = useAppSelector(getMyCustomerPassword);
   const myCustomerVersion = useAppSelector(getMyCustomerVersion);
 
   const [activeStep, setActiveStep] = useState(0);
@@ -75,16 +71,6 @@ export const UserPage: React.FC = () => {
 
   const accessToken = useAppSelector(getAccessToken) as string;
   const [updateMyCustomer] = useUpdateMyCustomerMutation();
-
-  const initialUserBio: IMakeUpdateMyCustomerPersonalQueryObject = {
-    firstName,
-    lastName,
-    birthDate,
-    email,
-  };
-
-  const billingAddresses = addresses.filter((address) => billingAddressId.includes(address.id));
-  const shippingAddresses = addresses.filter((address) => shippingAddressId.includes(address.id));
 
   const {
     register,
@@ -98,43 +84,6 @@ export const UserPage: React.FC = () => {
   } = useForm<IRegistrationFormData>();
 
   const [activeAddressTab, setActiveAddressTab] = useState(0);
-  const mediumViewport = useMediaQuery('(min-width:900px)');
-  const handleAddressTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveAddressTab(newValue);
-  };
-
-  const [openEditBio, setOpenEditBio] = React.useState(false);
-
-  const handleClickOpenEditBio = () => {
-    setOpenEditBio(true);
-  };
-
-  const handleCloseClickCloseEditBio = () => {
-    setOpenEditBio(false);
-  };
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
     (acc, item) => {
@@ -184,7 +133,7 @@ export const UserPage: React.FC = () => {
   };
 
   const onSubmitPersonal: SubmitHandler<IRegistrationFormData> = (data) => {
-    if (Object.keys(globalErrors).length) {
+    if (Object.keys(globalErrors).length || !Object.keys(data).length) {
       return;
     }
 
@@ -214,8 +163,6 @@ export const UserPage: React.FC = () => {
     updateMyCustomer({
       token: accessToken,
       data: updateData,
-    }).then((a) => {
-      console.log(a);
     });
   };
 
@@ -228,45 +175,52 @@ export const UserPage: React.FC = () => {
 
   const userData = [firstName, lastName, birthDate, email];
 
-  const userAddresses = [
-    addresses,
-    shippingAddressId,
-    billingAddressId,
-    shippingDefaultAddressId,
-    billingDefaultAddressId,
-  ];
 
   return (
     <>
       <Box pt={5}>
-        <CssBaseline />
-        <Grid container spacing={3}>
-          <Grid item md={2} sx={{ display: { xs: 'none', md: 'block' } }}>
-            <img src={PageImg} alt="Personal page" width={'100%'} />
+        <CssBaseline/>
+        <Grid container
+              spacing={3}>
+          <Grid item
+                md={2}
+                sx={{ display: { xs: 'none', md: 'block' } }}>
+            <img src={PageImg}
+                 alt="Personal page"
+                 width={'100%'}/>
           </Grid>
-          <Grid item md={8} xs={12}>
+          <Grid item
+                md={8}
+                xs={12}>
             <Stack spacing={5}>
-              <Typography component={'span'} variant="h3" textAlign={'center'}>
+              <Typography component={'span'}
+                          variant="h3"
+                          textAlign={'center'}>
                 Hello, {capitalizeString(firstName)}!
               </Typography>
 
-              <Divider />
+              <Divider/>
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Personal information" icon={<PersonIcon />} />
-                  <UserPersonalRow title="First Name:" value={firstName} />
-                  <UserPersonalRow title="Last Name:" value={lastName} />
+                  <UserPersonalHeader title="Personal information"
+                                      icon={<PersonIcon/>}/>
+                  <UserPersonalRow title="First Name:"
+                                   value={firstName}/>
+                  <UserPersonalRow title="Last Name:"
+                                   value={lastName}/>
                   <UserPersonalRow
                     title="Date of Birth:"
                     value={new Date(birthDate).toDateString()}
                   />
-                  <UserPersonalRow title="Email:" value={email} />
+                  <UserPersonalRow title="Email:"
+                                   value={email}/>
                   <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                       <Typography>Edit Personal Info</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <Box component={'form'} onSubmit={handleSubmit(onSubmitPersonal)}>
+                      <Box component={'form'}
+                           onSubmit={handleSubmit(onSubmitPersonal)}>
                         <UserData
                           register={register}
                           validationHandler={validationHandler}
@@ -298,21 +252,22 @@ export const UserPage: React.FC = () => {
                     </AccordionDetails>
                   </Accordion>
                   <Accordion>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                    <AccordionSummary expandIcon={<ExpandMoreIcon/>}>
                       <Typography>Reset Password</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <UserPassword />
+                      <UserPassword/>
                     </AccordionDetails>
                   </Accordion>
                 </Stack>
               </Box>
 
-              <Divider />
+              <Divider/>
 
               <Box>
                 <Stack spacing={0.5}>
-                  <UserPersonalHeader title="Contact information" icon={<ContactsIcon />} />
+                  <UserPersonalHeader title="Contact information"
+                                      icon={<ContactsIcon/>}/>
                   <Box>
                     <UserPersonalAddressTab
                       addresses={addresses}
@@ -323,14 +278,14 @@ export const UserPage: React.FC = () => {
 
                   <Accordion>
                     <AccordionSummary
-                      expandIcon={<ExpandMoreIcon />}
+                      expandIcon={<ExpandMoreIcon/>}
                       aria-controls="panel1a-content"
                       id="panel1a-header"
                     >
                       <Typography>Add New Address</Typography>
                     </AccordionSummary>
                     <AccordionDetails>
-                      <UserPersonalAddAddress />
+                      <UserPersonalAddAddress/>
                     </AccordionDetails>
                   </Accordion>
                 </Stack>
