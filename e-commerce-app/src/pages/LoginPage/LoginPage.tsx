@@ -59,7 +59,7 @@ export const LoginPage: FC = () => {
   }, [isLoggedIn]);
 
   const { validateField } = useValidate();
-  const { setTokenInStorage } = useLocalToken();
+  const { setTokenInStorage, setTokenInSessionStorage } = useLocalToken();
   const dispatch = useAppDispatch();
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
@@ -85,6 +85,7 @@ export const LoginPage: FC = () => {
   useEffect(() => {
     if (!isSuccess || !data) return;
     dispatch(setAuth({ access_token: data.access_token, refresh_token: data.refresh_token }));
+    setTokenInSessionStorage(data.refresh_token);
     if (isRememberedUser) {
       setTokenInStorage(data.refresh_token);
     }

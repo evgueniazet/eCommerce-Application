@@ -16,6 +16,7 @@ import { getAccessToken, getUserEmail, setAuth } from '../../store/slices/userSl
 import { useChangePasswordMyCustomerMutation } from '../../api/myCustomerApi';
 import { useDispatch } from 'react-redux';
 import { useLoginUserMutation } from '../../api/authApi';
+import { useLocalToken } from '../../hooks/useLocalToken';
 
 interface IResetPasswordForm {
   currentPassword: string;
@@ -34,6 +35,8 @@ export const UserPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+  const { delTokenFromStorage, setTokenInSessionStorage } = useLocalToken();
 
   const {
     handleSubmit,
@@ -110,9 +113,11 @@ export const UserPassword = () => {
           .unwrap()
           .then((result) => {
             if (result) {
+              delTokenFromStorage();
               dispatch(
                 setAuth({ access_token: result.access_token, refresh_token: result.refresh_token }),
               );
+              setTokenInSessionStorage(result.refresh_token);
             }
           });
       })
@@ -127,9 +132,13 @@ export const UserPassword = () => {
   };
 
   return (
-    <Box component={'form'} onSubmit={handleSubmit(submitNewPasswordHandler)} onReset={onResetForm}>
+    <Box component={'form'}
+         onSubmit={handleSubmit(submitNewPasswordHandler)}
+         onReset={onResetForm}>
       <Grid container>
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -149,7 +158,9 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item xs={12} mt={5}>
+        <Grid item
+              xs={12}
+              mt={5}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -168,7 +179,9 @@ export const UserPassword = () => {
             control={control}
           />
         </Grid>
-        <Grid item xs={12} mt={2}>
+        <Grid item
+              xs={12}
+              mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -188,7 +201,8 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item xs={12}>
+        <Grid item
+              xs={12}>
           <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
             <Button
               type="submit"

@@ -9,7 +9,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getLoggedIn } from '../../store/slices/userSlice';
 import MenuLinks from '../MenuLinks/MenuLinks';
 import { userLoginRoutes, userLogoutRoutes } from '../../routes/navigation';
-import { getMyCustomerFirstName } from '../../store/slices/myCustomerSlice';
+import { green } from '@mui/material/colors';
 
 const UserMenu = (): JSX.Element => {
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
@@ -23,18 +23,13 @@ const UserMenu = (): JSX.Element => {
   const menuId = useId();
 
   const isLoggedIn = useAppSelector(getLoggedIn);
-  const myCustomerFirstName = useAppSelector(getMyCustomerFirstName);
 
   return (
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar>
-            {isLoggedIn && myCustomerFirstName ? (
-              myCustomerFirstName[0].toUpperCase()
-            ) : (
+          <Avatar sx={{bgcolor: isLoggedIn ? green[700]: ''}}>
               <PersonIcon />
-            )}
           </Avatar>
         </IconButton>
       </Tooltip>
