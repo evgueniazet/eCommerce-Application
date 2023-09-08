@@ -28,8 +28,8 @@ const UserMenu = (): JSX.Element => {
     <Box sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-          <Avatar sx={{bgcolor: isLoggedIn ? green[700]: ''}}>
-              <PersonIcon />
+          <Avatar sx={{ bgcolor: isLoggedIn ? green[700] : '' }}>
+            <PersonIcon />
           </Avatar>
         </IconButton>
       </Tooltip>

@@ -132,13 +132,9 @@ export const UserPassword = () => {
   };
 
   return (
-    <Box component={'form'}
-         onSubmit={handleSubmit(submitNewPasswordHandler)}
-         onReset={onResetForm}>
+    <Box component={'form'} onSubmit={handleSubmit(submitNewPasswordHandler)} onReset={onResetForm}>
       <Grid container>
-        <Grid item
-              xs={12}
-              mt={2}>
+        <Grid item xs={12} mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -158,9 +154,7 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item
-              xs={12}
-              mt={5}>
+        <Grid item xs={12} mt={5}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -179,9 +173,7 @@ export const UserPassword = () => {
             control={control}
           />
         </Grid>
-        <Grid item
-              xs={12}
-              mt={2}>
+        <Grid item xs={12} mt={2}>
           <Controller
             render={({ fieldState, field: { onChange } }) => (
               <TextField
@@ -201,8 +193,7 @@ export const UserPassword = () => {
           />
         </Grid>
 
-        <Grid item
-              xs={12}>
+        <Grid item xs={12}>
           <Box sx={{ width: '100%', display: 'flex', pt: 4, gap: '30%' }}>
             <Button
               type="submit"

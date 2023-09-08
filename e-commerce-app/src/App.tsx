@@ -10,7 +10,14 @@ import LoadingProgress from './components/LoadingProgress/LoadingProgress';
 
 export const App = () => {
   const [getAnonymousToken] = useGetAnonymousTokenMutation();
-  const { isTokenInStorage, getTokenFromStorage, delTokenFromStorage, setTokenInSessionStorage, getTokenFromSessionStorage, isTokenInLocalStorage } = useLocalToken();
+  const {
+    isTokenInStorage,
+    getTokenFromStorage,
+    delTokenFromStorage,
+    setTokenInSessionStorage,
+    getTokenFromSessionStorage,
+    isTokenInLocalStorage,
+  } = useLocalToken();
   const [getAccessTokenApi, { data, isSuccess, isError, isLoading }] =
     useGetAccessTokenFromRefreshMutation();
   const [getDetails] = useGetMyCustomerDetailsMutation();
@@ -58,14 +65,13 @@ export const App = () => {
     }
 
     getAnonymousToken().then((res) => {
-        if ('data' in res) {
-          dispatch(
-            setAuth({ access_token: res.data.access_token, refresh_token: res.data.refresh_token }),
-          );
-          setTokenInSessionStorage(res.data.refresh_token);
-        }
-      });
-
+      if ('data' in res) {
+        dispatch(
+          setAuth({ access_token: res.data.access_token, refresh_token: res.data.refresh_token }),
+        );
+        setTokenInSessionStorage(res.data.refresh_token);
+      }
+    });
   }, [accessToken]);
 
   if (isLoading) {
