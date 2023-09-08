@@ -71,9 +71,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
       <Box width={'100%'}>
         <CardMedia sx={{ height: 200, width: '100%' }} image={imgPath} title={imgDescription} />
       </Box>
-      <CardContent
-        className={styles.card__text}
-      >
+      <CardContent className={styles.card__text}>
         <Typography className={styles.card__title} component="h2">
           {item.masterData.current.name.en}
         </Typography>

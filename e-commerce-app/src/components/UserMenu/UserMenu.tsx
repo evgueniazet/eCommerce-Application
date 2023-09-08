@@ -30,7 +30,11 @@ const UserMenu = (): JSX.Element => {
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar>
-            {isLoggedIn && myCustomerFirstName ? myCustomerFirstName[0].toUpperCase() : <PersonIcon/>}
+            {isLoggedIn && myCustomerFirstName ? (
+              myCustomerFirstName[0].toUpperCase()
+            ) : (
+              <PersonIcon />
+            )}
           </Avatar>
         </IconButton>
       </Tooltip>

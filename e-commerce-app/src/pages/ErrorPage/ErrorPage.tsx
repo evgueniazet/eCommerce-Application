@@ -21,18 +21,14 @@ export const ErrorPage: React.FC = () => {
       }}
       pt={5}
     >
-      <Typography variant="h5"
-                  style={{ color: 'darkgreen' }}>
+      <Typography variant="h5" style={{ color: 'darkgreen' }}>
         Sorry, the page you’re looking for doesn’t exist.
       </Typography>
-      <img src={gifIcon}
-           alt="home-icon"
-           width={45}
-           height={45}/>
-      <Button variant="contained"
-              sx={{ backgroundColor: 'lightgreen', height: 'fit-content' }}>
-        <Link to="/"
-              style={{ textDecoration: 'none' }}>Back Home</Link>
+      <img src={gifIcon} alt="home-icon" width={45} height={45} />
+      <Button variant="contained" sx={{ backgroundColor: 'lightgreen', height: 'fit-content' }}>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          Back Home
+        </Link>
       </Button>
     </Box>
   );
