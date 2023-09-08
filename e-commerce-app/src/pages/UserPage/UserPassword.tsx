@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 import Button from '@mui/material/Button';
@@ -9,10 +9,10 @@ import { validateConfirmPassword } from '../../validators/validateConfirmPasswor
 import {
   IChangePasswordMyCustomer,
   IChangePasswordMyCustomerRequest,
-} from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+} from '../../types/updateMyCustomerTypes/updateMyCustomerTypes';
 import { useAppSelector } from '../../store/hooks';
-import { clearMyCustomerData, getMyCustomerVersion } from '../../store/slices/myCustomerSlice';
-import { getAccessToken, getUserEmail, setAuth, setLogOut } from '../../store/slices/userSlice';
+import { getMyCustomerVersion } from '../../store/slices/myCustomerSlice';
+import { getAccessToken, getUserEmail, setAuth } from '../../store/slices/userSlice';
 import { useChangePasswordMyCustomerMutation } from '../../api/myCustomerApi';
 import { useDispatch } from 'react-redux';
 import { useLoginUserMutation } from '../../api/authApi';
@@ -85,7 +85,7 @@ export const UserPassword = () => {
     }
   };
 
-  const submitNewPasswordHandler: SubmitHandler<IResetPasswordForm> = (data) => {
+  const submitNewPasswordHandler: SubmitHandler<IResetPasswordForm> = () => {
     if (
       [
         validateStrictPassword(currentPassword),

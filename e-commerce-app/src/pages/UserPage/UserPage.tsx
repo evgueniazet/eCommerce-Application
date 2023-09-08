@@ -44,7 +44,7 @@ import {
 } from '../../store/slices/myCustomerSlice';
 import { useUpdateMyCustomerMutation } from '../../api/myCustomerApi';
 import { getAccessToken } from '../../store/slices/userSlice';
-import { IUpdateMyCustomer } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+import { IUpdateMyCustomer } from '../../types/updateMyCustomerTypes/updateMyCustomerTypes';
 import { IMakeUpdateMyCustomerPersonalQueryObject } from '../../types/utilsTypes/IMakeUpdateMyCustomerPersonalQueryActions';
 import { makeUpdateMyCustomerPersonalQueryActions } from '../../utils/updateMyCustomerUtils/makeUpdateMyCustomerPersonalQueryActions';
 import { capitalizeString } from '../../utils/capitalizeString';

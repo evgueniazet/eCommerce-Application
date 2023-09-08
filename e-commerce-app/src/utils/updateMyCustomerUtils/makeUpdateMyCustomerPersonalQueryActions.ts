@@ -5,7 +5,7 @@ import {
   IUpdateMyCustomerActionSetFirstName,
   IUpdateMyCustomerActionSetLastName,
   UpdateMyCustomerActionsType,
-} from '../../store/slices/updateMyCustomerTypes/updateMyCustomerActionTypes';
+} from '../../types/updateMyCustomerTypes/updateMyCustomerActionTypes';
 
 export const makeUpdateMyCustomerPersonalQueryActions: MakeUpdateMyCustomerPersonalQueryActionsType =
   (initial, current) => {

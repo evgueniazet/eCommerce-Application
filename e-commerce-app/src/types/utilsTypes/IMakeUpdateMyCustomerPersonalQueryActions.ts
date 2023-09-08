@@ -1,4 +1,4 @@
-import { UpdateMyCustomerActionsType } from '../../store/slices/updateMyCustomerTypes/updateMyCustomerActionTypes';
+import { UpdateMyCustomerActionsType } from '../updateMyCustomerTypes/updateMyCustomerActionTypes';
 
 export interface IMakeUpdateMyCustomerPersonalQueryObject {
   firstName: string;

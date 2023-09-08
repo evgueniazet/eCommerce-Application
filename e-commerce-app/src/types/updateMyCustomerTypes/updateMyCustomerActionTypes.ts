@@ -1,6 +1,6 @@
 // IUpdateMyCustomerAction
 
-import { IMyCustomerApiAddressRequest } from '../../../types/addressesTypes';
+import { IMyCustomerApiAddressRequest } from '../addressesTypes';
 
 export interface IUpdateMyCustomerActionChangeEmail {
   action: 'changeEmail';

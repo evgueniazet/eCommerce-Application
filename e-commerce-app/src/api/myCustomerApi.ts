@@ -7,7 +7,7 @@ import {
 import {
   IChangePasswordMyCustomerRequest,
   IUpdateMyCustomerRequest,
-} from '../store/slices/updateMyCustomerTypes/updateMyCustomerTypes';
+} from '../types/updateMyCustomerTypes/updateMyCustomerTypes';
 
 export const myCustomerApi = createApi({
   reducerPath: 'myCustomerApi',
