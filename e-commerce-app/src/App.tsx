@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from './store/hooks';
 import { getAccessToken, setAuth, setLogIn, setLogOut } from './store/slices/userSlice';
 import { useGetMyCustomerDetailsMutation } from './api/myCustomerApi';
 import LoadingProgress from './components/LoadingProgress/LoadingProgress';
+import { useLazyGetMyActiveCartQuery } from './api/cartApi';
 
 export const App = () => {
   const [getAnonymousToken] = useGetAnonymousTokenMutation();
@@ -21,6 +22,7 @@ export const App = () => {
   const [getAccessTokenApi, { data, isSuccess, isError, isLoading }] =
     useGetAccessTokenFromRefreshMutation();
   const [getDetails] = useGetMyCustomerDetailsMutation();
+  const [getMyActiveCart] = useLazyGetMyActiveCartQuery();
   const dispatch = useAppDispatch();
   const accessToken = useAppSelector(getAccessToken);
 
@@ -45,6 +47,7 @@ export const App = () => {
 
   useEffect(() => {
     if (accessToken) {
+      getMyActiveCart(accessToken).then(a => console.log(a.data));
       return;
     }
 
