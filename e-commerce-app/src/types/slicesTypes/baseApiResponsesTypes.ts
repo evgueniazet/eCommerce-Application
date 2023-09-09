@@ -16,11 +16,11 @@ export interface IMetaDescriptionProductResponse {
 }
 
 export interface IBaseCurrency {
-  currencyCode: string | 'EUR' | 'USD'
-  centAmount: number
+  currencyCode: string | 'EUR' | 'USD';
+  centAmount: number;
 }
 
-export interface ICurrencyResponse extends IBaseCurrency{
-  type: string
-  fractionDigits: number
+export interface ICurrencyResponse extends IBaseCurrency {
+  type: string;
+  fractionDigits: number;
 }

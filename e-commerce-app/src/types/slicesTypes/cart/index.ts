@@ -20,7 +20,7 @@ import {
   IUpdateItemShippingAddressCart,
   IChangeTaxModeCart,
   ISetDeleteDaysAfterLastModificationCart,
-  IActionCart
+  IActionCart,
 } from './updateCartActionsTypes';
 
 export type {
@@ -45,5 +45,5 @@ export type {
   IPaymentCart,
   ISetDeleteDaysAfterLastModificationCart,
   IChangeTaxModeCart,
-  IActionCart
+  IActionCart,
 };

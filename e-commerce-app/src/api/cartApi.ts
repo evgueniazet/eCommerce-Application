@@ -16,7 +16,7 @@ export const cartApi = createApi({
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`,
-          }
+          },
         };
       },
       providesTags: ['activeCart'],
@@ -34,12 +34,13 @@ export const cartApi = createApi({
             currency: 'EUR',
           },
         };
-      }
+      },
     }),
     updateCart: build.mutation({
       query(queryObj: IUpdateCartApiObjectRequest) {
         return {
           url: `/me/carts/${queryObj.cartId}`,
+          method: 'POST',
           headers: {
             Authorization: `Bearer ${queryObj.token}`,
             'Content-Type': 'application/json',
@@ -48,12 +49,23 @@ export const cartApi = createApi({
         };
       },
       invalidatesTags: ['activeCart'],
+    }),
+    deleteCart: build.mutation({
+      query(queryObj: {
+        cartId: string,
+        token: string,
+      }) {
+        return {
+          url: `/me/carts/${queryObj.cartId}`,
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${queryObj.token}`,
+          },
+        };
+      }
     })
-  })
+  }),
 });
 
-export const {
-  useLazyGetMyActiveCartQuery,
-  useCreateCartMutation,
-  useUpdateCartMutation,
-} = cartApi;
+export const { useLazyGetMyActiveCartQuery, useCreateCartMutation, useUpdateCartMutation } =
+  cartApi;

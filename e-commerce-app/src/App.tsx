@@ -47,7 +47,7 @@ export const App = () => {
 
   useEffect(() => {
     if (accessToken) {
-      getMyActiveCart(accessToken).then(a => console.log(a.data));
+      getMyActiveCart(accessToken).then((a) => console.log(a.data));
       return;
     }
 

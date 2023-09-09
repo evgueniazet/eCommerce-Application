@@ -2,23 +2,23 @@ import { IBaseCurrency, IBaseIdTypeResponse } from '../baseApiResponsesTypes';
 import { IMyCustomerApiAddressRequest } from '../../addressesTypes';
 
 export interface IAddLineItemCart {
-  action: 'addLineItem',
-  productId: string,
-  variantId: number,
-  quantity: number
+  action: 'addLineItem';
+  productId: string;
+  variantId: number;
+  quantity: number;
 }
 
 export interface IRemoveLineItemCart {
-  action: 'removeLineItem',
-  lineItemId: string,
-  quantity: number,
-  externalPrice?: IBaseCurrency,
+  action: 'removeLineItem';
+  lineItemId: string;
+  quantity: number;
+  externalPrice?: IBaseCurrency;
   shippingDetailsToRemove?: {
     targets: {
-      addressKey: string
-      quantity: number
-    }
-  }
+      addressKey: string;
+      quantity: number;
+    };
+  };
 }
 
 export interface IAddDiscountCodeCart {
@@ -40,18 +40,18 @@ export interface IPaymentCart extends IBaseIdTypeResponse {
 }
 
 export interface IAddPaymentCart {
-  action: 'addPayment',
-  payment: IPaymentCart,
+  action: 'addPayment';
+  payment: IPaymentCart;
 }
 
 export interface IRemovePaymentCart {
-  action: 'removePayment',
-  payment: IPaymentCart,
+  action: 'removePayment';
+  payment: IPaymentCart;
 }
 
 export interface IChangeTaxModeCart {
-  action: 'changeTaxMode',
-  taxMode: 'Platform' | 'External' | 'ExternalAmount' | 'Disabled'
+  action: 'changeTaxMode';
+  taxMode: 'Platform' | 'External' | 'ExternalAmount' | 'Disabled';
 }
 
 export interface ISetBillingAddressCart {
@@ -65,8 +65,8 @@ export interface ISetShippingAddressCart {
 }
 
 export interface IAddItemShippingAddressCart {
-  action: 'addItemShippingAddress',
-  address: IMyCustomerApiAddressRequest,
+  action: 'addItemShippingAddress';
+  address: IMyCustomerApiAddressRequest;
 }
 
 export interface IRemoveItemShippingAddressCart {
@@ -75,8 +75,8 @@ export interface IRemoveItemShippingAddressCart {
 }
 
 export interface IUpdateItemShippingAddressCart {
-  action: 'updateItemShippingAddress',
-  address: string,
+  action: 'updateItemShippingAddress';
+  address: string;
 }
 
 export interface IShippingMethod extends IBaseIdTypeResponse {
@@ -109,7 +109,7 @@ export interface IRecalculateCart {
 }
 
 export type IActionCart =
-  IRecalculateCart
+  | IRecalculateCart
   | ISetDeleteDaysAfterLastModificationCart
   | ISetCountryCart
   | ISetLocaleCart
@@ -126,4 +126,4 @@ export type IActionCart =
   | IRemoveDiscountCodeCart
   | IAddDiscountCodeCart
   | IRemoveLineItemCart
-  | IAddLineItemCart
+  | IAddLineItemCart;

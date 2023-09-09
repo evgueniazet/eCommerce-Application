@@ -1,6 +1,7 @@
 import {
   IBaseGetAllQueryResponse,
-  IBaseIdTypeResponse, ICurrencyResponse,
+  IBaseIdTypeResponse,
+  ICurrencyResponse,
   IMetaDescriptionProductResponse,
 } from './baseApiResponsesTypes';
 import { IBaseQueryParams } from './baseApiRequestsTypes';
@@ -18,7 +19,7 @@ export interface IImageProductApiResponse {
   };
 }
 
-export interface IValuePriceProductApiResponse extends ICurrencyResponse{
+export interface IValuePriceProductApiResponse extends ICurrencyResponse {
   country: string;
   channel: IBaseIdTypeResponse;
 }
