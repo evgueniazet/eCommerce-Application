@@ -54,10 +54,10 @@ export const BasketPage: FC = () => {
           <Grid item xs={7}>
             <Typography>Product</Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={1.8}>
             <Typography>Price</Typography>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={2.2}>
             <Typography>Quantity</Typography>
           </Grid>
           <Grid item xs={1}>
@@ -92,18 +92,41 @@ export const BasketPage: FC = () => {
                 19.00
               </Typography>
             </Grid>
-            <Grid item className="cart-product-quantity" xs={3} alignSelf="center" display="flex">
-              <Button sx={{ backgroundColor: 'lightgrey' }}>-</Button>
+            <Grid item className="cart-product-quantity" xs={2.8} alignSelf="center" display="flex">
+              <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>-</Button>
               <Typography className="count">1</Typography>
-              <Button sx={{ backgroundColor: 'lightgrey' }}>+</Button>
+              <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>+</Button>
             </Grid>
-            <Grid item className="cart-product_total-price" xs={1} alignSelf="center">
+            <Grid item className="cart-product_total-price" xs={1.2} alignSelf="center">
               <Typography variant="subtitle1" component="div">
                 19.00
               </Typography>
             </Grid>
           </Grid>
         </Grid>
+        <Divider />
+        <Box className="cart-summary" display="flex" justifyContent="space-between">
+          <Button className="clear-cart">Clear Cart</Button>
+          <Grid container xs={4} className="cart-checkout">
+            <Box className="subtotal">
+              <Box component="span">Subtotal</Box>
+              <Box component="span" className="amount">
+                19.00
+              </Box>
+            </Box>
+            <Typography fontSize="small">Taxes and shipping calculated at checkout</Typography>
+            <Button>Check out</Button>
+            <Button
+              className="continue-shopping"
+              sx={{ backgroundColor: 'yellowgreen', color: 'green', mt: '5%' }}
+            >
+              <KeyboardBackspaceIcon width="20" />
+              <Box component="span" onClick={() => navigate('/products')}>
+                Continue shopping
+              </Box>
+            </Button>
+          </Grid>
+        </Box>
       </Paper>
       )
     </Container>
