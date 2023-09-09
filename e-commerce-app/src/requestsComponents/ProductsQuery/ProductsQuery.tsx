@@ -28,7 +28,6 @@ const ProductsQuery = (): JSX.Element => {
   const searchQueryLimit = useAppSelector(getQueryLimit);
   const searchQueryOffset = useAppSelector(getQueryOffset);
 
-
   const [params, setParams] = useState<IBaseQueryParams>({});
 
   useEffect(() => {

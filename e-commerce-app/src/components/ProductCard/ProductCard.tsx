@@ -13,12 +13,14 @@ interface ICardProps {
 
 export const ProductCard: FC<ICardProps> = ({ item }) => {
   const navigate = useNavigate();
-  const handlerNavigation = () => {
-    navigate(`/products/${item.id}`);
-  };
 
-  const handlerAddToCart = () => {
-    console.log('here, add to cart');
+  const clickOnCardHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log(e.target instanceof HTMLButtonElement);
+    if (e.target instanceof HTMLButtonElement) {
+      console.log(`here, add to cart ${item.id}`);
+    } else {
+      navigate(`/products/${item.id}`);
+    }
   };
 
   const taxesArray = useAppSelector(getTaxes);
@@ -65,15 +67,11 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
   }).format(numberUSD - numberUSD * tax);
 
   return (
-    <Card className={styles.card}>
-      <Box className={styles.card__pointer} width={'100%'} onClick={handlerNavigation}>
+    <Card className={styles.card} onClick={(e) => clickOnCardHandler(e)}>
+      <Box width={'100%'}>
         <CardMedia sx={{ height: 200, width: '100%' }} image={imgPath} title={imgDescription} />
       </Box>
-      <CardContent
-        className={`${styles.card__text} ${styles.card__pointer}`}
-        onClick={handlerNavigation}
-        sx={{ cursor: 'pointer' }}
-      >
+      <CardContent className={styles.card__text}>
         <Typography className={styles.card__title} component="h2">
           {item.masterData.current.name.en}
         </Typography>
@@ -109,7 +107,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
         )}
       </CardContent>
       <CardActions>
-        <Button color="success" variant="outlined" onClick={handlerAddToCart}>
+        <Button color="success" variant="outlined">
           Add to Cart
         </Button>
       </CardActions>

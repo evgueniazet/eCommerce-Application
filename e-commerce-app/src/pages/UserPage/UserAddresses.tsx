@@ -1,5 +1,5 @@
 import { FC, useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import { AddressPanel } from '../../components/AddressPanel/AddressPanel';
 import { AddressList } from '../../components/AddressList/AddressList';
 import { IUserProps } from '../../interfaces/IUserProps';

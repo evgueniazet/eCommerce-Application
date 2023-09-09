@@ -16,6 +16,7 @@ import { getAccessToken, getUserEmail, setAuth } from '../../store/slices/userSl
 import { useChangePasswordMyCustomerMutation } from '../../api/myCustomerApi';
 import { useDispatch } from 'react-redux';
 import { useLoginUserMutation } from '../../api/authApi';
+import { useLocalToken } from '../../hooks/useLocalToken';
 
 interface IResetPasswordForm {
   currentPassword: string;
@@ -34,6 +35,8 @@ export const UserPassword = () => {
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmNewPassword, setConfirmNewPassword] = useState('');
+
+  const { delTokenFromStorage, setTokenInSessionStorage } = useLocalToken();
 
   const {
     handleSubmit,
@@ -110,9 +113,11 @@ export const UserPassword = () => {
           .unwrap()
           .then((result) => {
             if (result) {
+              delTokenFromStorage();
               dispatch(
                 setAuth({ access_token: result.access_token, refresh_token: result.refresh_token }),
               );
+              setTokenInSessionStorage(result.refresh_token);
             }
           });
       })

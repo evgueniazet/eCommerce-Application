@@ -11,18 +11,12 @@ import {
   Divider,
   Grid,
   Stack,
-  Tab,
-  Tabs,
   useMediaQuery,
 } from '@mui/material';
 import PersonIcon from '@mui/icons-material/Person';
 import ContactsIcon from '@mui/icons-material/Contacts';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import HomeIcon from '@mui/icons-material/Home';
-import PaymentIcon from '@mui/icons-material/Payment';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { UserData } from './UserData';
-import { UserAddresses } from './UserAddresses';
 import { useValidate } from '../../hooks/useValidate';
 import { IRegistrationFormData } from '../../interfaces/IRegistrationFormData';
 import { useForm, SubmitHandler, FieldErrors } from 'react-hook-form';
@@ -54,8 +48,6 @@ import UserPersonalAddressTab from '../../components/UserPersonalAddressTab/User
 import UserPersonalAddAddress from '../../components/UserPersonalAddAddress/UserPersonalAddAddress';
 import { UserPassword } from './UserPassword';
 
-const steps = ['Personal information', 'Shipping/Billing address', 'Change password'];
-
 export const UserPage: React.FC = () => {
   const firstName = useAppSelector(getMyCustomerFirstName);
   const lastName = useAppSelector(getMyCustomerLastName);
@@ -66,7 +58,6 @@ export const UserPage: React.FC = () => {
   const billingAddressId = useAppSelector(getMyCustomerBillingAddressIds);
   const shippingDefaultAddressId = useAppSelector(getMyCustomerDefaultShippingAddressId);
   const billingDefaultAddressId = useAppSelector(getMyCustomerDefaultBillingAddressId);
-  const password = useAppSelector(getMyCustomerPassword);
   const myCustomerVersion = useAppSelector(getMyCustomerVersion);
 
   const [activeStep, setActiveStep] = useState(0);
@@ -75,16 +66,6 @@ export const UserPage: React.FC = () => {
 
   const accessToken = useAppSelector(getAccessToken) as string;
   const [updateMyCustomer] = useUpdateMyCustomerMutation();
-
-  const initialUserBio: IMakeUpdateMyCustomerPersonalQueryObject = {
-    firstName,
-    lastName,
-    birthDate,
-    email,
-  };
-
-  const billingAddresses = addresses.filter((address) => billingAddressId.includes(address.id));
-  const shippingAddresses = addresses.filter((address) => shippingAddressId.includes(address.id));
 
   const {
     register,
@@ -98,43 +79,6 @@ export const UserPage: React.FC = () => {
   } = useForm<IRegistrationFormData>();
 
   const [activeAddressTab, setActiveAddressTab] = useState(0);
-  const mediumViewport = useMediaQuery('(min-width:900px)');
-  const handleAddressTabChange = (event: React.SyntheticEvent, newValue: number) => {
-    setActiveAddressTab(newValue);
-  };
-
-  const [openEditBio, setOpenEditBio] = React.useState(false);
-
-  const handleClickOpenEditBio = () => {
-    setOpenEditBio(true);
-  };
-
-  const handleCloseClickCloseEditBio = () => {
-    setOpenEditBio(false);
-  };
-
-  const isStepSkipped = (step: number) => {
-    return skipped.has(step);
-  };
-
-  const handleNext = () => {
-    let newSkipped = skipped;
-    if (isStepSkipped(activeStep)) {
-      newSkipped = new Set(newSkipped.values());
-      newSkipped.delete(activeStep);
-    }
-
-    setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    setSkipped(newSkipped);
-  };
-
-  const handleBack = () => {
-    setActiveStep((prevActiveStep) => prevActiveStep - 1);
-  };
-
-  const handleReset = () => {
-    setActiveStep(0);
-  };
 
   const globalErrors = Object.keys(validationErrors).reduce<globalErrors<IRegistrationFormData>>(
     (acc, item) => {
@@ -184,7 +128,7 @@ export const UserPage: React.FC = () => {
   };
 
   const onSubmitPersonal: SubmitHandler<IRegistrationFormData> = (data) => {
-    if (Object.keys(globalErrors).length) {
+    if (Object.keys(globalErrors).length || !Object.keys(data).length) {
       return;
     }
 
@@ -214,8 +158,6 @@ export const UserPage: React.FC = () => {
     updateMyCustomer({
       token: accessToken,
       data: updateData,
-    }).then((a) => {
-      console.log(a);
     });
   };
 
@@ -227,14 +169,6 @@ export const UserPage: React.FC = () => {
   };
 
   const userData = [firstName, lastName, birthDate, email];
-
-  const userAddresses = [
-    addresses,
-    shippingAddressId,
-    billingAddressId,
-    shippingDefaultAddressId,
-    billingDefaultAddressId,
-  ];
 
   return (
     <>
