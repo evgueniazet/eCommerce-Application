@@ -7,6 +7,12 @@ export interface IMyCustomerLoginRequest {
   anonymousCart?: IAnonymousCartSignIn;
 }
 
+export interface IAuthenticateMyCustomer {
+  token: string
+  customerData: IMyCustomerLoginRequest
+}
+
+
 export interface IMyCustomerBaseResponse {
   addresses: IMyCustomerAddressResponse[];
   authenticationMode: 'Password' | string;

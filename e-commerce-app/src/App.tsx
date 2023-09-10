@@ -32,9 +32,9 @@ export const App = () => {
       getDetails(data.access_token).then((res) => {
         if ('data' in res) {
           dispatch(setAuth({ email: res.data.email }));
+          dispatch(setLogIn());
         }
       });
-      dispatch(setLogIn());
     }
   }, [isSuccess, data]);
 

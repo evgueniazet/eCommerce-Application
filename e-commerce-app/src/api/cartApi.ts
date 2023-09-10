@@ -11,6 +11,7 @@ export const cartApi = createApi({
   endpoints: (build) => ({
     getMyActiveCart: build.query<ICartApiResponse, string>({
       query(token: string) {
+        console.log('get active cart');
         return {
           url: '/me/active-cart',
           method: 'GET',
@@ -20,6 +21,13 @@ export const cartApi = createApi({
         };
       },
       providesTags: ['activeCart'],
+      async onQueryStarted(token, {queryFulfilled, dispatch}) {
+        try {
+          queryFulfilled.catch( () => dispatch(cartApi.endpoints.createCart.initiate(token)));
+        } catch (e) {
+          dispatch(cartApi.endpoints.createCart.initiate(token));
+        }
+      }
     }),
     createCart: build.mutation<ICartApiResponse, string>({
       query(token: string) {
@@ -35,6 +43,7 @@ export const cartApi = createApi({
           },
         };
       },
+      invalidatesTags: ['activeCart'],
     }),
     updateCart: build.mutation({
       query(queryObj: IUpdateCartApiObjectRequest) {
@@ -51,10 +60,7 @@ export const cartApi = createApi({
       invalidatesTags: ['activeCart'],
     }),
     deleteCart: build.mutation({
-      query(queryObj: {
-        cartId: string,
-        token: string,
-      }) {
+      query(queryObj: { cartId: string; token: string }) {
         return {
           url: `/me/carts/${queryObj.cartId}`,
           method: 'DELETE',
@@ -62,8 +68,8 @@ export const cartApi = createApi({
             Authorization: `Bearer ${queryObj.token}`,
           },
         };
-      }
-    })
+      },
+    }),
   }),
 });
 

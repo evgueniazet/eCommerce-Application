@@ -19,6 +19,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useLoginUserMutation } from '../../api/authApi';
 import {
+  getAccessToken,
   getLoggedIn,
   isRememberedMe,
   setAuth,
@@ -30,6 +31,8 @@ import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useLocalToken } from '../../hooks/useLocalToken';
+import { useAuthenticateMyCustomerMutation } from '../../api/myCustomerApi';
+import { IAuthenticateMyCustomer } from '../../types/slicesTypes/myCustomerApiSliceTypes';
 
 const defaultFormState: ILoginFormData = {
   email: '',
@@ -48,6 +51,7 @@ export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const from = '/';
 
+  const accessToken = useAppSelector(getAccessToken) as string;
   const isLoggedIn = useAppSelector(getLoggedIn);
   const isRememberedUser = useAppSelector(isRememberedMe);
 
@@ -68,6 +72,7 @@ export const LoginPage: FC = () => {
   });
 
   const [loginUser, { isSuccess, error: errorApi, isError, data }] = useLoginUserMutation();
+  const [authenticateUser] = useAuthenticateMyCustomerMutation();
 
   const {
     register,
@@ -155,7 +160,16 @@ export const LoginPage: FC = () => {
         }),
       );
       try {
-        loginUser({ email: data.email, password: data.password });
+        const authObj: IAuthenticateMyCustomer = {
+          token: accessToken,
+          customerData: {
+            email: data.email,
+            password: data.password,
+          }
+        };
+        authenticateUser(authObj).then(
+          () => loginUser({ email: data.email, password: data.password })
+        );
       } catch {
         console.log('er');
       }
@@ -187,7 +201,8 @@ export const LoginPage: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Grid container sx={{ height: '80vh' }}>
+    <Grid container
+          sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -199,7 +214,9 @@ export const LoginPage: FC = () => {
           backgroundPosition: 'top',
         }}
       ></Grid>
-      <Grid item lg={5} sm={7}>
+      <Grid item
+            lg={5}
+            sm={7}>
         <Box
           component="form"
           noValidate
@@ -240,11 +257,11 @@ export const LoginPage: FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon />
+                      <VisibilityIcon/>
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon />
+                      <VisibilityOffIcon/>
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -274,7 +291,8 @@ export const LoginPage: FC = () => {
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p" textAlign="center">
+            <Typography component="p"
+                        textAlign="center">
               Don&apos;t have account yet?
             </Typography>
           </Box>
