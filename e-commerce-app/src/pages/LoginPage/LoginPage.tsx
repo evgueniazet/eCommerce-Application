@@ -165,10 +165,10 @@ export const LoginPage: FC = () => {
           customerData: {
             email: data.email,
             password: data.password,
-          }
+          },
         };
-        authenticateUser(authObj).then(
-          () => loginUser({ email: data.email, password: data.password })
+        authenticateUser(authObj).then(() =>
+          loginUser({ email: data.email, password: data.password }),
         );
       } catch {
         console.log('er');
@@ -201,8 +201,7 @@ export const LoginPage: FC = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   return (
-    <Grid container
-          sx={{ height: '80vh' }}>
+    <Grid container sx={{ height: '80vh' }}>
       <Grid
         item
         lg={7}
@@ -214,9 +213,7 @@ export const LoginPage: FC = () => {
           backgroundPosition: 'top',
         }}
       ></Grid>
-      <Grid item
-            lg={5}
-            sm={7}>
+      <Grid item lg={5} sm={7}>
         <Box
           component="form"
           noValidate
@@ -257,11 +254,11 @@ export const LoginPage: FC = () => {
                 <InputAdornment position="end">
                   {showPassword ? (
                     <IconButton onClick={() => setShowPassword(false)}>
-                      <VisibilityIcon/>
+                      <VisibilityIcon />
                     </IconButton>
                   ) : (
                     <IconButton onClick={() => setShowPassword(true)}>
-                      <VisibilityOffIcon/>
+                      <VisibilityOffIcon />
                     </IconButton>
                   )}
                 </InputAdornment>
@@ -291,8 +288,7 @@ export const LoginPage: FC = () => {
             <NavLink to="/">Forgot Password?</NavLink>
           </Box>
           <Box sx={{ mt: 10 }}>
-            <Typography component="p"
-                        textAlign="center">
+            <Typography component="p" textAlign="center">
               Don&apos;t have account yet?
             </Typography>
           </Box>

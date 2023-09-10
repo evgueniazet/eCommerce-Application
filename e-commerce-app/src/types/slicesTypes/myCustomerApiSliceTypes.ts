@@ -8,10 +8,9 @@ export interface IMyCustomerLoginRequest {
 }
 
 export interface IAuthenticateMyCustomer {
-  token: string
-  customerData: IMyCustomerLoginRequest
+  token: string;
+  customerData: IMyCustomerLoginRequest;
 }
-
 
 export interface IMyCustomerBaseResponse {
   addresses: IMyCustomerAddressResponse[];

@@ -23,6 +23,8 @@ import {
   IActionCart,
 } from './updateCartActionsTypes';
 
+import { ICartFromSlice } from './cartSliceTypes';
+
 export type {
   ICartApiResponse,
   IRecalculateCart,
@@ -46,4 +48,5 @@ export type {
   ISetDeleteDaysAfterLastModificationCart,
   IChangeTaxModeCart,
   IActionCart,
+  ICartFromSlice,
 };

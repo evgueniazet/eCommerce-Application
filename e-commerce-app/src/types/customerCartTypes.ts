@@ -1,4 +1,5 @@
-export interface IAnonymousCartSignIn {
-  id: string;
-  typeId: 'cart' | string;
+import { IBaseIdTypeResponse } from './slicesTypes/baseApiResponsesTypes';
+
+export interface IAnonymousCartSignIn extends IBaseIdTypeResponse{
+  typeId: 'cart';
 }

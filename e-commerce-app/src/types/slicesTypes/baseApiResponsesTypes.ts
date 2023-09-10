@@ -21,6 +21,6 @@ export interface IBaseCurrency {
 }
 
 export interface ICurrencyResponse extends IBaseCurrency {
-  type: string;
-  fractionDigits: number;
+  type: string | 'centPrecision';
+  fractionDigits: number | 2;
 }

@@ -21,13 +21,13 @@ export const cartApi = createApi({
         };
       },
       providesTags: ['activeCart'],
-      async onQueryStarted(token, {queryFulfilled, dispatch}) {
+      async onQueryStarted(token, { queryFulfilled, dispatch }) {
         try {
-          queryFulfilled.catch( () => dispatch(cartApi.endpoints.createCart.initiate(token)));
+          queryFulfilled.catch(() => dispatch(cartApi.endpoints.createCart.initiate(token)));
         } catch (e) {
           dispatch(cartApi.endpoints.createCart.initiate(token));
         }
-      }
+      },
     }),
     createCart: build.mutation<ICartApiResponse, string>({
       query(token: string) {
