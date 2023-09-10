@@ -94,37 +94,55 @@ export const BasketPage: FC = () => {
             </Grid>
             <Grid item className="cart-product-quantity" xs={2.8} alignSelf="center" display="flex">
               <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>-</Button>
-              <Typography className="count">1</Typography>
+              <Typography className="count" padding="0.7rem  0">
+                1
+              </Typography>
               <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>+</Button>
             </Grid>
             <Grid item className="cart-product_total-price" xs={1.2} alignSelf="center">
-              <Typography variant="subtitle1" component="div">
+              <Typography variant="subtitle1" component="div" fontWeight="700">
                 19.00
               </Typography>
             </Grid>
           </Grid>
         </Grid>
         <Divider />
-        <Box className="cart-summary" display="flex" justifyContent="space-between">
-          <Button className="clear-cart">Clear Cart</Button>
-          <Grid container xs={4} className="cart-checkout">
-            <Box className="subtotal">
-              <Box component="span">Subtotal</Box>
-              <Box component="span" className="amount">
+        <Box className="cart-summary" display="flex" justifyContent="space-between" mt="5%">
+          <Button className="clear-cart" sx={{ height: '40px', border: '1px solid grey' }}>
+            Clear Cart
+          </Button>
+          <Grid container xs={5} className="cart-checkout">
+            <Grid className="subtotal" container>
+              <Grid item xs={6} textAlign="left">
+                Subtotal
+              </Grid>
+              <Grid item xs={6} textAlign="right" fontWeight={700}>
                 19.00
-              </Box>
-            </Box>
-            <Typography fontSize="small">Taxes and shipping calculated at checkout</Typography>
-            <Button>Check out</Button>
-            <Button
-              className="continue-shopping"
-              sx={{ backgroundColor: 'yellowgreen', color: 'green', mt: '5%' }}
-            >
-              <KeyboardBackspaceIcon width="20" />
-              <Box component="span" onClick={() => navigate('/products')}>
-                Continue shopping
-              </Box>
-            </Button>
+              </Grid>
+            </Grid>
+            <Typography mt="3px" fontSize="small">
+              Taxes and shipping calculated at checkout
+            </Typography>
+            <Grid container mt={3}>
+              <Grid item xs={12} mb={5}>
+                <Button
+                  sx={{ width: '100%', backgroundColor: 'yellowgreen', color: 'green', mt: '5%' }}
+                >
+                  Check out
+                </Button>
+              </Grid>
+              <Grid item xs={12}>
+                <Button
+                  className="continue-shopping"
+                  sx={{ border: '1px solid grey', fontSize: '10px' }}
+                >
+                  <KeyboardBackspaceIcon width="20" />
+                  <Box component="span" onClick={() => navigate('/products')}>
+                    Continue shopping
+                  </Box>
+                </Button>
+              </Grid>
+            </Grid>
           </Grid>
         </Box>
       </Paper>
