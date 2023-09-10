@@ -4,7 +4,7 @@ import Typography from '@mui/material/Typography';
 import { Box } from '@mui/system';
 import { useNavigate } from 'react-router-dom';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
-import { Button } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import EmptyBasket from '../../assets/images/BasketPageImg.png';
 import Paper from '@mui/material/Paper';
@@ -112,18 +112,44 @@ export const BasketPage: FC = () => {
             Clear Cart
           </Button>
           <Grid container xs={5} className="cart-checkout">
-            <Grid className="subtotal" container>
+            <Grid className="subtotal" container fontWeight={700} fontSize="large">
               <Grid item xs={6} textAlign="left">
                 Subtotal
               </Grid>
-              <Grid item xs={6} textAlign="right" fontWeight={700}>
+              <Grid item xs={6} textAlign="right">
                 19.00
               </Grid>
             </Grid>
             <Typography mt="3px" fontSize="small">
               Taxes and shipping calculated at checkout
             </Typography>
-            <Grid container mt={3}>
+
+            <Grid container mt={4} height={30}>
+              <Grid item xs={9}>
+                <TextField fullWidth size="small" label="Promo Code" />
+              </Grid>
+              <Grid item xs={3}>
+                <Button sx={{ backgroundColor: 'beige', color: 'green' }}>Apply</Button>
+              </Grid>
+            </Grid>
+
+            <Grid
+              className="subtotal"
+              container
+              fontWeight={700}
+              fontSize="20px"
+              mt={3}
+              color="green"
+            >
+              <Grid item xs={9} textAlign="left">
+                Discounted Price
+              </Grid>
+              <Grid item xs={3} textAlign="right">
+                19.00
+              </Grid>
+            </Grid>
+
+            <Grid container mt={2}>
               <Grid item xs={12} mb={5}>
                 <Button
                   sx={{ width: '100%', backgroundColor: 'yellowgreen', color: 'green', mt: '5%' }}
