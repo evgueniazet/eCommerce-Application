@@ -10,7 +10,6 @@ import {
 } from '../types/slicesTypes/productsApiTypes';
 
 const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductApiResponse => {
-
   const current: IProductApiDescriptionResponse = {
     categories: el.categories,
     categoryOrderHints: el.categoryOrderHints,
