@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { ICartApiResponse } from '../types/slicesTypes/cart';
 import { IUpdateCartApiObjectRequest } from '../types/slicesTypes/cart/updateCartApiTypes';
+import { RootStateType } from '../store/store';
 
 export const cartApi = createApi({
   reducerPath: 'cartApi',
@@ -11,7 +12,6 @@ export const cartApi = createApi({
   endpoints: (build) => ({
     getMyActiveCart: build.query<ICartApiResponse, string>({
       query(token: string) {
-        console.log('get active cart');
         return {
           url: '/me/active-cart',
           method: 'GET',
@@ -75,3 +75,6 @@ export const cartApi = createApi({
 
 export const { useLazyGetMyActiveCartQuery, useCreateCartMutation, useUpdateCartMutation } =
   cartApi;
+
+export const selectCart = (state: RootStateType) => cartApi.endpoints.getMyActiveCart.select(state.user.access_token as string)(state).data;
+export const findProductInCart = (state: RootStateType, productId: string) => cartApi.endpoints.getMyActiveCart.select(state.user.access_token as string)(state).data?.lineItems.find(item => item.productId === productId);

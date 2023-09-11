@@ -6,6 +6,7 @@ export interface ISearchApiResponse extends IProductApiDescriptionResponse {
   key: string;
   productType: IBaseIdTypeResponse;
   taxCategory: IBaseIdTypeResponse;
+  version: number;
 }
 
 export interface ISearchProductsResponse extends IBaseGetAllQueryResponse<ISearchApiResponse> {

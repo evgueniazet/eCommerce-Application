@@ -25,6 +25,12 @@ import {
 
 import { ICartFromSlice } from './cartSliceTypes';
 
+import {ISubState,
+  IStateLineItem,
+  ICartLineItem,
+  IAttributeCartLineItem,
+  IProductType} from './cartLineItemsTypes';
+
 export type {
   ICartApiResponse,
   IRecalculateCart,
@@ -49,4 +55,9 @@ export type {
   IChangeTaxModeCart,
   IActionCart,
   ICartFromSlice,
+  ISubState,
+  IStateLineItem,
+  ICartLineItem,
+  IAttributeCartLineItem,
+  IProductType,
 };

@@ -4,7 +4,7 @@ import { IMyCustomerApiAddressRequest } from '../../addressesTypes';
 export interface IAddLineItemCart {
   action: 'addLineItem';
   productId: string;
-  variantId: number;
+  variantId?: number;
   quantity: number;
 }
 

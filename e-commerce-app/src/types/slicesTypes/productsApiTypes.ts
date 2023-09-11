@@ -63,6 +63,7 @@ export interface IProductApiResponse {
   masterData: IMasterDataProductApiResponse;
   productType: IBaseIdTypeResponse;
   taxCategory: IBaseIdTypeResponse;
+  version: number;
 }
 
 export interface IGetAllProductsResponse extends IBaseGetAllQueryResponse<IProductApiResponse> {

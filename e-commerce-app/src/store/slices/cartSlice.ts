@@ -14,8 +14,8 @@ export const cartSlice = createSlice({
     },
     setCart: (state, action: PayloadAction<ICartApiResponse>) => {
       state.cart = action.payload;
-    }
-  }
+    },
+  },
 });
 
 export const CartReducer = cartSlice.reducer;

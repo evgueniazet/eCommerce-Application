@@ -1,4 +1,5 @@
 import { ICurrencyResponse } from '../baseApiResponsesTypes';
+import { ICartLineItem } from './cartLineItemsTypes';
 
 export interface ICartApiResponse {
   cartState: 'Active' | 'Merged' | 'Ordered' | 'Frozen';
@@ -11,7 +12,7 @@ export interface ICartApiResponse {
   inventoryMode: string;
   itemShippingAddresses: [];
   lastMessageSequenceNumber: number;
-  lineItems: [];
+  lineItems: ICartLineItem[];
   origin: string | 'Customer';
   refusedGifts: [];
   shipping: [];
