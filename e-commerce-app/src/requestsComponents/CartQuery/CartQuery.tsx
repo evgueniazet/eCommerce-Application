@@ -6,11 +6,12 @@ import { setCart } from '../../store/slices/cartSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
 
 interface ICartQueryProps {
-  children?: string | JSX.Element | JSX.Element[] | React.ReactNode
+  children?: string | JSX.Element | JSX.Element[] | React.ReactNode;
 }
 
-const CartQuery: FC<ICartQueryProps> = ({children}): JSX.Element => {
-  const [getMyActiveCart, {isLoading, isFetching, isSuccess, data}] = useLazyGetMyActiveCartQuery();
+const CartQuery: FC<ICartQueryProps> = ({ children }): JSX.Element => {
+  const [getMyActiveCart, { isLoading, isFetching, isSuccess, data }] =
+    useLazyGetMyActiveCartQuery();
   const accessToken = useAppSelector(getAccessToken) as string;
   const dispatch = useAppDispatch();
   const cart = useAppSelector(selectCart);
@@ -30,10 +31,6 @@ const CartQuery: FC<ICartQueryProps> = ({children}): JSX.Element => {
     return <LoadingProgress />;
   }
 
-  return (
-    <>
-      {children}
-    </>
-  );
+  return <>{children}</>;
 };
 export default CartQuery;

@@ -75,12 +75,12 @@ export const App = () => {
   }, [accessToken]);
 
   if (isLoading) {
-    return <LoadingProgress/>;
+    return <LoadingProgress />;
   }
 
   return (
     <>
-      <AppRoutes/>
+      <AppRoutes />
     </>
   );
 };

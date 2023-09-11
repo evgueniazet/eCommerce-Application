@@ -76,5 +76,9 @@ export const cartApi = createApi({
 export const { useLazyGetMyActiveCartQuery, useCreateCartMutation, useUpdateCartMutation } =
   cartApi;
 
-export const selectCart = (state: RootStateType) => cartApi.endpoints.getMyActiveCart.select(state.user.access_token as string)(state).data;
-export const findProductInCart = (state: RootStateType, productId: string) => cartApi.endpoints.getMyActiveCart.select(state.user.access_token as string)(state).data?.lineItems.find(item => item.productId === productId);
+export const selectCart = (state: RootStateType) =>
+  cartApi.endpoints.getMyActiveCart.select(state.user.access_token as string)(state).data;
+export const findProductInCart = (state: RootStateType, productId: string) =>
+  cartApi.endpoints.getMyActiveCart
+    .select(state.user.access_token as string)(state)
+    .data?.lineItems.find((item) => item.productId === productId);

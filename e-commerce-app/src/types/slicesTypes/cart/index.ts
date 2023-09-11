@@ -25,11 +25,13 @@ import {
 
 import { ICartFromSlice } from './cartSliceTypes';
 
-import {ISubState,
+import {
+  ISubState,
   IStateLineItem,
   ICartLineItem,
   IAttributeCartLineItem,
-  IProductType} from './cartLineItemsTypes';
+  IProductType,
+} from './cartLineItemsTypes';
 
 export type {
   ICartApiResponse,

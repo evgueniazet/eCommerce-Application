@@ -61,7 +61,7 @@ export const ProductsPage: React.FC = () => {
 
       <Grid item xs={12} md={9}>
         <Box className={styles.right}>
-            <ProductsList />
+          <ProductsList />
         </Box>
         <ProductsPagination />
       </Grid>

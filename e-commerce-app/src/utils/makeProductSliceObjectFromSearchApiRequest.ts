@@ -11,8 +11,6 @@ import {
 
 const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductApiResponse => {
 
-  console.log('Search el ===>', el);
-
   const current: IProductApiDescriptionResponse = {
     categories: el.categories,
     categoryOrderHints: el.categoryOrderHints,
