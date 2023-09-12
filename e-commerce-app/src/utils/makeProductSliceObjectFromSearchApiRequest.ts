@@ -32,6 +32,7 @@ const makeFromSearchApiProductApiResponses = (el: ISearchApiResponse): IProductA
     masterData: masterData,
     productType: el.productType,
     taxCategory: el.taxCategory,
+    version: el.version,
   };
   return newProduct;
 };

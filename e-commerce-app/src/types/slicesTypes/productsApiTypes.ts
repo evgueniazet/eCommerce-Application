@@ -1,6 +1,7 @@
 import {
   IBaseGetAllQueryResponse,
-  ICategoryTypeResponse,
+  IBaseIdTypeResponse,
+  ICurrencyResponse,
   IMetaDescriptionProductResponse,
 } from './baseApiResponsesTypes';
 import { IBaseQueryParams } from './baseApiRequestsTypes';
@@ -18,13 +19,9 @@ export interface IImageProductApiResponse {
   };
 }
 
-export interface IValuePriceProductApiResponse {
-  type: string;
-  currencyCode: string;
-  centAmount: number;
-  fractionDigits: number;
+export interface IValuePriceProductApiResponse extends ICurrencyResponse {
   country: string;
-  channel: ICategoryTypeResponse;
+  channel: IBaseIdTypeResponse;
 }
 
 export interface IPriceProductApiResponse {
@@ -43,7 +40,7 @@ export interface IMasterVariantProductApiResponse {
 }
 
 export interface IProductApiDescriptionResponse {
-  categories: ICategoryTypeResponse[];
+  categories: IBaseIdTypeResponse[];
   categoryOrderHints: object;
   masterVariant: IMasterVariantProductApiResponse;
   metaDescription: IMetaDescriptionProductResponse;
@@ -64,8 +61,9 @@ export interface IProductApiResponse {
   id: string;
   key: string;
   masterData: IMasterDataProductApiResponse;
-  productType: ICategoryTypeResponse;
-  taxCategory: ICategoryTypeResponse;
+  productType: IBaseIdTypeResponse;
+  taxCategory: IBaseIdTypeResponse;
+  version: number;
 }
 
 export interface IGetAllProductsResponse extends IBaseGetAllQueryResponse<IProductApiResponse> {

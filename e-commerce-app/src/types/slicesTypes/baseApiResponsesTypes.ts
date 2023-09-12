@@ -6,11 +6,21 @@ export interface IBaseGetAllQueryResponse<T> {
   results: Array<T>;
 }
 
-export interface ICategoryTypeResponse {
+export interface IBaseIdTypeResponse {
   id: string;
   typeId: string;
 }
 
 export interface IMetaDescriptionProductResponse {
   en: string;
+}
+
+export interface IBaseCurrency {
+  currencyCode: string | 'EUR' | 'USD';
+  centAmount: number;
+}
+
+export interface ICurrencyResponse extends IBaseCurrency {
+  type: string | 'centPrecision';
+  fractionDigits: number | 2;
 }

@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './ProductCard.module.scss';
-import { Box, Typography, Button, CardMedia, CardContent, CardActions, Card } from '@mui/material';
+import { Box, Typography, CardMedia, CardContent, CardActions, Card } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { IProductApiResponse } from '../../types/slicesTypes/productsApiTypes';
 import { getTaxes } from '../../store/slices/taxesSlice';
 import { useAppSelector } from '../../store/hooks';
 import { ITaxApiResponse } from '../../types/slicesTypes/taxApiTypes';
+import CartAddLineItem from '../../requestsComponents/CartAddLineItem/CartAddLineItem';
 
 interface ICardProps {
   item: IProductApiResponse;
@@ -107,9 +108,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
         )}
       </CardContent>
       <CardActions>
-        <Button color="success" variant="outlined">
-          Add to Cart
-        </Button>
+        <CartAddLineItem productId={item.id} props={{ color: 'success', variant: 'outlined' }} />
       </CardActions>
     </Card>
   );

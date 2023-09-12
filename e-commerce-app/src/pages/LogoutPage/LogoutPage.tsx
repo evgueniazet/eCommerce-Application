@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { CircularProgress } from '@mui/material';
 import { useLocalToken } from '../../hooks/useLocalToken';
 import { useLogoutUserMutation } from '../../api/authApi';
+import { resetCart } from '../../store/slices/cartSlice';
 
 export const LogoutPage = (): JSX.Element => {
   const navigate = useNavigate();
@@ -28,6 +29,7 @@ export const LogoutPage = (): JSX.Element => {
   useEffect(() => {
     dispatch(setLogOut());
     delTokenFromStorage();
+    dispatch(resetCart());
   }, [isSuccess, isError]);
 
   useEffect(() => {
