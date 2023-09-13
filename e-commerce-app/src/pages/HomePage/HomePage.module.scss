@@ -1,0 +1,18 @@
+.homePage {
+    display: block;
+
+    .banner {
+        background-image: url(../../assets/HomePageImg/Banner.avif);
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        height: 550px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: green;
+        font-size: 3rem;
+        font-weight: 700;
+    }
+}
