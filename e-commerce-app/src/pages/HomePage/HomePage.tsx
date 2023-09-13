@@ -11,7 +11,7 @@ export const HomePage: React.FC = () => {
     <Container component="div" className={styles.homePage}>
       <Box className={styles.banner}>
         <Typography component="p" paragraph>
-          Hello, {email ? email : 'Stranger. Can I call you a Friend?'}
+          Hello, {email ? email : 'Stranger.'} <br /> Can I call you a Friend?
         </Typography>
       </Box>
     </Container>
