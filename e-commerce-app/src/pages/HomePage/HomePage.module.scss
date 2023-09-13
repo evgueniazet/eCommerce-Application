@@ -18,4 +18,19 @@
             text-align: center;
         }
     }
+
+    .promoContainer{
+        background-color: beige;
+
+        .promoTitle {
+            padding-top: 5%;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .code {
+            border: 2px green dotted;
+        }
+    }
+    
 }
