@@ -54,7 +54,6 @@ export const ProductPage: FC = () => {
 
   const [selectedImg, setSelectedImg] = useState(0);
 
-
   // Modal window
 
   const [open, setOpen] = useState(false);

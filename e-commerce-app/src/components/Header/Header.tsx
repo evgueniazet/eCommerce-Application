@@ -13,6 +13,8 @@ import MenuLinks from '../MenuLinks/MenuLinks';
 import { navigationRoutes } from '../../routes/navigation';
 import UserMenu from '../UserMenu/UserMenu';
 import { Link } from 'react-router-dom';
+import UserCart from '../UserCart/UserCart';
+import { Grid } from '@mui/material';
 
 export const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -107,7 +109,14 @@ export const Header: React.FC = () => {
             <NavLinks />
           </Box>
 
-          <UserMenu />
+          <Grid container spacing={1} sx={{maxWidth: 'max-content'}}>
+            <Grid item>
+              <UserCart />
+            </Grid>
+            <Grid item>
+              <UserMenu />
+            </Grid>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

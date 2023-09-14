@@ -82,3 +82,8 @@ export const findProductInCart = (state: RootStateType, productId: string) =>
   cartApi.endpoints.getMyActiveCart
     .select(state.user.access_token as string)(state)
     .data?.lineItems.find((item) => item.productId === productId);
+
+export const getTotalQuantityLineItemsInCart = (state: RootStateType) =>
+  cartApi.endpoints.getMyActiveCart
+    .select(state.user.access_token as string)(state)
+    .data?.totalLineItemQuantity;

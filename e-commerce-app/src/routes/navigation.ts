@@ -12,10 +12,10 @@ export const navigationRoutes = {
   home: '/',
   products: '/products',
   about: '/about',
-  basket: '/basket',
 };
 
 export const unusedNavigation = {
+  basket: '/basket',
   product: '/product',
   products: '/products',
   user: '/user',
