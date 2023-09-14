@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Divider from '@mui/material/Divider';
 import ButtonBase from '@mui/material/ButtonBase';
 import { styled } from '@mui/material/styles';
+import CartModifyQuantity from '../../requestsComponents/CartModifyQuantity/CartModifyQuantity';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -93,11 +94,7 @@ export const BasketPage: FC = () => {
               </Typography>
             </Grid>
             <Grid item className="cart-product-quantity" xs={2.8} alignSelf="center" display="flex">
-              <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>-</Button>
-              <Typography className="count" padding="0.7rem  0">
-                1
-              </Typography>
-              <Button sx={{ minWidth: 'min-content', backgroundColor: 'lightgrey' }}>+</Button>
+              <CartModifyQuantity productId="we" />
             </Grid>
             <Grid item className="cart-product_total-price" xs={1.2} alignSelf="center">
               <Typography variant="subtitle1" component="div" fontWeight="700">
