@@ -16,10 +16,7 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
   const navigate = useNavigate();
 
   const clickOnCardHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log(e.target instanceof HTMLButtonElement);
-    if (e.target instanceof HTMLButtonElement) {
-      console.log(`here, add to cart ${item.id}`);
-    } else {
+    if (!(e.target instanceof HTMLButtonElement)) {
       navigate(`/products/${item.id}`);
     }
   };

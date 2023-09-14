@@ -109,7 +109,7 @@ export const Header: React.FC = () => {
             <NavLinks />
           </Box>
 
-          <Grid container spacing={1} sx={{maxWidth: 'max-content'}}>
+          <Grid container spacing={2} sx={{ maxWidth: 'max-content' }} alignItems={'center'}>
             <Grid item>
               <UserCart />
             </Grid>
