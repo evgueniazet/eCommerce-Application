@@ -21,7 +21,7 @@ const UserMenu = (): JSX.Element => {
   const isLoggedIn = useAppSelector(getLoggedIn);
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box data-testid="user-menu" sx={{ flexGrow: 0 }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt="" />
