@@ -1,0 +1,12 @@
+.footer {
+    background-color: beige;
+
+    &_title {
+        color: green;
+    }
+
+    .span {
+        color: green;
+        font-weight: 500;
+    }
+}
