@@ -1,5 +1,9 @@
 import { IBaseIdTypeResponse } from '../baseApiResponsesTypes';
-import { IImageProductApiResponse, IPriceProductApiResponse, IValuePriceProductApiResponse } from '../productsApiTypes';
+import {
+  IImageProductApiResponse,
+  IPriceProductApiResponse,
+  IValuePriceProductApiResponse,
+} from '../productsApiTypes';
 
 export interface IProductType extends IBaseIdTypeResponse {
   typeId: 'product-type';

@@ -23,9 +23,7 @@ const BasketEmpty = (): JSX.Element => {
           onClick={() => navigate('/products')}
         >
           <KeyboardBackspaceIcon width="20" />
-          <Box component="span">
-            Start shopping
-          </Box>
+          <Box component="span">Start shopping</Box>
         </Button>
       </Box>
       <img src={EmptyBasket} alt="EmptyBasket" width={300} />

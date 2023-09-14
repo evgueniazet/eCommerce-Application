@@ -13,17 +13,13 @@ import { getLineItemsInCart, selectCart } from '../../api/cartApi';
 import BasketLineItem from '../BasketLineItem/BasketLineItem';
 import { ICartApiResponse } from '../../types/slicesTypes/cart';
 
-
-
 const BasketFull = (): JSX.Element => {
   const navigate = useNavigate();
   const cartLineItems = useAppSelector(getLineItemsInCart);
   const cart = useAppSelector(selectCart) as ICartApiResponse;
 
   const totalCurrencyEUR = cart.totalPrice.currencyCode;
-  const totalNumberEUR =
-    cart.totalPrice.centAmount /
-    10 ** cart.totalPrice.fractionDigits;
+  const totalNumberEUR = cart.totalPrice.centAmount / 10 ** cart.totalPrice.fractionDigits;
   const totalPriceEUR = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: totalCurrencyEUR,
@@ -54,7 +50,8 @@ const BasketFull = (): JSX.Element => {
       </Grid>
       <Divider />
 
-      {cartLineItems && cartLineItems.map(lineItem => <BasketLineItem item={lineItem} key={lineItem.id} />)}
+      {cartLineItems &&
+        cartLineItems.map((lineItem) => <BasketLineItem item={lineItem} key={lineItem.id} />)}
 
       <Divider />
 
