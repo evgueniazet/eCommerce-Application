@@ -29,11 +29,7 @@ export const HomePage: React.FC = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Avatar
-                  alt="Promo1"
-                  src={Icon1}
-                  sx={{ width: 56, height: 56, marginLeft: '42%' }}
-                />
+                <Avatar alt="Promo1" src={Icon1} className={styles.avatar} />
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Coupon Code #1
                 </Typography>
@@ -52,11 +48,7 @@ export const HomePage: React.FC = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Avatar
-                  alt="Promo2"
-                  src={Icon2}
-                  sx={{ width: 56, height: 56, marginLeft: '42%' }}
-                />
+                <Avatar alt="Promo2" src={Icon2} className={styles.avatar} />
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Coupon Code #2
                 </Typography>
@@ -75,11 +67,7 @@ export const HomePage: React.FC = () => {
           <Grid item xs={12} sm={6} md={4}>
             <Card>
               <CardContent>
-                <Avatar
-                  alt="Promo3"
-                  src={Icon3}
-                  sx={{ width: 56, height: 56, marginLeft: '42%' }}
-                />
+                <Avatar alt="Promo3" src={Icon3} className={styles.avatar} />
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
                   Coupon Code #3
                 </Typography>
