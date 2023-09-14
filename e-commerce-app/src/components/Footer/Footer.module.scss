@@ -1,12 +1,48 @@
+@mixin animate($animation,$duration,$method){
+    animation: $animation $duration $method;
+}
+@mixin keyframes($name){
+    @keyframes #{$name}{
+        @content;
+    }
+}
+
 .footer {
     background-color: beige;
 
-    &_title {
-        color: green;
+    .footer_container {
+        justify-content: end;
+
+        .footer_title {
+            color: green;
+        }
+    
+        .span {
+            color: green;
+            font-weight: 500;
+        }
     }
 
-    .span {
-        color: green;
-        font-weight: 500;
+    &_img {
+            background-image: url(../../assets/images/FooterImg.png);
+            background-repeat: repeat-x;
+            background-size: contain;
+            background-position: center;
+            width: 140%;
+            height: 150px;
+            margin-left: -20%;
+            overflow: hidden;
+            transition: all 2s;
+            @include keyframes(fade-in){
+                0%{
+                    opacity: 0;
+                    transform: translateX(30px);
+                }
+                100% {
+                    opacity: 1;
+                    transform: translateX(0px);
+                }
+            }
+            @include animate(fade-in, 2s, ease-out);
     }
 }

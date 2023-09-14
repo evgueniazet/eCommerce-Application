@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   return (
     <Box className={styles.footer} component="footer">
       <Container maxWidth="lg">
-        <Grid container spacing={5}>
+        <Grid container className={styles.footer_container} spacing={5}>
           <Grid item xs={12} sm={4}>
             <Typography
               className={styles.footer_title}
@@ -46,8 +46,13 @@ export const Footer: React.FC = () => {
               Phone: +1 234 567 8901
             </Typography>
           </Grid>
-          <Grid className={styles.footer_title} item xs={12} sm={3}>
-            <Typography variant="h6" color="text.primary" gutterBottom>
+          <Grid item xs={12} sm={3}>
+            <Typography
+              className={styles.footer_title}
+              variant="h6"
+              color="text.primary"
+              gutterBottom
+            >
               Follow Us
             </Typography>
             <Link href="https://www.facebook.com/" color="inherit">
@@ -64,6 +69,9 @@ export const Footer: React.FC = () => {
             </Typography>
           </Grid>
         </Grid>
+        <Box className={styles.footer_img_container}>
+          <Box className={styles.footer_img}></Box>
+        </Box>
       </Container>
     </Box>
   );
