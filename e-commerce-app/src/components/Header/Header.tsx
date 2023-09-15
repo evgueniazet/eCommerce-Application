@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import logo from '../../assets/logo/free-icon-tree-740936.png';
+import logo from '../../assets/logo/Logo.png';
 import Menu from '@mui/material/Menu';
 import NavLinks from '../NavLinks/NavLinks';
 import MenuLinks from '../MenuLinks/MenuLinks';
