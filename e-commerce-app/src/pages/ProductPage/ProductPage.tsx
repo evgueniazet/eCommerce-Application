@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import styles from './ProductPage.module.scss';
-import { Box, Typography, ButtonGroup, Button, Grid, Stack } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, Typography, Button, Grid, Stack } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Modal from '@mui/material/Modal';
@@ -16,6 +14,8 @@ import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
 import { getTaxes } from '../../store/slices/taxesSlice';
 import { ITaxApiResponse } from '../../types/slicesTypes/taxApiTypes';
+import CartAddLineItem from '../../requestsComponents/CartAddLineItem/CartAddLineItem';
+import CartModifyQuantity from '../../requestsComponents/CartModifyQuantity/CartModifyQuantity';
 
 const style = {
   bgcolor: 'background.paper',
@@ -53,8 +53,6 @@ export const ProductPage: FC = () => {
   }, [isSuccess]);
 
   const [selectedImg, setSelectedImg] = useState(0);
-
-  const [count, setCount] = useState(1);
 
   // Modal window
 
@@ -183,35 +181,12 @@ export const ProductPage: FC = () => {
             {description}
           </Typography>
 
-          <ButtonGroup className={styles.quantity}>
-            <Button
-              className={styles.quantity__btn}
-              aria-label="reduce"
-              onClick={() => {
-                setCount(Math.max(count - 1, 0));
-              }}
-            >
-              <RemoveIcon fontSize="small" />
-            </Button>
-
-            <Typography variant="h6">{count}</Typography>
-
-            <Button
-              className={styles.quantity__btn}
-              aria-label="increase"
-              onClick={() => {
-                setCount(count + 1);
-              }}
-            >
-              <AddIcon fontSize="small" />
-            </Button>
-          </ButtonGroup>
+          <CartModifyQuantity productId={productId as string} />
 
           <Box className={styles.btn}>
-            <Button>
+            <CartAddLineItem productId={productId as string}>
               <AddShoppingCartIcon />
-              ADD TO CART
-            </Button>
+            </CartAddLineItem>
           </Box>
 
           <Box className={styles.btn}>

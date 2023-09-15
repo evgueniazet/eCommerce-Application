@@ -28,9 +28,12 @@ const ProductsQuery = (): JSX.Element => {
   const searchQueryLimit = useAppSelector(getQueryLimit);
   const searchQueryOffset = useAppSelector(getQueryOffset);
 
-  const [params, setParams] = useState<IBaseQueryParams>({});
+  const [params, setParams] = useState<IBaseQueryParams>({
+    limit: searchQueryLimit,
+  });
 
   useEffect(() => {
+    if (!searchQuerySort && !params.sort) return;
     if (searchQuerySort) {
       setParams((prevState) => ({
         ...prevState,
@@ -46,6 +49,7 @@ const ProductsQuery = (): JSX.Element => {
   }, [searchQuerySort]);
 
   useEffect(() => {
+    if (!searchQueryText && !params['text.en']) return;
     if (searchQueryText) {
       setParams((prevState) => ({
         ...prevState,
@@ -81,6 +85,7 @@ const ProductsQuery = (): JSX.Element => {
     }
 
     if (filterArr.length === 0) {
+      if (!params.filter?.length) return;
       setParams((prevState) => {
         const newState = {
           ...prevState,
@@ -97,6 +102,7 @@ const ProductsQuery = (): JSX.Element => {
   }, [searchQueryCentAmount, searchQueryCategories]);
 
   useEffect(() => {
+    if (searchQueryLimit === params.limit) return;
     if (searchQueryLimit) {
       setParams((prevState) => ({
         ...prevState,
@@ -114,6 +120,7 @@ const ProductsQuery = (): JSX.Element => {
   }, [searchQueryLimit]);
 
   useEffect(() => {
+    if (searchQueryOffset === params.offset || (!searchQueryOffset && !params.offset)) return;
     if (searchQueryOffset) {
       setParams((prevState) => ({
         ...prevState,
