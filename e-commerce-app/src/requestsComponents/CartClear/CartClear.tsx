@@ -2,8 +2,13 @@ import React from 'react';
 import { Button } from '@mui/material';
 import { useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
-import { findProductInCart, selectCart, useUpdateCartMutation } from '../../api/cartApi';
-import { IActionCart, ICartApiResponse, ICartLineItem, IRemoveLineItemCart } from '../../types/slicesTypes/cart';
+import { selectCart, useUpdateCartMutation } from '../../api/cartApi';
+import {
+  IActionCart,
+  ICartApiResponse,
+  ICartLineItem,
+  IRemoveLineItemCart,
+} from '../../types/slicesTypes/cart';
 import { IUpdateCartApiObjectRequest } from '../../types/slicesTypes/cart/updateCartApiTypes';
 
 const CartClear = () => {
@@ -16,7 +21,7 @@ const CartClear = () => {
 
   const clearCartHandler = () => {
     const actions: IActionCart[] = [];
-    lineItems.forEach(item => {
+    lineItems.forEach((item) => {
       const actionObject: IRemoveLineItemCart = {
         action: 'removeLineItem',
         lineItemId: item.id,
@@ -33,7 +38,13 @@ const CartClear = () => {
   };
 
   return (
-    <Button onClick={clearCartHandler} sx={{ height: '40px' }} variant="outlined" color="error" disabled={isLoading}>
+    <Button
+      onClick={clearCartHandler}
+      sx={{ height: '40px' }}
+      variant="outlined"
+      color="error"
+      disabled={isLoading}
+    >
       Clear Cart
     </Button>
   );

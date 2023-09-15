@@ -31,7 +31,12 @@ const CartModifyQuantity: FC<ICartModifyQuantityProps> = ({ productId }): JSX.El
   }
 
   const decreaseQuantity = () => {
-    if (productInCart?.quantity === undefined || Number.isNaN(productInCart.quantity) || productInCart.quantity < 0) return;
+    if (
+      productInCart?.quantity === undefined ||
+      Number.isNaN(productInCart.quantity) ||
+      productInCart.quantity < 0
+    )
+      return;
     const actionObject: IRemoveLineItemCart = {
       action: 'removeLineItem',
       lineItemId: productInCart.id,
