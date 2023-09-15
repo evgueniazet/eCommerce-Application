@@ -12,6 +12,7 @@ import { useAppSelector } from '../../store/hooks';
 import { getLineItemsInCart, selectCart } from '../../api/cartApi';
 import BasketLineItem from '../BasketLineItem/BasketLineItem';
 import { ICartApiResponse } from '../../types/slicesTypes/cart';
+import CartClear from '../../requestsComponents/CartClear/CartClear';
 
 const BasketFull = (): JSX.Element => {
   const navigate = useNavigate();
@@ -57,9 +58,7 @@ const BasketFull = (): JSX.Element => {
 
       <Grid container justifyContent="space-between" mt="5%">
         <Grid item xs={12} md={2} mb={3}>
-          <Button className="clear-cart" sx={{ height: '40px' }} variant="outlined" color="error">
-            Clear Cart
-          </Button>
+          <CartClear />
         </Grid>
         <Grid item xs={12} md={7}>
           <Grid container className="cart-checkout">

@@ -46,7 +46,7 @@ const CartAddLineItem: FC<ICartAddLineItemProps> = ({
         token: accessToken,
         data: { version: cartVersion, actions: [actionObject] },
       };
-      updateCart(queryObj).then((a) => console.log(a));
+      updateCart(queryObj);
     } else {
       const actionObject: IAddLineItemCart = {
         action: 'addLineItem',
@@ -61,7 +61,7 @@ const CartAddLineItem: FC<ICartAddLineItemProps> = ({
         token: accessToken,
         data: { version: cartVersion, actions: [actionObject] },
       };
-      updateCart(queryObj).then((a) => console.log(a));
+      updateCart(queryObj);
     }
   };
 
