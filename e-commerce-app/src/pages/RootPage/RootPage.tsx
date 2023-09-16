@@ -9,7 +9,7 @@ const RootPage = (): JSX.Element => {
   return (
     <Stack spacing={5} minHeight={'100vh'}>
       <Header />
-      <Box>
+      <Box flexGrow={1}>
         <Container maxWidth={'xl'}>
           <Outlet />
         </Container>

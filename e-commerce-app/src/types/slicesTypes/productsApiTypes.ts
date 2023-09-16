@@ -18,15 +18,23 @@ export interface IImageProductApiResponse {
     h: number;
   };
 }
-
-export interface IValuePriceProductApiResponse extends ICurrencyResponse {
-  country: string;
-  channel: IBaseIdTypeResponse;
+export interface IDiscountBaseIdTypeResponse extends IBaseIdTypeResponse {
+  typeId: 'product-discount';
+}
+export interface IDiscountedPriceResponse {
+  value: ICurrencyResponse,
+  discount: IDiscountBaseIdTypeResponse
 }
 
-export interface IPriceProductApiResponse {
+export interface IValuePriceProductApiResponse {
+  country?: string;
+  channel?: IBaseIdTypeResponse;
+  discounted?: IDiscountedPriceResponse;
+}
+
+export interface IPriceProductApiResponse extends IValuePriceProductApiResponse {
   id: string;
-  value: IValuePriceProductApiResponse;
+  value: ICurrencyResponse;
 }
 
 export interface IMasterVariantProductApiResponse {

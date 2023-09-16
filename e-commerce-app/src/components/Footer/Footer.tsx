@@ -58,7 +58,12 @@ export const Footer: React.FC = () => {
             <Link href="https://www.facebook.com/" target={'_blank'} color="inherit">
               <Facebook />
             </Link>
-            <Link href="https://www.instagram.com/" target={'_blank'} color="inherit" sx={{ pl: 1, pr: 1 }}>
+            <Link
+              href="https://www.instagram.com/"
+              target={'_blank'}
+              color="inherit"
+              sx={{ pl: 1, pr: 1 }}
+            >
               <Instagram />
             </Link>
             <Link href="https://www.twitter.com/" target={'_blank'} color="inherit">

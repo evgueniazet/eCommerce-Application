@@ -1,8 +1,7 @@
-import { IBaseIdTypeResponse } from '../baseApiResponsesTypes';
+import { IBaseIdTypeResponse, ICurrencyResponse } from '../baseApiResponsesTypes';
 import {
   IImageProductApiResponse,
   IPriceProductApiResponse,
-  IValuePriceProductApiResponse,
 } from '../productsApiTypes';
 
 export interface IProductType extends IBaseIdTypeResponse {
@@ -50,6 +49,6 @@ export interface ICartLineItem {
   state: [];
   priceMode: string;
   lineItemMode: string;
-  totalPrice: IValuePriceProductApiResponse;
+  totalPrice: ICurrencyResponse;
   taxedPricePortions: [];
 }
