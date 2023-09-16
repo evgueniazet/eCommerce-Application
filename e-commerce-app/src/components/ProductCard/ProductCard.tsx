@@ -27,7 +27,8 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
     10 ** item.masterData.current.masterVariant.prices[0].value.fractionDigits;
   let discountEUR = numberEUR;
   if (item.masterData.current.masterVariant.prices[0].discounted) {
-    discountEUR = item.masterData.current.masterVariant.prices[0].discounted.value.centAmount /
+    discountEUR =
+      item.masterData.current.masterVariant.prices[0].discounted.value.centAmount /
       10 ** item.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits;
   }
   const priceEUR = new Intl.NumberFormat('en-IN', {
@@ -38,7 +39,6 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
     style: 'currency',
     currency: currencyEUR,
   }).format(discountEUR);
-
 
   return (
     <Card className={styles.card} onClick={(e) => clickOnCardHandler(e)}>
@@ -64,7 +64,6 @@ export const ProductCard: FC<ICardProps> = ({ item }) => {
             {priceEUR}
           </Typography>
         )}
-
       </CardContent>
       <CardActions>
         <CartAddLineItem productId={item.id} props={{ color: 'success', variant: 'outlined' }} />

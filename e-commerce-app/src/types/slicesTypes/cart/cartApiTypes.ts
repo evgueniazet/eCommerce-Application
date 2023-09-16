@@ -1,5 +1,6 @@
 import { ICurrencyResponse } from '../baseApiResponsesTypes';
 import { ICartLineItem } from './cartLineItemsTypes';
+import { IDiscountCodesCart } from '../DiscountCodesTypes/DiscountCodesCart';
 
 export interface ICartApiResponse {
   cartState: 'Active' | 'Merged' | 'Ordered' | 'Frozen';
@@ -7,7 +8,7 @@ export interface ICartApiResponse {
   anonymousId?: string;
   deleteDaysAfterLastModification: number;
   directDiscounts: [];
-  discountCodes: [];
+  discountCodes: IDiscountCodesCart[];
   id: string;
   inventoryMode: string;
   itemShippingAddresses: [];
