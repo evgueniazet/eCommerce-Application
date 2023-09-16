@@ -17,9 +17,9 @@ export const discountCodesApi = createApi({
             Authorization: `Bearer ${token}`,
           },
         };
-      }
-    })
-  })
+      },
+    }),
+  }),
 });
 
 export const { useGetDiscountCodesQuery, useLazyGetDiscountCodesQuery } = discountCodesApi;

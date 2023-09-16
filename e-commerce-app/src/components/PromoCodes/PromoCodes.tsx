@@ -13,14 +13,14 @@ import { getAccessToken } from '../../store/slices/userSlice';
 
 const initialData = {
   code: 'XXX-XXX-XX',
-  description: 'Discount code will be here'
+  description: 'Discount code will be here',
 };
 
 const icons = [Icon1, Icon2, Icon3];
 
 const PromoCodes = (): JSX.Element => {
   const accessToken = useAppSelector(getAccessToken) as string;
-  const [getDiscountCodes ,{data, isSuccess}] = useLazyGetDiscountCodesQuery();
+  const [getDiscountCodes, { data, isSuccess }] = useLazyGetDiscountCodesQuery();
 
   const [discounts, setDiscounts] = useState([initialData, initialData, initialData]);
 
@@ -32,7 +32,7 @@ const PromoCodes = (): JSX.Element => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      const discountsArray = data.results.slice(0, 3).map(discount => ({
+      const discountsArray = data.results.slice(0, 3).map((discount) => ({
         code: discount.code,
         description: discount.description.en,
       }));
@@ -41,7 +41,6 @@ const PromoCodes = (): JSX.Element => {
     }
   }, [isSuccess]);
 
-
   return (
     <Container className={styles.promo}>
       <Typography variant="h4" className={styles.promo__title}>
@@ -49,8 +48,12 @@ const PromoCodes = (): JSX.Element => {
       </Typography>
       <Grid container spacing={4} textAlign="center">
         {discounts.map((discount, idx) => (
-          <Grid item xs={12} sm={6} md={4} key={discount.code+idx}>
-            <PromoCard avatarSrc={icons[idx]} code={discount.code} description={discount.description} />
+          <Grid item xs={12} sm={6} md={4} key={discount.code + idx}>
+            <PromoCard
+              avatarSrc={icons[idx]}
+              code={discount.code}
+              description={discount.description}
+            />
           </Grid>
         ))}
       </Grid>

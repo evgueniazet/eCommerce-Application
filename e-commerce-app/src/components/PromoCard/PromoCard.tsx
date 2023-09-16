@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Card from '@mui/material/Card';
 
 interface IPromoCardProps {
-  avatarSrc: string
-  code: string
-  description: string
+  avatarSrc: string;
+  code: string;
+  description: string;
 }
 
-const PromoCard: FC<IPromoCardProps> = ({avatarSrc, code, description}): JSX.Element => {
+const PromoCard: FC<IPromoCardProps> = ({ avatarSrc, code, description }): JSX.Element => {
   return (
     <Card>
       <CardContent>

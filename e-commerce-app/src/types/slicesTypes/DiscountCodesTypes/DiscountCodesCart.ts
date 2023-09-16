@@ -1,10 +1,10 @@
 import { IBaseIdTypeResponse } from '../baseApiResponsesTypes';
 
 export interface IDiscountCodeIdType extends IBaseIdTypeResponse {
-  typeId: 'discount-code'
+  typeId: 'discount-code';
 }
 
 export interface IDiscountCodesCart {
-  discountCode: IDiscountCodeIdType
-  state: string | 'NotActive' | 'MatchesCart'
+  discountCode: IDiscountCodeIdType;
+  state: string | 'NotActive' | 'MatchesCart';
 }
