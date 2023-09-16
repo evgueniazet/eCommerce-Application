@@ -22,8 +22,8 @@ export interface IDiscountBaseIdTypeResponse extends IBaseIdTypeResponse {
   typeId: 'product-discount';
 }
 export interface IDiscountedPriceResponse {
-  value: ICurrencyResponse,
-  discount: IDiscountBaseIdTypeResponse
+  value: ICurrencyResponse;
+  discount: IDiscountBaseIdTypeResponse;
 }
 
 export interface IValuePriceProductApiResponse {
