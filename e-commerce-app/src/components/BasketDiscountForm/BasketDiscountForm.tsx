@@ -10,11 +10,11 @@ import { selectCart, useUpdateCartMutation } from '../../api/cartApi';
 import { IUpdateCartApiObjectRequest } from '../../types/slicesTypes/cart/updateCartApiTypes';
 
 interface IDiscountForm {
-  discount: string
+  discount: string;
 }
 
 const BasketDiscountForm = (): JSX.Element => {
-  const {control, handleSubmit} = useForm<IDiscountForm>();
+  const { control, handleSubmit } = useForm<IDiscountForm>();
   const accessToken = useAppSelector(getAccessToken) as string;
   const cartId = (useAppSelector(selectCart) as ICartApiResponse)?.id as string;
   const cartVersion = (useAppSelector(selectCart) as ICartApiResponse)?.version as number;
@@ -37,12 +37,25 @@ const BasketDiscountForm = (): JSX.Element => {
     <Box component={'form'} width={'100%'} onSubmit={handleSubmit(submitHandler)}>
       <Grid container mt={4} height={30}>
         <Grid item xs={9}>
-          <Controller render={({field}) => (
-            <TextField {...field} fullWidth size="small" label="Promo Code" />
-          )} name={'discount'} control={control} defaultValue={''} />
+          <Controller
+            render={({ field }) => (
+              <TextField {...field} fullWidth size="small" label="Promo Code" />
+            )}
+            name={'discount'}
+            control={control}
+            defaultValue={''}
+          />
         </Grid>
         <Grid item xs={3}>
-          <Button sx={{ backgroundColor: 'beige' }} color="success" variant="outlined" type={'submit'} disabled={isLoading}>Apply</Button>
+          <Button
+            sx={{ backgroundColor: 'beige' }}
+            color="success"
+            variant="outlined"
+            type={'submit'}
+            disabled={isLoading}
+          >
+            Apply
+          </Button>
         </Grid>
       </Grid>
       {isError && error && <Alert severity="error">This discount code is not available</Alert>}

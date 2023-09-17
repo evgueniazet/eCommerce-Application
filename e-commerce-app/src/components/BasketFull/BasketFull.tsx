@@ -21,6 +21,15 @@ const BasketFull = (): JSX.Element => {
   const cart = useAppSelector(selectCart) as ICartApiResponse;
 
   const totalCurrencyEUR = cart.totalPrice.currencyCode;
+
+  const subTotalNumber = cart.lineItems.reduce((accum, item) => {
+    return item.price.value.centAmount * item.quantity + accum;
+  }, 0) / 10 ** cart.totalPrice.fractionDigits;
+  const subTotalPriceEUR = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: totalCurrencyEUR,
+  }).format(subTotalNumber);
+
   const totalNumberEUR = cart.totalPrice.centAmount / 10 ** cart.totalPrice.fractionDigits;
   const totalPriceEUR = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -68,7 +77,7 @@ const BasketFull = (): JSX.Element => {
                 Subtotal
               </Grid>
               <Grid item xs={6} textAlign="right">
-                {totalPriceEUR}
+                {subTotalPriceEUR}
               </Grid>
             </Grid>
             <Typography mt="3px" fontSize="small">
