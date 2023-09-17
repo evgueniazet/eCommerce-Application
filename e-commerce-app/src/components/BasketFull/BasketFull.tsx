@@ -3,7 +3,7 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { Box } from '@mui/system';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import Paper from '@mui/material/Paper';
 import { useNavigate } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { getLineItemsInCart, selectCart } from '../../api/cartApi';
 import BasketLineItem from '../BasketLineItem/BasketLineItem';
 import { ICartApiResponse } from '../../types/slicesTypes/cart';
 import CartClear from '../../requestsComponents/CartClear/CartClear';
+import BasketDiscountForm from '../BasketDiscountForm/BasketDiscountForm';
 
 const BasketFull = (): JSX.Element => {
   const navigate = useNavigate();
@@ -74,14 +75,7 @@ const BasketFull = (): JSX.Element => {
               Taxes and shipping calculated at checkout
             </Typography>
 
-            <Grid container mt={4} height={30}>
-              <Grid item xs={9}>
-                <TextField fullWidth size="small" label="Promo Code" />
-              </Grid>
-              <Grid item xs={3}>
-                <Button sx={{ backgroundColor: 'beige', color: 'green' }}>Apply</Button>
-              </Grid>
-            </Grid>
+            <BasketDiscountForm />
 
             <Grid
               className="subtotal"
@@ -92,10 +86,10 @@ const BasketFull = (): JSX.Element => {
               color="green"
             >
               <Grid item xs={9} textAlign="left">
-                Discounted Price
+                EST. TOTAL:
               </Grid>
               <Grid item xs={3} textAlign="right">
-                19.00
+                {totalPriceEUR}
               </Grid>
             </Grid>
 

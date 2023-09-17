@@ -6,5 +6,5 @@ export interface IDiscountCodeIdType extends IBaseIdTypeResponse {
 
 export interface IDiscountCodesCart {
   discountCode: IDiscountCodeIdType;
-  state: string | 'NotActive' | 'MatchesCart';
+  state: string | 'NotActive' | 'MatchesCart' | 'NotValid' | 'DoesNotMatchCart' | 'MaxApplicationReached' | 'ApplicationStoppedByPreviousDiscount';
 }
