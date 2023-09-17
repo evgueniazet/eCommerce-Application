@@ -22,9 +22,11 @@ const BasketFull = (): JSX.Element => {
 
   const totalCurrencyEUR = cart.totalPrice.currencyCode;
 
-  const subTotalNumber = cart.lineItems.reduce((accum, item) => {
-    return item.price.value.centAmount * item.quantity + accum;
-  }, 0) / 10 ** cart.totalPrice.fractionDigits;
+  const subTotalNumber =
+    cart.lineItems.reduce((accum, item) => {
+      return item.price.value.centAmount * item.quantity + accum;
+    }, 0) /
+    10 ** cart.totalPrice.fractionDigits;
   const subTotalPriceEUR = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: totalCurrencyEUR,

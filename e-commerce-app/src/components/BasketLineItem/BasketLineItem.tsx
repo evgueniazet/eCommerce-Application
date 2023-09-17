@@ -8,6 +8,7 @@ import CartModifyQuantity from '../../requestsComponents/CartModifyQuantity/Cart
 import { styled } from '@mui/material/styles';
 import { ICartLineItem } from '../../types/slicesTypes/cart';
 import { Link } from 'react-router-dom';
+import styles from './BasketLineItem.module.scss';
 
 const Img = styled('img')({
   margin: 'auto',
@@ -28,7 +29,26 @@ const BasketLineItem: FC<IBasketLineItemProps> = ({ item }) => {
     currency: currencyEUR,
   }).format(numberEUR);
 
+  let discountedNumberEUR = numberEUR;
+  if (item.price.discounted) {
+    discountedNumberEUR = item.price.discounted.value.centAmount / 10 ** item.price.discounted.value.fractionDigits;
+  }
+  if (item.discountedPrice) {
+    discountedNumberEUR = item.discountedPrice.value.centAmount / 10 ** item.discountedPrice.value.fractionDigits;
+  }
+  const discountedPriceEUR = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyEUR,
+  }).format(discountedNumberEUR);
+
   const totalCurrencyEUR = item.totalPrice.currencyCode;
+
+  const subTotalNumberEUR = (item.price.value.centAmount * item.quantity) / 10 ** item.price.value.fractionDigits;
+  const subTotalPriceEUR = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: totalCurrencyEUR,
+  }).format(subTotalNumberEUR);
+
   const totalNumberEUR = item.totalPrice.centAmount / 10 ** item.totalPrice.fractionDigits;
   const totalPriceEUR = new Intl.NumberFormat('en-IN', {
     style: 'currency',
@@ -58,9 +78,22 @@ const BasketLineItem: FC<IBasketLineItemProps> = ({ item }) => {
               </Grid>
 
               <Grid item xs={2} alignSelf="center">
-                <Typography variant="subtitle1" component="div">
-                  {priceEUR}
-                </Typography>
+
+                {discountedNumberEUR !== numberEUR ? (
+                  <>
+                    <Typography className={styles.price__marked} variant="subtitle1" component="p" fontWeight={500}>
+                      {discountedPriceEUR}
+                    </Typography>
+                    <Typography className={styles.price__sale} variant="subtitle1" component="p" fontWeight={500}>
+                      {priceEUR}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="subtitle1" component="p" fontWeight={500}>
+                    {priceEUR}
+                  </Typography>
+                )}
+
               </Grid>
 
               <Grid item xs={2.8} alignSelf="center" display="flex">
@@ -68,9 +101,20 @@ const BasketLineItem: FC<IBasketLineItemProps> = ({ item }) => {
               </Grid>
 
               <Grid item xs={1.2} alignSelf="center">
-                <Typography variant="subtitle1" component="div" fontWeight="700">
-                  {totalPriceEUR}
-                </Typography>
+                {subTotalNumberEUR !== totalNumberEUR ? (
+                  <>
+                    <Typography className={styles.price__marked} variant="subtitle1" component="p" fontWeight={700}>
+                      {totalPriceEUR}
+                    </Typography>
+                    <Typography className={styles.price__sale} variant="subtitle1" component="p" fontWeight={700}>
+                      {subTotalPriceEUR}
+                    </Typography>
+                  </>
+                ) : (
+                  <Typography variant="subtitle1" component="p" fontWeight={700}>
+                    {totalPriceEUR}
+                  </Typography>
+                )}
               </Grid>
             </Grid>
             <CartAddLineItem

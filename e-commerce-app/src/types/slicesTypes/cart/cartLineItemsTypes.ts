@@ -19,6 +19,16 @@ export interface IStateLineItem {
   state: ISubState;
 }
 
+export interface IIncludedDiscounts {
+  discount: IBaseIdTypeResponse;
+  discountedAmount: ICurrencyResponse;
+}
+
+export interface IDiscountedPriceCart {
+  value: ICurrencyResponse;
+  includedDiscounts: IIncludedDiscounts[];
+}
+
 export interface ICartLineItem {
   id: string;
   productId: string;
@@ -41,6 +51,7 @@ export interface ICartLineItem {
   };
   price: IPriceProductApiResponse;
   quantity: number;
+  discountedPrice: IDiscountedPriceCart;
   discountedPricePerQuantity: [];
   perMethodTaxRate: [];
   state: [];
