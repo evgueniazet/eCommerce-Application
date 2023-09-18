@@ -7,11 +7,11 @@ import Container from '@mui/material/Container';
 const RootPage = (): JSX.Element => {
   return (
     <>
-      <Header />
+      <Header data-testid="header" />
       <Container maxWidth={'xl'}>
         <Outlet />
       </Container>
-      <Footer />
+      <Footer data-testid="footer" />
     </>
   );
 };

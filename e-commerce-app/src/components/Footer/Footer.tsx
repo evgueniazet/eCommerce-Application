@@ -9,7 +9,7 @@ import { Box } from '@mui/material';
 
 export const Footer: React.FC = () => {
   return (
-    <Box className={styles.footer} component="footer">
+    <Box data-testid="footer" className={styles.footer} component="footer">
       <Container maxWidth="lg">
         <Grid container className={styles.footer_container} spacing={5}>
           <Grid item xs={12} sm={4}>
