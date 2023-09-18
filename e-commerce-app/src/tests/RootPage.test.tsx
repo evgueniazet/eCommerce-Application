@@ -4,6 +4,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 import { UserReducer } from '../store/slices/userSlice';
+import { cartApi } from '../api/cartApi';
+
 import RootPage from '../pages/RootPage/RootPage';
 
 describe('RootPage Component', () => {
@@ -11,7 +13,10 @@ describe('RootPage Component', () => {
     const store = configureStore({
       reducer: {
         user: UserReducer,
+        [cartApi.reducerPath]: cartApi.reducer,
       },
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(cartApi.middleware),
     });
 
     const { getByTestId } = render(
