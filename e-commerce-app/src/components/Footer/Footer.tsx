@@ -11,7 +11,7 @@ export const Footer: React.FC = () => {
   return (
     <Box data-testid="footer" className={styles.footer} component="footer">
       <Container maxWidth="lg">
-        <Grid container className={styles.footer_container} spacing={5}>
+        <Grid container className={styles.footer_container} spacing={5} mt={5}>
           <Grid item xs={12} sm={4}>
             <Typography
               className={styles.footer_title}
@@ -22,9 +22,9 @@ export const Footer: React.FC = () => {
               About Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              We are RSdzen company, dedicated to providing the best service to our customers.{' '}
-              <br /> <span className={styles.span}>Hanna Dziahonskaya</span> CEO and Founder
-              ReactDreamTeam and RSdzen Company.
+              We are RS-School students, dedicated to providing the best service to our customers.
+              <br /> <span className={styles.span}>Hanna Dziahonskaya</span> is a Mentor
+              ReactDreamTeam and RSdzen Project.
             </Typography>
           </Grid>
           <Grid item xs={12} sm={4}>
@@ -37,7 +37,7 @@ export const Footer: React.FC = () => {
               Contact Us
             </Typography>
             <Typography variant="body2" color="text.secondary">
-              123 Main Street, USA
+              123 Example Street, EXAMPLE
             </Typography>
             <Typography variant="body2" color="text.secondary">
               Email: info@example.com
@@ -55,13 +55,18 @@ export const Footer: React.FC = () => {
             >
               Follow Us
             </Typography>
-            <Link href="https://www.facebook.com/" color="inherit">
+            <Link href="https://www.facebook.com/" target={'_blank'} color="inherit">
               <Facebook />
             </Link>
-            <Link href="https://www.instagram.com/" color="inherit" sx={{ pl: 1, pr: 1 }}>
+            <Link
+              href="https://www.instagram.com/"
+              target={'_blank'}
+              color="inherit"
+              sx={{ pl: 1, pr: 1 }}
+            >
               <Instagram />
             </Link>
-            <Link href="https://www.twitter.com/" color="inherit">
+            <Link href="https://www.twitter.com/" target={'_blank'} color="inherit">
               <Twitter />
             </Link>
             <Typography variant="body2" color="text.secondary" mt={2}>
@@ -69,10 +74,10 @@ export const Footer: React.FC = () => {
             </Typography>
           </Grid>
         </Grid>
-        <Box className={styles.footer_img_container}>
-          <Box className={styles.footer_img}></Box>
-        </Box>
       </Container>
+      <Box className={styles.footer_img_container}>
+        <Box className={styles.footer_img}></Box>
+      </Box>
     </Box>
   );
 };

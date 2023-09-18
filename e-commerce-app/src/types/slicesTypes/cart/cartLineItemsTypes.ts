@@ -1,9 +1,5 @@
-import { IBaseIdTypeResponse } from '../baseApiResponsesTypes';
-import {
-  IImageProductApiResponse,
-  IPriceProductApiResponse,
-  IValuePriceProductApiResponse,
-} from '../productsApiTypes';
+import { IBaseIdTypeResponse, ICurrencyResponse } from '../baseApiResponsesTypes';
+import { IImageProductApiResponse, IPriceProductApiResponse } from '../productsApiTypes';
 
 export interface IProductType extends IBaseIdTypeResponse {
   typeId: 'product-type';
@@ -21,6 +17,16 @@ export interface ISubState extends IBaseIdTypeResponse {
 export interface IStateLineItem {
   quantity: number;
   state: ISubState;
+}
+
+export interface IIncludedDiscounts {
+  discount: IBaseIdTypeResponse;
+  discountedAmount: ICurrencyResponse;
+}
+
+export interface IDiscountedPriceCart {
+  value: ICurrencyResponse;
+  includedDiscounts: IIncludedDiscounts[];
 }
 
 export interface ICartLineItem {
@@ -45,11 +51,12 @@ export interface ICartLineItem {
   };
   price: IPriceProductApiResponse;
   quantity: number;
+  discountedPrice: IDiscountedPriceCart;
   discountedPricePerQuantity: [];
   perMethodTaxRate: [];
   state: [];
   priceMode: string;
   lineItemMode: string;
-  totalPrice: IValuePriceProductApiResponse;
+  totalPrice: ICurrencyResponse;
   taxedPricePortions: [];
 }
