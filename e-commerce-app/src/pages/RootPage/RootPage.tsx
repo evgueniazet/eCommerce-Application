@@ -7,7 +7,7 @@ import { Box, Stack } from '@mui/material';
 
 const RootPage = (): JSX.Element => {
   return (
-    <Stack spacing={5} minHeight={'100vh'}>
+    <Stack data-testid="header"  spacing={5} minHeight={'100vh'}>
       <Header />
       <Box flexGrow={1}>
         <Container maxWidth={'xl'}>

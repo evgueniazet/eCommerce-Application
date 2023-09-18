@@ -8,14 +8,19 @@ describe('useValidate', () => {
     expect(result.current.errors).toEqual({
       email: null,
       birthDate: null,
-      city: null,
-      country: null,
+      cityShipping: null,
+      cityBilling: null,
+      countryShipping: null,
+      countryBilling: null,
       confirmPassword: null,
       password: null,
       firstName: null,
       lastName: null,
-      postalCode: null,
-      streetAddress: null,
+      postalCodeShipping: null,
+      postalCodeBilling: null,
+      streetAddressBilling: null,
+      streetAddressShipping: null,
+      currentPassword: null,
     });
   });
 });

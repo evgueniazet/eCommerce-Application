@@ -16,7 +16,6 @@ export const makeUpdateMyCustomerPersonalQueryActions: MakeUpdateMyCustomerPerso
         action: 'setFirstName',
         firstName: current.firstName,
       };
-      console.log('update first name: ', updateAction);
       actionsArray.push(updateAction);
     }
 
@@ -25,7 +24,6 @@ export const makeUpdateMyCustomerPersonalQueryActions: MakeUpdateMyCustomerPerso
         action: 'setLastName',
         lastName: current.lastName,
       };
-      console.log('update last name: ', updateAction);
       actionsArray.push(updateAction);
     }
 
@@ -34,7 +32,6 @@ export const makeUpdateMyCustomerPersonalQueryActions: MakeUpdateMyCustomerPerso
         action: 'setDateOfBirth',
         dateOfBirth: current.birthDate,
       };
-      console.log('update date of birth: ', updateAction);
       actionsArray.push(updateAction);
     }
 
@@ -43,7 +40,6 @@ export const makeUpdateMyCustomerPersonalQueryActions: MakeUpdateMyCustomerPerso
         action: 'changeEmail',
         email: current.email,
       };
-      console.log('update email: ', updateAction);
       actionsArray.push(updateAction);
     }
 

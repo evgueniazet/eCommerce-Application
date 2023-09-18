@@ -108,8 +108,6 @@ const UserPersonalAddAddress = (): JSX.Element => {
   };
 
   const submitForm: SubmitHandler<IAddAddressForm> = (data) => {
-    console.log('Submit, errors: ', errors);
-    console.log(data);
     const addressObject: IUpdateMyCustomerActionAddAddress = {
       action: 'addAddress',
       address: {

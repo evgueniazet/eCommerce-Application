@@ -11,7 +11,7 @@ const BasketEmpty = (): JSX.Element => {
   const navigate = useNavigate();
   return (
     <>
-      <Box className="cart-empty">
+      <Box className="cart-empty" data-testid="start-shopping-button">
         <Typography variant="h5" mt="5%">
           Your cart is empty
         </Typography>

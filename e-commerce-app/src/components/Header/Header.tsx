@@ -28,7 +28,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="sticky" color="default">
+    <AppBar data-testid="header" position="sticky" color="default">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={'/'}>

@@ -26,6 +26,7 @@ export const AboutPage: React.FC = () => {
         backgroundSize: 'cover',
         backgroundPosition: 'top',
       }}
+      
     >
       <Box
         sx={{
@@ -45,7 +46,7 @@ export const AboutPage: React.FC = () => {
             We&apos;re on a mission to complete <br /> eCommerce Application successfully.
           </Typography>
           <Stack sx={{ pb: 2 }} direction="row" justifyContent="center">
-            <Link href="https://rs.school/" target="_blank">
+            <Link data-testid="rs-school-link" href="https://rs.school/" target="_blank">
               <img src={RSlogo} alt="RSlogo" width={70} />
             </Link>
           </Stack>
