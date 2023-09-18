@@ -13,6 +13,7 @@ import { TaxesReducer } from './slices/taxesSlice';
 import { MyCustomerReducer } from './slices/myCustomerSlice';
 import { cartApi } from '../api/cartApi';
 import { CartReducer } from './slices/cartSlice';
+import { discountCodesApi } from '../api/discountCodesApi';
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     [taxApi.reducerPath]: taxApi.reducer,
     [productProjectionApi.reducerPath]: productProjectionApi.reducer,
     [cartApi.reducerPath]: cartApi.reducer,
+    [discountCodesApi.reducerPath]: discountCodesApi.reducer,
     user: UserReducer,
     categories: CategoriesReducer,
     products: ProductsReducer,
@@ -40,6 +42,7 @@ export const store = configureStore({
       productProjectionApi.middleware,
       taxApi.middleware,
       cartApi.middleware,
+      discountCodesApi.middleware,
     ]),
 });
 
