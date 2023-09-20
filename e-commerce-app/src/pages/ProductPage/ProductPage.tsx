@@ -1,8 +1,6 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import styles from './ProductPage.module.scss';
-import { Box, Typography, ButtonGroup, Button, Grid, Stack } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import { Box, Typography, Button, Grid, Stack } from '@mui/material';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import Modal from '@mui/material/Modal';
@@ -14,8 +12,8 @@ import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../store/hooks';
 import { getAccessToken } from '../../store/slices/userSlice';
 import LoadingProgress from '../../components/LoadingProgress/LoadingProgress';
-import { getTaxes } from '../../store/slices/taxesSlice';
-import { ITaxApiResponse } from '../../types/slicesTypes/taxApiTypes';
+import CartAddLineItem from '../../requestsComponents/CartAddLineItem/CartAddLineItem';
+import CartModifyQuantity from '../../requestsComponents/CartModifyQuantity/CartModifyQuantity';
 
 const style = {
   bgcolor: 'background.paper',
@@ -31,30 +29,13 @@ const styleArrows = {
 export const ProductPage: FC = () => {
   const { productId } = useParams();
   const authToken = useAppSelector(getAccessToken);
-  const taxesArray = useAppSelector(getTaxes);
 
-  const { data, isSuccess, isLoading, isFetching } = useGetProductByIdQuery({
+  const { data, isLoading, isFetching } = useGetProductByIdQuery({
     productId: productId as string,
     token: authToken as string,
   });
 
-  const [tax, setTax] = useState(0);
-
-  useEffect(() => {
-    if (isSuccess) {
-      taxesArray
-        .filter((item) => item.id === data.taxCategory.id && item.key === 'sale')
-        .flatMap((elem) => elem.rates)
-        .filter((rate: ITaxApiResponse) => rate.country === 'DE')
-        .forEach((rate: ITaxApiResponse) => {
-          setTax(rate.amount);
-        });
-    }
-  }, [isSuccess]);
-
   const [selectedImg, setSelectedImg] = useState(0);
-
-  const [count, setCount] = useState(1);
 
   // Modal window
 
@@ -74,6 +55,12 @@ export const ProductPage: FC = () => {
   const priceNumber =
     data.masterData.current.masterVariant.prices[0].value.centAmount /
     10 ** data.masterData.current.masterVariant.prices[0].value.fractionDigits;
+  let discountNumber = priceNumber;
+  if (data.masterData.current.masterVariant.prices[0].discounted) {
+    discountNumber =
+      data.masterData.current.masterVariant.prices[0].discounted.value.centAmount /
+      10 ** data.masterData.current.masterVariant.prices[0].discounted.value.fractionDigits;
+  }
   const priceCommon = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: currencyCommon,
@@ -82,7 +69,12 @@ export const ProductPage: FC = () => {
   const discountPrice = new Intl.NumberFormat('en-IN', {
     style: 'currency',
     currency: currencyCommon,
-  }).format(priceNumber - priceNumber * tax);
+  }).format(discountNumber);
+
+  const priceDiff = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: currencyCommon,
+  }).format(priceNumber - discountNumber);
 
   return (
     <Grid container px={5} py={7} spacing={2} alignItems={'center'}>
@@ -162,56 +154,33 @@ export const ProductPage: FC = () => {
         <Stack spacing={4} className="right">
           <Typography variant="h2">{title}</Typography>
 
-          {tax !== 0 ? (
+          {discountPrice !== priceCommon ? (
             <>
               <Typography variant="h4" className={styles.price}>
                 Discount price:{discountPrice}
               </Typography>
               <Typography variant="h5" className={styles.price_full}>
-                Full price:{priceCommon}
+                Full price: {priceCommon}
               </Typography>
               <Typography variant="h6" className={styles.price}>
-                Tax: {`${tax * 100} %`}
+                Discount: {priceDiff}
               </Typography>
             </>
           ) : (
             <Typography variant="h4" className={styles.price}>
-              Price:{priceCommon}
+              Price: {priceCommon}
             </Typography>
           )}
           <Typography variant="h6" align={'justify'}>
             {description}
           </Typography>
 
-          <ButtonGroup className={styles.quantity}>
-            <Button
-              className={styles.quantity__btn}
-              aria-label="reduce"
-              onClick={() => {
-                setCount(Math.max(count - 1, 0));
-              }}
-            >
-              <RemoveIcon fontSize="small" />
-            </Button>
-
-            <Typography variant="h6">{count}</Typography>
-
-            <Button
-              className={styles.quantity__btn}
-              aria-label="increase"
-              onClick={() => {
-                setCount(count + 1);
-              }}
-            >
-              <AddIcon fontSize="small" />
-            </Button>
-          </ButtonGroup>
+          <CartModifyQuantity productId={productId as string} />
 
           <Box className={styles.btn}>
-            <Button>
+            <CartAddLineItem productId={productId as string}>
               <AddShoppingCartIcon />
-              ADD TO CART
-            </Button>
+            </CartAddLineItem>
           </Box>
 
           <Box className={styles.btn}>

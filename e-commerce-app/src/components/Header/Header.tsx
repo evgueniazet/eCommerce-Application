@@ -6,13 +6,15 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import logo from '../../assets/logo/free-icon-tree-740936.png';
+import logo from '../../assets/logo/Logo.png';
 import Menu from '@mui/material/Menu';
 import NavLinks from '../NavLinks/NavLinks';
 import MenuLinks from '../MenuLinks/MenuLinks';
 import { navigationRoutes } from '../../routes/navigation';
 import UserMenu from '../UserMenu/UserMenu';
 import { Link } from 'react-router-dom';
+import UserCart from '../UserCart/UserCart';
+import { Grid } from '@mui/material';
 
 export const Header: React.FC = () => {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
@@ -26,7 +28,7 @@ export const Header: React.FC = () => {
   };
 
   return (
-    <AppBar position="sticky" color="default">
+    <AppBar data-testid="header" position="sticky" color="default">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <Link to={'/'}>
@@ -107,7 +109,14 @@ export const Header: React.FC = () => {
             <NavLinks />
           </Box>
 
-          <UserMenu />
+          <Grid container spacing={2} sx={{ maxWidth: 'max-content' }} alignItems={'center'}>
+            <Grid item>
+              <UserCart />
+            </Grid>
+            <Grid item>
+              <UserMenu />
+            </Grid>
+          </Grid>
         </Toolbar>
       </Container>
     </AppBar>

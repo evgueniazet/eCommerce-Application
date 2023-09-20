@@ -12,13 +12,14 @@ import {
 } from '@mui/material';
 import LoginImage from '../../assets/images/ImgLoginPage.png';
 import { NavLink, useNavigate } from 'react-router-dom';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect, useId, useState } from 'react';
 import { useValidate } from '../../hooks/useValidate';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useLoginUserMutation } from '../../api/authApi';
 import {
+  getAccessToken,
   getLoggedIn,
   isRememberedMe,
   setAuth,
@@ -30,6 +31,8 @@ import { IResponseError } from '../../types/AuthTypes';
 import { ILoginFormData } from '../../interfaces/ILoginFormData';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import { useLocalToken } from '../../hooks/useLocalToken';
+import { useAuthenticateMyCustomerMutation } from '../../api/myCustomerApi';
+import { IAuthenticateMyCustomer } from '../../types/slicesTypes/myCustomerApiSliceTypes';
 
 const defaultFormState: ILoginFormData = {
   email: '',
@@ -48,6 +51,7 @@ export const LoginPage: FC = () => {
   const navigate = useNavigate();
   const from = '/';
 
+  const accessToken = useAppSelector(getAccessToken) as string;
   const isLoggedIn = useAppSelector(getLoggedIn);
   const isRememberedUser = useAppSelector(isRememberedMe);
 
@@ -59,7 +63,7 @@ export const LoginPage: FC = () => {
   }, [isLoggedIn]);
 
   const { validateField } = useValidate();
-  const { setTokenInStorage } = useLocalToken();
+  const { setTokenInStorage, setTokenInSessionStorage } = useLocalToken();
   const dispatch = useAppDispatch();
 
   const [globalError, setGlobalError] = useState<IGlobalError>({
@@ -68,6 +72,7 @@ export const LoginPage: FC = () => {
   });
 
   const [loginUser, { isSuccess, error: errorApi, isError, data }] = useLoginUserMutation();
+  const [authenticateUser] = useAuthenticateMyCustomerMutation();
 
   const {
     register,
@@ -85,6 +90,7 @@ export const LoginPage: FC = () => {
   useEffect(() => {
     if (!isSuccess || !data) return;
     dispatch(setAuth({ access_token: data.access_token, refresh_token: data.refresh_token }));
+    setTokenInSessionStorage(data.refresh_token);
     if (isRememberedUser) {
       setTokenInStorage(data.refresh_token);
     }
@@ -96,6 +102,8 @@ export const LoginPage: FC = () => {
     setGlobalError({ status: true, message: (errorApi as IResponseError).data.message });
     dispatch(setLogOut());
   }, [isError]);
+
+  const loginFormId = useId();
 
   const submitHandler: SubmitHandler<ILoginFormData> = (data) => {
     if (data.email) {
@@ -152,7 +160,16 @@ export const LoginPage: FC = () => {
         }),
       );
       try {
-        loginUser({ email: data.email, password: data.password });
+        const authObj: IAuthenticateMyCustomer = {
+          token: accessToken,
+          customerData: {
+            email: data.email,
+            password: data.password,
+          },
+        };
+        authenticateUser(authObj).then(() =>
+          loginUser({ email: data.email, password: data.password }),
+        );
       } catch {
         console.log('er');
       }
@@ -201,7 +218,7 @@ export const LoginPage: FC = () => {
           component="form"
           noValidate
           sx={{ mt: 5, ml: 8, mr: 8 }}
-          id="login-form"
+          id={loginFormId}
           onSubmit={handleSubmit(submitHandler)}
         >
           {globalError.status && (
@@ -212,7 +229,7 @@ export const LoginPage: FC = () => {
           <TextField
             sx={{ mt: 2 }}
             fullWidth
-            id="email"
+            id={`email-${loginFormId}`}
             label="Email Address"
             type="email"
             autoComplete="off"
@@ -226,7 +243,7 @@ export const LoginPage: FC = () => {
           <TextField
             fullWidth
             margin="normal"
-            id="password"
+            id={`password-${loginFormId}`}
             label="Password"
             type={showPassword ? 'text' : 'password'}
             autoComplete="off"

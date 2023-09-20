@@ -16,16 +16,19 @@ export const ErrorPage: React.FC = () => {
         justifyContent: 'start',
         alignItems: 'center',
         flexDirection: 'column',
-        minHeight: '80vh',
+        minHeight: '90vh',
         marginBottom: '3%',
       }}
+      pt={5}
     >
       <Typography variant="h5" style={{ color: 'darkgreen' }}>
         Sorry, the page you’re looking for doesn’t exist.
       </Typography>
       <img src={gifIcon} alt="home-icon" width={45} height={45} />
       <Button variant="contained" sx={{ backgroundColor: 'lightgreen', height: 'fit-content' }}>
-        <Link to="/">Back Home</Link>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          Back Home
+        </Link>
       </Button>
     </Box>
   );

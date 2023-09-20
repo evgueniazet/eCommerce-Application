@@ -44,7 +44,7 @@ export const UserData: FC<IUserProps> = ({
   };
 
   return (
-    <Box sx={{ width: 450, margin: '0 auto' }}>
+    <Box>
       <Grid item xs={12} mt={2} sx={{ display: 'flex' }}>
         <TextField
           fullWidth

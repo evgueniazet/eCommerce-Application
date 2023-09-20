@@ -4,20 +4,20 @@ export const userLoginRoutes = {
 };
 
 export const userLogoutRoutes = {
-  logout: '/logout',
   user: '/user',
+  logout: '/logout',
 };
 
 export const navigationRoutes = {
   home: '/',
   products: '/products',
-  user: '/user',
+  about: '/about',
 };
 
 export const unusedNavigation = {
-  about: '/about',
   basket: '/basket',
   product: '/product',
   products: '/products',
+  user: '/user',
   error: '*',
 };

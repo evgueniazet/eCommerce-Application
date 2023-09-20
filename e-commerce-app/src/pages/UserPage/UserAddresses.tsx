@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
-import { Box, Typography, Button } from '@mui/material';
-import { AddressPanel } from '../../components/Panel/Panel';
-import { BoardList } from '../../components/AddressList/AddressList';
+import { Box, Typography } from '@mui/material';
+import { AddressPanel } from '../../components/AddressPanel/AddressPanel';
+import { AddressList } from '../../components/AddressList/AddressList';
 import { IUserProps } from '../../interfaces/IUserProps';
 import { IMyCustomerApiAddressRequest } from '../../types/addressesTypes';
 
@@ -133,7 +133,7 @@ export const UserAddresses: FC<IUserProps> = ({
         <Typography textAlign="center" variant="h5">
           Shipping adresses: {todoList.length}
         </Typography>
-        <BoardList
+        <AddressList
           editTodoId={editTodoId}
           todoList={todoList}
           onDeleteAddr={onDeleteAddr}
@@ -148,7 +148,7 @@ export const UserAddresses: FC<IUserProps> = ({
         <Typography textAlign="center" variant="h5">
           Billing adresses: {todoList.length}
         </Typography>
-        <BoardList
+        <AddressList
           editTodoId={editTodoId}
           todoList={todoList}
           onDeleteAddr={onDeleteAddr}

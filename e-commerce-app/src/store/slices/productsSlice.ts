@@ -39,6 +39,9 @@ export const productsSlice = createSlice({
 });
 
 export const getProducts = (state: RootStateType) => state.products.products;
+export const getProductsTotal = (state: RootStateType) => state.products.total;
+export const getProductsLimit = (state: RootStateType) => state.products.limit;
+export const getProductsOffset = (state: RootStateType) => state.products.offset;
 export const isFetchingProducts = (state: RootStateType) => state.products.fetching;
 export const ProductsReducer = productsSlice.reducer;
 export const { startLoadingProducts, setProducts, resetProducts } = productsSlice.actions;

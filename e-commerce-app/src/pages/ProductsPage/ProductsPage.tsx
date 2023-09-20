@@ -10,6 +10,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ISearchProductForm } from '../../types/searchProductsTypes/searchFormTypes';
 import { getQueryText, setQueryText } from '../../store/slices/queryParamsSlice';
 import { useAppSelector } from '../../store/hooks';
+import ProductsPagination from '../../components/ProductsPagination/ProductsPagination';
 
 export const ProductsPage: React.FC = () => {
   const dispatch = useDispatch();
@@ -62,6 +63,7 @@ export const ProductsPage: React.FC = () => {
         <Box className={styles.right}>
           <ProductsList />
         </Box>
+        <ProductsPagination />
       </Grid>
     </Grid>
   );

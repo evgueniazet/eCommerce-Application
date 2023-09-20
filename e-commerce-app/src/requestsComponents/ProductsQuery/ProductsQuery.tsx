@@ -8,6 +8,8 @@ import { setProducts, startLoadingProducts } from '../../store/slices/productsSl
 import {
   getQueryCategories,
   getQueryCentAmount,
+  getQueryLimit,
+  getQueryOffset,
   getQuerySort,
   getQueryText,
 } from '../../store/slices/queryParamsSlice';
@@ -23,10 +25,15 @@ const ProductsQuery = (): JSX.Element => {
   const searchQueryText = useAppSelector(getQueryText);
   const searchQueryCentAmount = useAppSelector(getQueryCentAmount);
   const searchQueryCategories = useAppSelector(getQueryCategories);
+  const searchQueryLimit = useAppSelector(getQueryLimit);
+  const searchQueryOffset = useAppSelector(getQueryOffset);
 
-  const [params, setParams] = useState<IBaseQueryParams>({});
+  const [params, setParams] = useState<IBaseQueryParams>({
+    limit: searchQueryLimit,
+  });
 
   useEffect(() => {
+    if (!searchQuerySort && !params.sort) return;
     if (searchQuerySort) {
       setParams((prevState) => ({
         ...prevState,
@@ -42,6 +49,7 @@ const ProductsQuery = (): JSX.Element => {
   }, [searchQuerySort]);
 
   useEffect(() => {
+    if (!searchQueryText && !params['text.en']) return;
     if (searchQueryText) {
       setParams((prevState) => ({
         ...prevState,
@@ -77,6 +85,7 @@ const ProductsQuery = (): JSX.Element => {
     }
 
     if (filterArr.length === 0) {
+      if (!params.filter?.length) return;
       setParams((prevState) => {
         const newState = {
           ...prevState,
@@ -84,12 +93,49 @@ const ProductsQuery = (): JSX.Element => {
         delete newState.filter;
         return newState;
       });
+      return;
     }
     setParams((prevState) => ({
       ...prevState,
       filter: filterArr,
     }));
   }, [searchQueryCentAmount, searchQueryCategories]);
+
+  useEffect(() => {
+    if (searchQueryLimit === params.limit) return;
+    if (searchQueryLimit) {
+      setParams((prevState) => ({
+        ...prevState,
+        limit: searchQueryLimit,
+      }));
+      return;
+    }
+    setParams((prevState) => {
+      const newState = {
+        ...prevState,
+      };
+      delete newState.limit;
+      return newState;
+    });
+  }, [searchQueryLimit]);
+
+  useEffect(() => {
+    if (searchQueryOffset === params.offset || (!searchQueryOffset && !params.offset)) return;
+    if (searchQueryOffset) {
+      setParams((prevState) => ({
+        ...prevState,
+        offset: searchQueryOffset,
+      }));
+      return;
+    }
+    setParams((prevState) => {
+      const newState = {
+        ...prevState,
+      };
+      delete newState.offset;
+      return newState;
+    });
+  }, [searchQueryOffset]);
 
   const [
     getAllProducts,
