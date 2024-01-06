@@ -1,0 +1,9 @@
+.price {
+  &__sale {
+    text-decoration: line-through;
+    text-decoration-color: gray;
+  }
+  &__marked {
+    color: rgb(221, 65, 65);
+  }
+}

@@ -1,0 +1,39 @@
+  base-react                                                         [m 3a9fe4f Init: init base react structure
+  commerce-tools                                                     [m f976761 chore: add base folder structure
+  develop                                                            [m 94fc2e3 Merge pull request #3 from evgueniazet/project-description
+  feat_sprint_2                                                      [m 94fc2e3 Merge pull request #3 from evgueniazet/project-description
+  infrastructure                                                     [m f976761 chore: add base folder structure
+  main                                                               [m 26cf775 [behind 2] Initial commit
+  react-router                                                       [m b098e66 fix: change Link to NavLink
+  sprint-2_login-page                                                [m ad68b3a feat: add remember me sign
+  sprint-2_login-page-layout                                         [m 3be32b5 Merge pull request #6 from evgueniazet/sprint-2_routing-implementation
+  sprint-2_login-page_input-validation                               [m 8ad8c50 refactor: remove console.log in LoginPage
+  sprint-2_login-registration-main                                   [m 0b72ee9 Merge pull request #14 from evgueniazet/sprint-2_error-page
+  sprint-2_main-page-navigation                                      [m 4b85a1e feat: add navigation on home page
+  sprint-2_registration-page                                         [m c8163b9 feat: add useValidate custom hook
+  sprint-2_registration-page_input-validation                        [m 7061198 fix: change validation for postal code field
+* [32msprint-2_registration-page_input-validation-refactor               [m 384cbdb feat: register fields errors
+  sprint-2_routing-implementation                                    [m 8614c19 feat: add routing
+  [31mremotes/origin/HEAD                                                [m -> origin/main
+  [31mremotes/origin/base-react                                          [m 3a9fe4f Init: init base react structure
+  [31mremotes/origin/develop                                             [m 94fc2e3 Merge pull request #3 from evgueniazet/project-description
+  [31mremotes/origin/eslint-prettier                                     [m 95a03ae feat: add eslint and prettier
+  [31mremotes/origin/feat_sprint_2                                       [m 94fc2e3 Merge pull request #3 from evgueniazet/project-description
+  [31mremotes/origin/husky                                               [m cf5ea78 feat: add husky
+  [31mremotes/origin/infrastructure                                      [m 2626af1 Docs: add ignores to .gitignore
+  [31mremotes/origin/main                                                [m a582d88 Merge pull request #1 from evgueniazet/pull-request-template
+  [31mremotes/origin/project-description                                 [m f5c91bf Merge branch 'develop' into project-description
+  [31mremotes/origin/pull-request-template                               [m 92ae162 Docs: add pull-request template
+  [31mremotes/origin/react-router                                        [m b098e66 fix: change Link to NavLink
+  [31mremotes/origin/sprint-2_error-page                                 [m 30a1f6e feat: add gif
+  [31mremotes/origin/sprint-2_login-page                                 [m ad68b3a feat: add remember me sign
+  [31mremotes/origin/sprint-2_login-page_authentication                  [m 88b5d4b refactor: linter refactors
+  [31mremotes/origin/sprint-2_login-page_input-validation                [m 8ad8c50 refactor: remove console.log in LoginPage
+  [31mremotes/origin/sprint-2_login-registration-main                    [m 0b72ee9 Merge pull request #14 from evgueniazet/sprint-2_error-page
+  [31mremotes/origin/sprint-2_main-page-navigation                       [m 4b85a1e feat: add navigation on home page
+  [31mremotes/origin/sprint-2_registration-page                          [m 3673852 feat: add registration form component
+  [31mremotes/origin/sprint-2_registration-page_input-validation         [m c6e025b Merge branch 'sprint-2_login-registration-main' into sprint-2_registration-page_input-validation
+  [31mremotes/origin/sprint-2_registration-page_input-validation-refactor[m 384cbdb feat: register fields errors
+  [31mremotes/origin/sprint-2_registration-page_layout                   [m f3d1a00 feat: add connection between form pages
+  [31mremotes/origin/sprint-2_registration-page_validation               [m 3673852 feat: add registration form component
+  [31mremotes/origin/sprint-2_routing-implementation                     [m 8614c19 feat: add routing
